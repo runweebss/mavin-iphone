@@ -1313,6 +1313,7 @@ function unlockPhone() {
 /* MUSIC PLAYER VISUAL TOGGLE */
 
 function togglePlayback() {
+  openHindia();
   isPlaying = !isPlaying;
 
   const button = document.getElementById("playButton");
@@ -1330,7 +1331,7 @@ function togglePlayback() {
 }
 
 function openSpotify() {
-  window.open(spotifyUrl, "_blank", "noopener,noreferrer");
+  window.open(mavinPlaylistUrl, "_blank", "noopener,noreferrer");
 }
 
 /* DEMO APPS */
