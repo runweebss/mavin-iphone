@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="id">
 <head>
@@ -7,2126 +8,461 @@
 <title>Mavin's iPhone</title>
 
 <style>
-:root {
-  --ink: #171719;
-  --paper: #f4f4f7;
-  --blue: #087cff;
-  --gold: #f4d39a;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html, body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
-body {
-  background: #111;
-  color: #fff;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-    "Segoe UI", sans-serif;
-  -webkit-tap-highlight-color: transparent;
-}
-
-button, input, textarea, select {
-  font: inherit;
-}
-
-button {
-  cursor: pointer;
-  border: 0;
-}
-
-#phone {
-  position: relative;
-  width: 100%;
-  height: 100dvh;
-  max-width: 430px;
-  margin: auto;
-  overflow: hidden;
-  background: #111;
-  isolation: isolate;
-}
-
-#wall {
-  position: absolute;
-  inset: 0;
-  background:
-    url("https://raw.githubusercontent.com/runweebss/Interactive-Winrina-AU/main/camera-wallpaper.jpg")
-    center / cover no-repeat;
-  z-index: 0;
-}
-
-#wall::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: #00000012;
-  pointer-events: none;
-}
-
-/* STATUS BAR */
-.status {
-  position: absolute;
-  z-index: 50;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 38px;
-  padding: max(8px, env(safe-area-inset-top)) 7% 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #fff;
-  font-size: 14px;
-  font-weight: 700;
-  text-shadow: 0 1px 4px #000;
-  pointer-events: none;
-}
-
-.status-right {
-  display: flex;
-  gap: 5px;
-  align-items: center;
-  letter-spacing: 1px;
-}
-
-/* SCREEN MANAGEMENT */
-.screen {
-  position: absolute;
-  inset: 0;
-  display: none;
-}
-
-.screen.active {
-  display: block;
-}
-
-.lock {
-  z-index: 30;
-  background: #000;
-  touch-action: pan-y;
-}
-
-.lock img {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.lockdate,
-.locktime,
-.hint {
-  position: absolute;
-  z-index: 2;
-  left: 0;
-  right: 0;
-  text-align: center;
-  text-shadow: 0 2px 8px #000;
-}
-
-.lockdate {
-  top: 17%;
-  font-size: 16px;
-}
-
-.locktime {
-  top: 20.5%;
-  font-size: clamp(66px, 18vw, 88px);
-  font-weight: 200;
-  letter-spacing: -3px;
-  line-height: 1.1;
-}
-
-.hint {
-  bottom: 8.5%;
-  width: 100%;
-  padding: 15px;
-  background: transparent;
-  color: var(--gold);
-  font-size: 16px;
-}
-
-/* HOME SCREEN */
-.home {
-  z-index: 2;
-  padding: 0;
-  overflow: hidden;
-}
-
-/* WEATHER WIDGET */
-.weather {
-  position: absolute;
-  top: calc(7.2% + env(safe-area-inset-top));
-  left: 5%;
-  width: 90%;
-  height: clamp(174px, 23.5%, 205px);
-  padding: 0;
-  overflow: hidden;
-  border-radius: 29px;
-  color: white;
-  text-align: left;
-  background: linear-gradient(
-    145deg,
-    rgba(83, 104, 123, .94),
-    rgba(29, 48, 65, .94)
-  );
-  box-shadow: 0 8px 24px #0002;
-}
-
-.city {
-  position: absolute;
-  top: 14px;
-  left: 17px;
-  font-size: clamp(18px, 5vw, 22px);
-  line-height: 1.2;
-  font-weight: 600;
-}
-
-.temp {
-  position: absolute;
-  top: 52px;
-  left: 16px;
-  margin: 0;
-  font-size: clamp(38px, 10vw, 46px);
-  font-weight: 250;
-  line-height: 1;
-  letter-spacing: -1.5px;
-}
-
-.desc {
-  position: absolute;
-  top: 17px;
-  right: 15px;
-  font-size: clamp(13px, 3.8vw, 17px);
-  line-height: 1.35;
-  text-align: right;
-  white-space: nowrap;
-}
-
-.weather-icon {
-  display: block;
-  font-size: 26px;
-  margin-bottom: 4px;
-}
-
-.hours {
-  position: absolute;
-  left: 8px;
-  right: 8px;
-  bottom: 9px;
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  align-items: end;
-  text-align: center;
-}
-
-.hour {
-  min-width: 0;
-  font-size: clamp(10px, 3.2vw, 13px);
-  line-height: 1.2;
-  white-space: nowrap;
-}
-
-.hour b {
-  display: block;
-  margin: 6px 0;
-  font-size: clamp(17px, 5vw, 21px);
-  line-height: 1;
-  font-weight: 400;
-}
-
-.wlabel {
-  position: absolute;
-  top: calc(
-    7.2% + env(safe-area-inset-top) +
-    clamp(174px, 23.5%, 205px) + 7px
-  );
-  left: 0;
-  width: 100%;
-  text-align: center;
-  font-size: 16px;
-  text-shadow: 0 1px 5px #000;
-}
-
-/* APP ICON GRID */
-.app-layout {
-  position: absolute;
-  top: 39%;
-  left: 5.5%;
-  right: 5.5%;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-template-rows: repeat(3, auto);
-  column-gap: 7px;
-  row-gap: 17px;
-  align-items: start;
-}
-
-.app {
-  min-width: 0;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 5px;
-  padding: 0;
-  background: transparent;
-  color: white;
-  text-shadow: 0 1px 4px #000;
-}
-
-.ico {
-  width: min(100%, 65px);
-  aspect-ratio: 1;
-  border-radius: 17px;
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  overflow: hidden;
-  font-size: 31px;
-  font-weight: 650;
-  box-shadow: 0 4px 9px #0002;
-}
-
-.app label {
-  font-size: 11px;
-  line-height: 1.2;
-  white-space: nowrap;
-}
-
-.wa {
-  background: #20ce68;
-}
-
-.calendar {
-  background: #fff;
-  color: #111;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  line-height: 1;
-}
-
-.calendar small {
-  font-size: 10px;
-  color: #d22;
-  font-weight: 700;
-}
-
-.calendar span {
-  font-size: 31px;
-  font-weight: 700;
-  margin-top: 2px;
-}
-
-.ig {
-  background: radial-gradient(
-    circle at 28% 105%,
-    #ffd66d 0%,
-    #f34c5e 45%,
-    #8b39c9 85%
-  );
-}
-
-.xicon {
-  background: #000;
-}
-
-.spotify {
-  background: #111;
-  color: #1ed760;
-}
-
-.photos {
-  background: #fff;
-  color: #ee755e;
-}
-
-.notesico {
-  background: linear-gradient(#ffce4b 19%, #fff 19%);
-  color: #999;
-}
-
-.yt {
-  background: #fff;
-  color: #e00;
-}
+:root{--ink:#171719;--paper:#f4f4f7;--blue:#087cff;--gold:#f4d39a}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+body{background:#111;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif;-webkit-tap-highlight-color:transparent}
+button,input,textarea,select{font:inherit}
+button{cursor:pointer;border:0}
+#phone{position:relative;width:100%;height:100dvh;max-width:430px;margin:auto;overflow:hidden;background:#111;isolation:isolate}
+#wall{position:absolute;inset:0;background:url("https://raw.githubusercontent.com/runweebss/Interactive-Winrina-AU/main/camera-wallpaper.jpg") center/cover no-repeat;z-index:0}
+#wall::after{content:"";position:absolute;inset:0;background:#00000012;pointer-events:none}
+.status{position:absolute;z-index:50;top:0;left:0;right:0;height:38px;padding:max(8px,env(safe-area-inset-top)) 7% 0;display:flex;justify-content:space-between;align-items:center;color:#fff;font-size:14px;font-weight:700;text-shadow:0 1px 4px #000;pointer-events:none}
+.status-right{display:flex;gap:5px;align-items:center;letter-spacing:1px}
+.screen{position:absolute;inset:0;display:none}
+.screen.active{display:block}
+.lock{z-index:30;background:#000;touch-action:pan-y}
+.lock img{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover}
+.lockdate,.locktime,.hint{position:absolute;z-index:2;left:0;right:0;text-align:center;text-shadow:0 2px 8px #000}
+.lockdate{top:17%;font-size:16px}
+.locktime{top:20.5%;font-size:clamp(66px,18vw,88px);font-weight:200;letter-spacing:-3px;line-height:1.1}
+.hint{bottom:8.5%;width:100%;padding:15px;background:transparent;color:var(--gold);font-size:16px}
+.home{z-index:2;padding:0;overflow:hidden}
+.weather{position:absolute;top:calc(7.2% + env(safe-area-inset-top));left:5%;width:90%;height:clamp(174px,23.5%,205px);padding:0;overflow:hidden;border-radius:29px;color:#fff;text-align:left;background:linear-gradient(145deg,rgba(83,104,123,.94),rgba(29,48,65,.94));box-shadow:0 8px 24px #0002}
+.city{position:absolute;top:14px;left:17px;font-size:clamp(18px,5vw,22px);line-height:1.2;font-weight:600}
+.temp{position:absolute;top:52px;left:16px;margin:0;font-size:clamp(38px,10vw,46px);font-weight:250;line-height:1;letter-spacing:-1.5px}
+.desc{position:absolute;top:17px;right:15px;font-size:clamp(13px,3.8vw,17px);line-height:1.35;text-align:right;white-space:nowrap}
+.weather-icon{display:block;font-size:26px;margin-bottom:4px}
+.hours{position:absolute;left:8px;right:8px;bottom:9px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-items:end;text-align:center}
+.hour{min-width:0;font-size:clamp(10px,3.2vw,13px);line-height:1.2;white-space:nowrap}
+.hour b{display:block;margin:6px 0;font-size:clamp(17px,5vw,21px);line-height:1;font-weight:400}
+.wlabel{position:absolute;top:calc(7.2% + env(safe-area-inset-top) + clamp(174px,23.5%,205px) + 7px);left:0;width:100%;text-align:center;font-size:16px;text-shadow:0 1px 5px #000}
+.app-layout{position:absolute;top:39%;left:5.5%;right:5.5%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,auto);column-gap:7px;row-gap:17px;align-items:start}
+.app{min-width:0;display:flex;align-items:center;flex-direction:column;gap:5px;padding:0;background:transparent;color:white;text-shadow:0 1px 4px #000}
+.ico{width:min(100%,65px);aspect-ratio:1;border-radius:17px;display:grid;place-items:center;flex-shrink:0;overflow:hidden;font-size:31px;font-weight:650;box-shadow:0 4px 9px #0002}
+.app label{font-size:11px;line-height:1.2;white-space:nowrap}
+.wa{background:#20ce68}
+.calendar{background:#fff;color:#111;display:flex;flex-direction:column;justify-content:center;line-height:1}
+.calendar small{font-size:10px;color:#d22;font-weight:700}
+.calendar span{font-size:31px;font-weight:700;margin-top:2px}
+.ig{background:radial-gradient(circle at 28% 105%,#ffd66d 0%,#f34c5e 45%,#8b39c9 85%)}
+.x-icon{background:#000}
+.spotify{background:#111;color:#1ed760}
+.photos{background:#fff;color:#ee755e}
+.notes{background:linear-gradient(#ffce4b 19%,#fff 19%);color:#999}
+.yt{background:#fff;color:#e00}
 
 /* MUSIC WIDGET */
-.music {
-  grid-column: 3 / 5;
-  grid-row: 1 / 3;
-  align-self: start;
-  position: relative;
-  z-index: 3;
-  width: 100%;
-  min-height: 218px;
-  padding: 13px;
-  border-radius: 25px;
-  background: rgba(36, 36, 38, .94);
-  color: #fff;
-  text-align: left;
-  box-shadow: 0 8px 24px #0003;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+.music{
+  grid-column:3/5;
+  grid-row:1/3;
+  align-self:start;
+  position:relative;
+  z-index:3;
+  width:100%;
+  min-width:0;
+  height:clamp(310px,39vw,370px);
+  min-height:0;
+  padding:clamp(12px,3vw,17px);
+  border:0;
+  border-radius:27px;
+  background:rgba(35,35,37,.97);
+  color:#fff;
+  text-align:left;
+  box-shadow:0 8px 24px #0003;
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
 }
+.album{
+  flex:0 0 auto;
+  width:44%;
+  aspect-ratio:1;
+  height:auto;
+  margin:0 0 12px;
+  overflow:hidden;
+  border-radius:12px;
+  background:#777;
+  display:grid;
+  place-items:center;
+}
+.album img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1)}
+.song{margin-top:1px;font-size:clamp(13px,3.5vw,16px);font-weight:700;line-height:1.25;overflow-wrap:anywhere}
+.artist{margin-top:5px;color:#c8c8cc;font-size:clamp(12px,3.2vw,14px);line-height:1.3}
+.bar{flex:0 0 5px;width:100%;height:5px;margin:auto 0 7px;border-radius:10px;overflow:hidden;background:#777}
+.bar i{display:block;width:46%;height:100%;border-radius:inherit;background:#fff;transition:width .25s ease}
+.track{display:flex;justify-content:space-between;gap:6px;font-size:11px;line-height:1.2;color:#eee}
+.controls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:center;justify-items:center;gap:2px;margin-top:17px}
+.controls button{display:grid;place-items:center;min-width:0;width:100%;padding:4px 0;background:transparent;color:#fff;font-size:clamp(14px,4vw,20px);line-height:1}
+.controls button:nth-child(2){font-size:clamp(23px,6vw,29px)}
+.controls button:active{opacity:.55}
+.musiclabel{grid-column:3/5;grid-row:3;align-self:start;text-align:center;margin-top:-12px;font-size:12px;color:#fff;text-shadow:0 1px 4px #000}
 
-.album {
-  width: 65px;
-  height: 65px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #bbb, #393939);
-  display: grid;
-  place-items: center;
-  font-size: 28px;
-  margin-bottom: 9px;
-  overflow: hidden;
-}
-
-.album img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.song {
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 1.25;
-}
-
-.artist {
-  font-size: 13px;
-  color: #ccc;
-  margin-top: 4px;
-}
-
-.bar {
-  height: 4px;
-  background: #777;
-  margin: 13px 0 5px;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.bar i {
-  display: block;
-  width: 46%;
-  height: 100%;
-  background: white;
-}
-
-.track {
-  display: flex;
-  justify-content: space-between;
-  font-size: 10px;
-  color: #eee;
-}
-
-.controls {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 12px;
-  gap: 4px;
-}
-
-.controls button {
-  background: transparent;
-  color: #fff;
-  font-size: 17px;
-  padding: 3px 0;
-}
-
-.musiclabel {
-  grid-column: 3 / 5;
-  grid-row: 3;
-  text-align: center;
-  margin-top: -12px;
-  font-size: 11px;
-  text-shadow: 0 1px 4px #000;
-}
-
-/* DOCK */
-.pages {
-  position: absolute;
-  bottom: 99px;
-  left: 0;
-  right: 0;
-  text-align: center;
-  font-size: 11px;
-  letter-spacing: 8px;
-  color: white;
-  text-shadow: 0 1px 4px #000;
-  pointer-events: none;
-}
-
-.dock,
-.lock-dock {
-  position: absolute;
-  z-index: 5;
-  left: 5%;
-  right: 5%;
-  bottom: 15px;
-  height: 78px;
-  border-radius: 28px;
-  background: rgba(207, 193, 171, .82);
-  backdrop-filter: blur(22px);
-  -webkit-backdrop-filter: blur(22px);
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  align-items: center;
-  justify-items: center;
-  padding: 8px 10px;
-  gap: 8px;
-}
-
-.dock .app {
-  height: 100%;
-  width: 100%;
-  justify-content: center;
-  text-shadow: none;
-}
-
-.dock .ico,
-.lock-dock .ico {
-  width: min(100%, 57px);
-  border-radius: 15px;
-  font-size: 29px;
-}
-
-.homebar {
-  position: absolute;
-  z-index: 70;
-  bottom: 5px;
-  left: calc(50% - 50px);
-  width: 100px;
-  height: 4px;
-  border-radius: 5px;
-  background: #ffffffb5;
-}
+.pages{position:absolute;bottom:99px;left:0;right:0;text-align:center;font-size:11px;letter-spacing:8px;color:white;text-shadow:0 1px 4px #000;pointer-events:none}
+.dock,.lock-dock{position:absolute;z-index:5;left:5%;right:5%;bottom:15px;height:78px;border-radius:28px;background:rgba(207,193,171,.82);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:center;justify-items:center;padding:8px 10px;gap:8px}
+.dock .app{height:100%;width:100%;justify-content:center;text-shadow:none}
+.dock .ico,.lock-dock .ico{width:min(100%,57px);border-radius:15px;font-size:29px}
+.homebar{position:absolute;z-index:70;bottom:5px;left:calc(50% - 50px);width:100px;height:4px;border-radius:5px;background:#ffffffb5}
 
 /* APP WINDOWS */
-.appscreen {
-  z-index: 35;
-  background: var(--paper);
-  color: var(--ink);
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding-bottom: 35px;
+.appscreen{z-index:35;background:var(--paper);color:var(--ink);overflow-y:auto;overscroll-behavior:contain;padding-bottom:35px}
+.topbar{position:sticky;top:0;min-height:51px;background:rgba(249,249,251,.94);backdrop-filter:blur(15px);padding:10px 15px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #ddd;z-index:4}
+.topbar button{background:transparent;color:var(--blue);font-size:15px;padding:3px 0}
+.topbar strong{font-size:17px}
+.content{padding:16px}
+.card{background:#fff;color:#222;border-radius:16px;padding:15px;margin-bottom:12px;box-shadow:0 1px 2px #00006}
+.muted{color:#777}
+.field{display:block;width:100%;padding:12px 13px;border:1px solid #d0d0d5;border-radius:11px;background:white;color:#111;margin:5px 0 10px;outline:none}
+.field:focus{border-color:#70aaff}
+.primary{background:var(--blue);color:white;border-radius:11px;padding:11px 14px}
+.item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:13px 4px;border-bottom:1px solid #ddd;background:transparent;color:#222}
+.avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#e2e2e7;flex-shrink:0;font-size:22px}
+.bubble{padding:10px 13px;border-radius:17px;background:#e4e4e9;color:#111;margin:8px 0;max-width:85%;overflow-wrap:anywhere}
+.bubble.me{margin-left:auto;background:#a4e8a0}
+.hide{display:none!important}
+.notice{font-size:12px;color:#777}
+.pinpanel{position:absolute;inset:0;background:#080808f5;z-index:60;display:none;text-align:center;padding-top:23%;color:#fff}
+.pinpanel.show{display:block}
+.pinpanel h2{font-weight:400;font-size:24px}
+.dots{letter-spacing:10px;font-size:23px;min-height:30px}
+.error{height:20px;color:#ff9999;font-size:13px}
+.keypad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:270px;margin:20px auto}
+.keypad button{aspect-ratio:1;border-radius:50%;background:#ffffff20;border:1px solid #ffffff35;font-size:24px;color:white}
+.photoGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px}
+.photoGrid button{aspect-ratio:1;background:linear-gradient(140deg,#d4b69a,#526270);font-size:30px}
+#video{width:100%;min-height:230px;border-radius:15px;background:#111;object-fit:cover}
+.calc-display{width:100%;margin:15px 0 20px;padding:12px 0;border:0;background:transparent;color:white;text-align:right;font-size:clamp(34px,10vw,48px)}
+.calc-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.calc-grid button{aspect-ratio:1;border-radius:50%;background:#444;color:white;font-size:21px}
+.calc-grid .operator{background:#f5a623}
+.calc-grid .function{background:#aaa;color:#111}
+@media(max-height:760px){
+ .weather{top:calc(6.5% + env(safe-area-inset-top));height:22%;min-height:155px}
+ .wlabel{top:calc(6.5% + env(safe-area-inset-top) + 22% + 6px)}
+ .app-layout{top:37%;row-gap:10px}
+ .music{height:clamp(270px,37vh,320px)}
+ .dock{height:68px}
+ .pages{bottom:88px}
 }
-
-.topbar {
-  position: sticky;
-  top: 0;
-  min-height: 51px;
-  background: rgba(249, 249, 251, .94);
-  backdrop-filter: blur(15px);
-  padding: 10px 15px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border-bottom: 1px solid #ddd;
-  z-index: 4;
+@media(max-width:360px){
+ .music{padding:10px;border-radius:22px}
+ .album{margin-bottom:8px}
+ .controls{margin-top:12px}
 }
-
-.topbar button {
-  background: transparent;
-  color: var(--blue);
-  font-size: 15px;
-  padding: 3px 0;
-}
-
-.topbar strong {
-  font-size: 17px;
-}
-
-.content {
-  padding: 16px;
-}
-
-.card {
-  background: #fff;
-  color: #222;
-  border-radius: 16px;
-  padding: 15px;
-  margin-bottom: 12px;
-  box-shadow: 0 1px 2px #00006;
-}
-
-.muted {
-  color: #777;
-}
-
-.field {
-  display: block;
-  width: 100%;
-  padding: 12px 13px;
-  border: 1px solid #d0d0d5;
-  border-radius: 11px;
-  background: white;
-  color: #111;
-  margin: 5px 0 10px;
-  outline: none;
-}
-
-.field:focus {
-  border-color: #70aaff;
-}
-
-.primary {
-  background: var(--blue);
-  color: white;
-  border-radius: 11px;
-  padding: 11px 14px;
-}
-
-.item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  width: 100%;
-  text-align: left;
-  padding: 13px 4px;
-  border-bottom: 1px solid #ddd;
-  background: transparent;
-  color: #222;
-}
-
-.avatar {
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: #e2e2e7;
-  flex-shrink: 0;
-  font-size: 22px;
-}
-
-.bubble {
-  padding: 10px 13px;
-  border-radius: 17px;
-  background: #e4e4e9;
-  color: #111;
-  margin: 8px 0;
-  max-width: 85%;
-  overflow-wrap: anywhere;
-}
-
-.bubble.me {
-  margin-left: auto;
-  background: #a4e8a0;
-}
-
-.hide {
-  display: none !important;
-}
-
-.notice {
-  font-size: 12px;
-  color: #777;
-}
-
-/* PASSCODE */
-.pinpanel {
-  position: absolute;
-  inset: 0;
-  background: #080808f5;
-  z-index: 60;
-  display: none;
-  text-align: center;
-  padding-top: 23%;
-  color: #fff;
-}
-
-.pinpanel.show {
-  display: block;
-}
-
-.pinpanel h2 {
-  font-weight: 400;
-  font-size: 24px;
-}
-
-.dots {
-  letter-spacing: 10px;
-  font-size: 23px;
-  min-height: 30px;
-}
-
-.error {
-  height: 20px;
-  color: #ff9999;
-  font-size: 13px;
-}
-
-.keypad {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-  max-width: 270px;
-  margin: 20px auto;
-}
-
-.keypad button {
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: #ffffff20;
-  border: 1px solid #ffffff35;
-  font-size: 24px;
-  color: white;
-}
-
- /* PHOTO GRID */
-.photoGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 3px;
-}
-
-.photoGrid button {
-  aspect-ratio: 1;
-  background: linear-gradient(140deg, #d4b69a, #526270);
-  font-size: 30px;
-}
-
-/* CAMERA */
-#video {
-  width: 100%;
-  min-height: 230px;
-  border-radius: 15px;
-  background: #111;
-  object-fit: cover;
-}
-
-/* CALCULATOR */
-.calc-display {
-  width: 100%;
-  margin: 15px 0 20px;
-  padding: 12px 0;
-  border: 0;
-  background: transparent;
-  color: white;
-  text-align: right;
-  font-size: clamp(34px, 10vw, 48px);
-}
-
-.calc-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.calc-grid button {
-  aspect-ratio: 1;
-  border-radius: 50%;
-  background: #444;
-  color: white;
-  font-size: 21px;
-}
-
-.calc-grid .operator {
-  background: #f5a623;
-}
-
-.calc-grid .function {
-  background: #aaa;
-  color: #111;
-}
-
-@media (max-height: 760px) {
-  .weather {
-    top: calc(6.5% + env(safe-area-inset-top));
-    height: 22%;
-    min-height: 155px;
-  }
-
-  .wlabel {
-    top: calc(6.5% + env(safe-area-inset-top) + 22% + 6px);
-  }
-
-  .app-layout {
-    top: 37%;
-    row-gap: 10px;
-  }
-
-  .music {
-    min-height: 195px;
-  }
-
-  .dock {
-    height: 68px;
-  }
-
-  .pages {
-    bottom: 88px;
-  }
-}
-
-@media (min-width: 600px) {
-  #phone {
-    max-width: 430px;
-    margin: 0 auto;
-  }
-}
+@media(min-width:600px){#phone{max-width:430px;margin:0 auto}}
 </style>
 </head>
-
 <body>
 <div id="phone">
-
-  <div id="wall"></div>
-
-  <div class="status">
-    <span id="clock">11:11</span>
-    <span class="status-right">
-      <span>▮▮▮</span>
-      <span>◉</span>
-      <span>━</span>
-    </span>
-  </div>
-
-  <!-- LOCK SCREEN -->
-  <section class="screen lock active" id="lock">
-    <img src="alohomora-lockscreen.jpg" alt="Alohomora lock screen">
-
-    <div class="lockdate" id="date"></div>
-    <div class="locktime" id="lockclock">11:11</div>
-
-    <button class="hint" id="unlock">
-      ↑ &nbsp; swipe up to unlock
-    </button>
-  </section>
-
-  <!-- HOME SCREEN -->
-  <section class="screen home" id="home">
-
-    <!-- WEATHER -->
-    <button class="weather" data-app="Weather" aria-label="Open Weather">
-      <span class="city">Bandung</span>
-      <span class="temp">26°</span>
-
-      <span class="desc">
-        <span class="weather-icon">☁</span>
-        Cloudy<br>
-        H:27° L:20°
-      </span>
-
-      <span class="hours">
-        <span class="hour">2PM<b>☁</b>26°</span>
-        <span class="hour">3PM<b>☁</b>27°</span>
-        <span class="hour">4PM<b>☁</b>26°</span>
-        <span class="hour">5PM<b>☁</b>26°</span>
-        <span class="hour">6PM<b>☁</b>25°</span>
-        <span class="hour">7PM<b>☁</b>24°</span>
-      </span>
-    </button>
-
-    <div class="wlabel">Weather</div>
-
-    <!-- APPLICATIONS -->
-    <div class="app-layout">
-
-      <button class="app" data-app="WhatsApp">
-        <span class="ico wa">☎</span>
-        <label>WhatsApp</label>
-      </button>
-
-      <button class="app" data-app="Calendar">
-        <span class="ico calendar">
-          <small id="day">THU</small>
-          <span id="num">29</span>
-        </span>
-        <label>Calendar</label>
-      </button>
-
-      <!-- MUSIC WIDGET -->
-      <div class="music">
-        <div class="album">
-          <img
-            src="https://raw.githubusercontent.com/runweebss/Interactive-Winrina-AU/main/camera-wallpaper.jpg"
-            alt="Album artwork"
-            onerror="this.style.display='none';this.parentElement.textContent='♫';"
-          >
-        </div>
-
-        <div class="song">everything u are</div>
-        <div class="artist">Hindia</div>
-
-        <div class="bar"><i id="progress"></i></div>
-
-        <div class="track">
-          <span>1:53</span>
-          <span>−2:04</span>
-        </div>
-
-        <div class="controls">
-          <button type="button" data-control="prev" aria-label="Previous">
-            ◀◀
-          </button>
-
-          <button type="button" data-control="play" aria-label="Play">
-            ▶
-          </button>
-
-          <button type="button" data-control="next" aria-label="Next">
-            ▶▶
-          </button>
-        </div>
-      </div>
-
-      <button class="app" data-app="Instagram">
-        <span class="ico ig">◎</span>
-        <label>Instagram</label>
-      </button>
-
-      <button class="app" data-app="X">
-        <span class="ico x-icon">𝕏</span>
-        <label>X</label>
-      </button>
-
-      <button class="app" data-app="Spotify">
-        <span class="ico spotify">●</span>
-        <label>Spotify</label>
-      </button>
-
-      <button class="app" data-app="Photos">
-        <span class="ico photos">✿</span>
-        <label>Photos</label>
-      </button>
-
-      <button class="app" data-app="Notes">
-        <span class="ico notes">▤</span>
-        <label>Notes</label>
-      </button>
-
-      <button class="app" data-app="YouTube">
-        <span class="ico yt">▶</span>
-        <label>YouTube</label>
-      </button>
-
-      <div class="musiclabel">Music</div>
-
-    </div>
-
-    <div class="pages">● ○ ○</div>
-
-    <!-- DOCK -->
-    <div class="dock">
-      <button class="app" data-app="Camera" aria-label="Camera">
-        <span class="ico dock-icon">📷</span>
-      </button>
-
-      <button class="app" data-app="Calculator" aria-label="Calculator">
-        <span class="ico dock-icon">🧮</span>
-      </button>
-
-      <button class="app" data-app="Gmail" aria-label="Gmail">
-        <span class="ico mail-icon">✉</span>
-      </button>
-
-      <button class="app" data-app="Settings" aria-label="Settings">
-        <span class="ico dock-icon">⚙</span>
-      </button>
-    </div>
-  </section>
-
-  <!-- APP WINDOW -->
-  <section class="screen appscreen" id="app">
-    <div class="topbar">
-      <button id="back">‹ Home</button>
-      <strong id="title">App</strong>
-      <span style="flex:1"></span>
-      <button id="lockBtn">Lock</button>
-    </div>
-
-    <div class="content" id="content"></div>
-  </section>
-
-  <!-- PASSCODE -->
-  <div class="pinpanel" id="pin">
-    <h2>Enter Passcode</h2>
-    <p>Unlock Mavin's iPhone</p>
-
-    <div class="dots" id="dots">○ ○ ○ ○</div>
-    <div class="error" id="error"></div>
-    <div class="keypad" id="keys"></div>
-
-    <button id="cancel" style="background:none;color:#ddd">
-      Cancel
-    </button>
-  </div>
-
-  <div class="homebar" id="homebar"></div>
+<div id="wall"></div>
+<div class="status">
+  <span id="clock">11:11</span>
+  <span class="status-right"><span>▮▮▮</span><span>◉</span><span>━</span></span>
 </div>
 
- <script>
-const $ = s => document.querySelector(s);
-const $$ = s => [...document.querySelectorAll(s)];
+<section class="screen lock active" id="lock">
+  <img src="alohomora-lockscreen.jpg" alt="Alohomora lock screen">
+  <div class="lockdate" id="date"></div>
+  <div class="locktime" id="lockclock">11:11</div>
+  <button class="hint" id="unlock">↑ &nbsp; swipe up to unlock</button>
+</section>
 
-let pin = "";
-let appName = "";
-let playing = false;
-let cameraStream = null;
+<section class="screen home" id="home">
+  <button class="weather" data-app="Weather" aria-label="Open Weather">
+    <span class="city">Bandung</span>
+    <span class="temp">26°</span>
+    <span class="desc"><span class="weather-icon">☁</span>Cloudy<br>H:27° L:20°</span>
+    <span class="hours">
+      <span class="hour">2PM<b>☁</b>26°</span>
+      <span class="hour">3PM<b>☁</b>27°</span>
+      <span class="hour">4PM<b>☁</b>26°</span>
+      <span class="hour">5PM<b>☁</b>26°</span>
+      <span class="hour">6PM<b>☁</b>25°</span>
+      <span class="hour">7PM<b>☁</b>24°</span>
+    </span>
+  </button>
+  <div class="wlabel">Weather</div>
 
-let notes = JSON.parse(
-  localStorage.getItem("mavin-notes") ||
-  '["Shot list: Gotham rooftops","Buy film for the camera","Daily Bugle deadline: submit photos"]'
-);
+  <div class="app-layout">
+    <button class="app" data-app="WhatsApp"><span class="ico wa">☎</span><label>WhatsApp</label></button>
+    <button class="app" data-app="Calendar"><span class="ico calendar"><small id="day">THU</small><span id="num">29</span></span><label>Calendar</label></button>
 
-let events = JSON.parse(
-  localStorage.getItem("mavin-events") || "[]"
-);
+    <!-- MUSIC WIDGET -->
+    <div class="music">
+      <div class="album">
+        <img src="https://raw.githubusercontent.com/runweebss/Interactive-Winrina-AU/main/camera-wallpaper.jpg" alt="Album artwork" onerror="this.style.display='none';this.parentElement.textContent='♫';">
+      </div>
+      <div class="song">everything u are</div>
+      <div class="artist">Hindia</div>
+      <div class="bar"><i id="progress"></i></div>
+      <div class="track"><span id="musicElapsed">1:53</span><span id="musicRemaining">−2:04</span></div>
+      <div class="controls">
+        <button type="button" data-control="prev" aria-label="Previous track">◀◀</button>
+        <button type="button" data-control="play" aria-label="Play or pause">Ⅱ</button>
+        <button type="button" data-control="next" aria-label="Next track">▶▶</button>
+        <button type="button" data-control="spotify" aria-label="Open Spotify">♫</button>
+      </div>
+    </div>
 
-let chats = {};
+    <button class="app" data-app="Instagram"><span class="ico ig">◎</span><label>Instagram</label></button>
+    <button class="app" data-app="X"><span class="ico x-icon">𝕏</span><label>X</label></button>
+    <button class="app" data-app="Spotify"><span class="ico spotify">●</span><label>Spotify</label></button>
+    <button class="app" data-app="Photos"><span class="ico photos">✿</span><label>Photos</label></button>
+    <button class="app" data-app="Notes"><span class="ico notes">▤</span><label>Notes</label></button>
+    <button class="app" data-app="YouTube"><span class="ico yt">▶</span><label>YouTube</label></button>
+    <div class="musiclabel">Music</div>
+  </div>
 
-function tick() {
-  const d = new Date();
+  <div class="pages">● ○ ○</div>
+  <div class="dock">
+    <button class="app" data-app="Camera" aria-label="Camera"><span class="ico">📷</span></button>
+    <button class="app" data-app="Calculator" aria-label="Calculator"><span class="ico">🧮</span></button>
+    <button class="app" data-app="Gmail" aria-label="Gmail"><span class="ico">✉</span></button>
+    <button class="app" data-app="Settings" aria-label="Settings"><span class="ico">⚙</span></button>
+  </div>
+</section>
 
-  const time = d.toLocaleTimeString("en-GB", {
-    hour: "2-digit",
-    minute: "2-digit"
-  });
+<section class="screen appscreen" id="app">
+  <div class="topbar"><button id="back">‹ Home</button><strong id="title">App</strong><span style="flex:1"></span><button id="lockBtn">Lock</button></div>
+  <div class="content" id="content"></div>
+</section>
 
-  $("#clock").textContent = time;
-  $("#lockclock").textContent = time;
+<div class="pinpanel" id="pin">
+  <h2>Enter Passcode</h2><p>Unlock Mavin's iPhone</p>
+  <div class="dots" id="dots">○ ○ ○ ○</div><div class="error" id="error"></div>
+  <div class="keypad" id="keys"></div>
+  <button id="cancel" style="background:none;color:#ddd">Cancel</button>
+</div>
+<div class="homebar" id="homebar"></div>
+</div>
 
-  $("#date").textContent = d.toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric"
-  });
+<script>
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+let pin="",appName="",playing=false,cameraStream=null;
+let musicPosition=113;
+const musicDuration=244;
+let notes=JSON.parse(localStorage.getItem("mavin-notes")||'["Shot list: Gotham rooftops","Buy film for the camera","Daily Bugle deadline: submit photos"]');
+let events=JSON.parse(localStorage.getItem("mavin-events")||"[]");
+let chats={};
 
-  $("#day").textContent = d.toLocaleDateString("en-US", {
-    weekday: "short"
-  }).toUpperCase();
-
-  $("#num").textContent = d.getDate();
+function tick(){
+ const d=new Date();
+ const time=d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
+ $("#clock").textContent=time;$("#lockclock").textContent=time;
+ $("#date").textContent=d.toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});
+ $("#day").textContent=d.toLocaleDateString("en-US",{weekday:"short"}).toUpperCase();
+ $("#num").textContent=d.getDate();
 }
+tick();setInterval(tick,15000);
 
-tick();
-setInterval(tick, 15000);
-
-/* LOCK SCREEN DAN PASSCODE */
-
-function showPin() {
-  pin = "";
-  drawPin();
-  $("#error").textContent = "";
-  $("#pin").classList.add("show");
+function showPin(){pin="";drawPin();$("#error").textContent="";$("#pin").classList.add("show")}
+function drawPin(){$("#dots").textContent=Array.from({length:4},(_,i)=>i<pin.length?"●":"○").join(" ")}
+function home(){
+ $("#pin").classList.remove("show");$("#lock").classList.remove("active");
+ $("#app").classList.remove("active");$("#home").classList.add("active");
 }
-
-function drawPin() {
-  $("#dots").textContent = Array.from(
-    { length: 4 },
-    (_, i) => i < pin.length ? "●" : "○"
-  ).join(" ");
+function lock(){
+ $("#pin").classList.remove("show");$("#home").classList.remove("active");
+ $("#app").classList.remove("active");$("#lock").classList.add("active");
+ if(cameraStream){cameraStream.getTracks().forEach(t=>t.stop());cameraStream=null}
 }
-
-function home() {
-  $("#pin").classList.remove("show");
-  $("#lock").classList.remove("active");
-  $("#app").classList.remove("active");
-  $("#home").classList.add("active");
-}
-
-function lock() {
-  $("#pin").classList.remove("show");
-  $("#home").classList.remove("active");
-  $("#app").classList.remove("active");
-  $("#lock").classList.add("active");
-
-  if (cameraStream) {
-    cameraStream.getTracks().forEach(track => track.stop());
-    cameraStream = null;
-  }
-}
-
-$("#unlock").addEventListener("click", showPin);
-
-$("#cancel").addEventListener("click", () => {
-  $("#pin").classList.remove("show");
-});
-
-$("#back").addEventListener("click", home);
-$("#lockBtn").addEventListener("click", lock);
-
-let touchStartY = null;
-
-$("#lock").addEventListener("touchstart", e => {
-  touchStartY = e.touches[0].clientY;
-}, { passive: true });
-
-$("#lock").addEventListener("touchend", e => {
-  if (touchStartY === null) return;
-
-  const distance =
-    touchStartY - e.changedTouches[0].clientY;
-
-  if (distance > 35) showPin();
-
-  touchStartY = null;
-}, { passive: true });
-
-$("#lock").addEventListener("wheel", e => {
-  if (e.deltaY < -20) showPin();
-}, { passive: true });
-
-for (let n = 1; n <= 9; n++) {
-  const b = document.createElement("button");
-  b.textContent = n;
-  b.addEventListener("click", () => addPin(String(n)));
-  $("#keys").append(b);
-}
-
+$("#unlock").addEventListener("click",showPin);
+$("#cancel").addEventListener("click",()=>$("#pin").classList.remove("show"));
+$("#back").addEventListener("click",home);$("#lockBtn").addEventListener("click",lock);
+let touchStartY=null;
+$("#lock").addEventListener("touchstart",e=>{touchStartY=e.touches[0].clientY},{passive:true});
+$("#lock").addEventListener("touchend",e=>{
+ if(touchStartY===null)return;
+ if(touchStartY-e.changedTouches[0].clientY>35)showPin();
+ touchStartY=null;
+},{passive:true});
+$("#lock").addEventListener("wheel",e=>{if(e.deltaY< -20)showPin()},{passive:true});
+for(let n=1;n<=9;n++){const b=document.createElement("button");b.textContent=n;b.addEventListener("click",()=>addPin(String(n)));$("#keys").append(b)}
 $("#keys").append(document.createElement("span"));
+const zero=document.createElement("button");zero.textContent="0";zero.addEventListener("click",()=>addPin("0"));$("#keys").append(zero);
+const del=document.createElement("button");del.textContent="⌫";del.addEventListener("click",()=>{pin=pin.slice(0,-1);drawPin();$("#error").textContent=""});$("#keys").append(del);
+function addPin(n){
+ if(pin.length>=4)return;pin+=n;drawPin();
+ if(pin.length===4){
+  if(pin==="1711")setTimeout(home,160);
+  else{$("#error").textContent="Incorrect passcode";setTimeout(()=>{pin="";drawPin()},650)}
+ }
+}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 
-const zero = document.createElement("button");
-zero.textContent = "0";
-zero.addEventListener("click", () => addPin("0"));
-$("#keys").append(zero);
-
-const del = document.createElement("button");
-del.textContent = "⌫";
-del.addEventListener("click", () => {
-  pin = pin.slice(0, -1);
-  drawPin();
-  $("#error").textContent = "";
+/* MUSIC CONTROLS */
+function formatMusicTime(seconds){
+ const m=Math.floor(seconds/60),s=seconds%60;
+ return `${m}:${String(s).padStart(2,"0")}`;
+}
+function updateMusicWidget(){
+ $("#progress").style.width=`${musicPosition/musicDuration*100}%`;
+ $("#musicElapsed").textContent=formatMusicTime(musicPosition);
+ $("#musicRemaining").textContent="−"+formatMusicTime(musicDuration-musicPosition);
+}
+$$("[data-control]").forEach(button=>{
+ button.addEventListener("click",event=>{
+  event.stopPropagation();
+  const action=button.dataset.control;
+  if(action==="play"){
+   playing=!playing;button.textContent=playing?"Ⅱ":"▶";
+   button.setAttribute("aria-label",playing?"Pause":"Play");
+  }else if(action==="prev"){
+   musicPosition=0;updateMusicWidget();
+  }else if(action==="next"){
+   musicPosition=0;updateMusicWidget();
+  }else if(action==="spotify"){
+   window.open("https://open.spotify.com/track/5WOSNVChcadlsCRiqXE45K?si=eDLWuk--RMOb2kCRwV4k0w","_blank","noopener");
+  }
+ });
 });
-$("#keys").append(del);
+updateMusicWidget();
 
-function addPin(n) {
-  if (pin.length >= 4) return;
-
-  pin += n;
-  drawPin();
-
-  if (pin.length === 4) {
-    if (pin === "1711") {
-      setTimeout(home, 160);
-    } else {
-      $("#error").textContent = "Incorrect passcode";
-
-      setTimeout(() => {
-        pin = "";
-        drawPin();
-      }, 650);
-    }
-  }
-}
-
-/* UTILITAS */
-
-function esc(s) {
-  return String(s).replace(/[&<>"']/g, c => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#39;"
-  })[c]);
-}
-
-/* NAVIGASI APLIKASI */
-
-$$("[data-app]").forEach(b => {
-  b.addEventListener("click", e => {
-    if (e.target.closest("[data-control]")) return;
-    openApp(b.dataset.app);
-  });
+/* APP NAVIGATION */
+$$("[data-app]").forEach(b=>b.addEventListener("click",e=>{
+ if(e.target.closest("[data-control]"))return;
+ openApp(b.dataset.app);
+}));
+$("#homebar").addEventListener("click",()=>{
+ if($("#app").classList.contains("active"))home();
+ else if($("#lock").classList.contains("active"))showPin();
 });
-
-$$("[data-control]").forEach(b => {
-  b.addEventListener("click", e => {
-    e.stopPropagation();
-
-    const action = b.dataset.control;
-
-    if (action === "play") {
-      playing = !playing;
-      b.textContent = playing ? "Ⅱ" : "▶";
-    } else if (action === "prev") {
-      $("#progress").style.width = "20%";
-    } else {
-      $("#progress").style.width = "65%";
-    }
-  });
-});
-
-$("#homebar").addEventListener("click", () => {
-  if ($("#app").classList.contains("active")) {
-    home();
-  } else if ($("#lock").classList.contains("active")) {
-    showPin();
-  }
-});
-
-function openApp(name) {
-  appName = name;
-
-  $("#title").textContent = name;
-  $("#home").classList.remove("active");
-  $("#lock").classList.remove("active");
-  $("#app").classList.add("active");
-
-  render(name);
+function openApp(name){
+ appName=name;$("#title").textContent=name;
+ $("#home").classList.remove("active");$("#lock").classList.remove("active");
+ $("#app").classList.add("active");render(name);
 }
 
-/* WEATHER */
-
-function render(name) {
-  const c = $("#content");
-  c.innerHTML = "";
-
-  if (name === "Weather") {
-    c.innerHTML = `
-      <div class="card"
-        style="text-align:center;background:linear-gradient(140deg,#617d98,#263c51);color:white">
-        <div>Bandung · Current weather</div>
-        <div style="font-size:65px;font-weight:250">26°</div>
-        ☁ Cloudy
-        <p>H: 27° · L: 20°</p>
-        <p>Feels like 26° · Humidity 68% · Wind 8 km/h</p>
-      </div>
-
-      <h3>Hourly forecast</h3>
-      <div class="card">
-        2 PM ☁ 26° · 3 PM ☁ 27° · 4 PM ☁ 26°
-      </div>
-
-      <h3>10-day forecast</h3>
-
-      ${[
-        "Today · Cloudy · 27° / 20°",
-        "Friday · Partly cloudy · 27° / 20°",
-        "Saturday · Light rain · 25° / 19°"
-      ].map(x => `<div class="item">${x}</div>`).join("")}
-
-      <p class="notice">Demo weather, not live data.</p>
-    `;
+function render(name){
+ const c=$("#content");c.innerHTML="";
+ if(name==="Weather"){
+  c.innerHTML=`<div class="card" style="text-align:center;background:linear-gradient(140deg,#617d98,#263c51);color:white"><div>Bandung · Current weather</div><div style="font-size:65px;font-weight:250">26°</div>☁ Cloudy<p>H: 27° · L: 20°</p><p>Feels like 26° · Humidity 68% · Wind 8 km/h</p></div><h3>Hourly forecast</h3><div class="card">2 PM ☁ 26° · 3 PM ☁ 27° · 4 PM ☁ 26°</div><h3>10-day forecast</h3>${["Today · Cloudy · 27° / 20°","Friday · Partly cloudy · 27° / 20°","Saturday · Light rain · 25° / 19°"].map(x=>`<div class="item">${x}</div>`).join("")}<p class="notice">Demo weather, not live data.</p>`;
+ }
+ else if(name==="WhatsApp"){
+  const names=["Sal","Kinan","Opi","Daily Bugle Desk","Peter","Aunt May","MJ","Flash"],emojis=["🌻","📚","☕","📰","📷","🏠","🎧","🕸️"];
+  c.innerHTML=`<input class="field" id="search" placeholder="Search chats"><div id="chatlist">${names.map((x,i)=>`<button class="item" data-chat="${x}"><span class="avatar">${emojis[i]}</span><span><b>${x}</b><br><span class="muted">${esc((chats[x]||["Hey, are we still on for today?"]).slice(-1)[0])}</span></span><span style="margin-left:auto" class="muted">10:${12+i}</span></button>`).join("")}</div>`;
+  $$("[data-chat]").forEach(b=>b.addEventListener("click",()=>chat(b.dataset.chat)));
+  $("#search").addEventListener("input",e=>$$("[data-chat]").forEach(b=>b.classList.toggle("hide",!b.dataset.chat.toLowerCase().includes(e.target.value.toLowerCase()))));
+ }
+ else if(name==="Calendar"){
+  let d=new Date(),m=new Date(d.getFullYear(),d.getMonth(),1);
+  c.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><button class="primary" id="prev">‹</button><h2 id="month"></h2><button class="primary" id="next">›</button></div><div class="card"><div id="calgrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:7px;text-align:center"></div></div><h3>Events</h3><div id="events"></div><input id="eventname" class="field" placeholder="Event title"><input id="eventdate" class="field" type="date" value="${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}"><button class="primary" id="addevent">Add event</button>`;
+  function drawEvents(){
+   $("#events").innerHTML=events.map((e,i)=>`<div class="item">${esc(e.date)} · ${esc(e.title)}<button data-del="${i}" style="margin-left:auto;color:#d33;background:none">Delete</button></div>`).join("")||'<p class="muted">No events yet.</p>';
+   $$("[data-del]").forEach(b=>b.addEventListener("click",()=>{events.splice(+b.dataset.del,1);localStorage.setItem("mavin-events",JSON.stringify(events));drawEvents()}));
   }
-
-  /* WHATSAPP */
-
-  else if (name === "WhatsApp") {
-    const names = [
-      "Sal", "Kinan", "Opi", "Daily Bugle Desk",
-      "Peter", "Aunt May", "MJ", "Flash"
-    ];
-
-    const emojis = [
-      "🌻", "📚", "☕", "📰",
-      "📷", "🏠", "🎧", "🕸️"
-    ];
-
-    c.innerHTML = `
-      <input class="field" id="search" placeholder="Search chats">
-
-      <div id="chatlist">
-        ${names.map((x, i) => `
-          <button class="item" data-chat="${x}">
-            <span class="avatar">${emojis[i]}</span>
-
-            <span>
-              <b>${x}</b><br>
-              <span class="muted">
-                ${esc((chats[x] || ["Hey, are we still on for today?"]).slice(-1)[0])}
-              </span>
-            </span>
-
-            <span style="margin-left:auto" class="muted">
-              10:${12 + i}
-            </span>
-          </button>
-        `).join("")}
-      </div>
-    `;
-
-    $$("[data-chat]").forEach(b => {
-      b.addEventListener("click", () => chat(b.dataset.chat));
-    });
-
-    $("#search").addEventListener("input", e => {
-      $$("[data-chat]").forEach(b => {
-        b.classList.toggle(
-          "hide",
-          !b.dataset.chat.toLowerCase().includes(
-            e.target.value.toLowerCase()
-          )
-        );
-      });
-    });
+  function draw(){
+   $("#month").textContent=m.toLocaleDateString("en-US",{month:"long",year:"numeric"});
+   const g=$("#calgrid");g.innerHTML=["S","M","T","W","T","F","S"].map(x=>`<b>${x}</b>`).join("");
+   const offset=m.getDay(),count=new Date(m.getFullYear(),m.getMonth()+1,0).getDate();
+   for(let i=0;i<offset;i++)g.innerHTML+="<span></span>";
+   for(let i=1;i<=count;i++){
+    const today=i===d.getDate()&&m.getMonth()===d.getMonth()&&m.getFullYear()===d.getFullYear();
+    g.innerHTML+=`<button data-date="${i}" style="background:${today?"#087cff":"transparent"};color:${today?"white":"#222"};border-radius:50%;padding:7px 0">${i}</button>`;
+   }
+   $$("[data-date]").forEach(b=>b.addEventListener("click",()=>{$("#eventdate").value=`${m.getFullYear()}-${String(m.getMonth()+1).padStart(2,"0")}-${String(+b.dataset.date).padStart(2,"0")}`}));
+   drawEvents();
   }
-
-  /* CALENDAR */
-
-  else if (name === "Calendar") {
-    let d = new Date();
-
-    let m = new Date(
-      d.getFullYear(),
-      d.getMonth(),
-      1
-    );
-
-    c.innerHTML = `
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <button class="primary" id="prev">‹</button>
-        <h2 id="month"></h2>
-        <button class="primary" id="next">›</button>
-      </div>
-
-      <div class="card">
-        <div id="calgrid"
-          style="display:grid;grid-template-columns:repeat(7,1fr);gap:7px;text-align:center">
-        </div>
-      </div>
-
-      <h3>Events</h3>
-      <div id="events"></div>
-
-      <input id="eventname" class="field" placeholder="Event title">
-
-      <input id="eventdate" class="field" type="date"
-        value="${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}">
-
-      <button class="primary" id="addevent">Add event</button>
-    `;
-
-    function drawEvents() {
-      $("#events").innerHTML = events.map((e, i) => `
-        <div class="item">
-          ${esc(e.date)} · ${esc(e.title)}
-          <button data-del="${i}"
-            style="margin-left:auto;color:#d33;background:none">
-            Delete
-          </button>
-        </div>
-      `).join("") || '<p class="muted">No events yet.</p>';
-
-      $$("[data-del]").forEach(b => {
-        b.addEventListener("click", () => {
-          events.splice(+b.dataset.del, 1);
-
-          localStorage.setItem(
-            "mavin-events",
-            JSON.stringify(events)
-          );
-
-          drawEvents();
-        });
-      });
-    }
-
-    function draw() {
-      $("#month").textContent = m.toLocaleDateString(
-        "en-US",
-        { month: "long", year: "numeric" }
-      );
-
-      const g = $("#calgrid");
-
-      g.innerHTML = ["S","M","T","W","T","F","S"]
-        .map(x => `<b>${x}</b>`).join("");
-
-      const offset = m.getDay();
-
-      const count = new Date(
-        m.getFullYear(),
-        m.getMonth() + 1,
-        0
-      ).getDate();
-
-      for (let i = 0; i < offset; i++) {
-        g.innerHTML += "<span></span>";
-      }
-
-      for (let i = 1; i <= count; i++) {
-        const today =
-          i === d.getDate() &&
-          m.getMonth() === d.getMonth() &&
-          m.getFullYear() === d.getFullYear();
-
-        g.innerHTML += `
-          <button data-date="${i}"
-            style="background:${today ? "#087cff" : "transparent"};
-            color:${today ? "white" : "#222"};
-            border-radius:50%;padding:7px 0">
-            ${i}
-          </button>
-        `;
-      }
-
-      $$("[data-date]").forEach(b => {
-        b.addEventListener("click", () => {
-          $("#eventdate").value =
-            `${m.getFullYear()}-${String(m.getMonth()+1).padStart(2,"0")}-${String(+b.dataset.date).padStart(2,"0")}`;
-        });
-      });
-
-      drawEvents();
-    }
-
-    $("#prev").addEventListener("click", () => {
-      m.setMonth(m.getMonth() - 1);
-      draw();
-    });
-
-    $("#next").addEventListener("click", () => {
-      m.setMonth(m.getMonth() + 1);
-      draw();
-    });
-
-    $("#addevent").addEventListener("click", () => {
-      const title = $("#eventname").value.trim();
-
-      if (!title) return;
-
-      events.push({
-        title,
-        date: $("#eventdate").value
-      });
-
-      localStorage.setItem(
-        "mavin-events",
-        JSON.stringify(events)
-      );
-
-      $("#eventname").value = "";
-      drawEvents();
-    });
-
-    draw();
+  $("#prev").addEventListener("click",()=>{m.setMonth(m.getMonth()-1);draw()});
+  $("#next").addEventListener("click",()=>{m.setMonth(m.getMonth()+1);draw()});
+  $("#addevent").addEventListener("click",()=>{const title=$("#eventname").value.trim();if(!title)return;events.push({title,date:$("#eventdate").value});localStorage.setItem("mavin-events",JSON.stringify(events));$("#eventname").value="";drawEvents()});
+  draw();
+ }
+ else if(name==="Instagram"){
+  const pics=["📷","🌆","☕","🌧️","🏙️","🌿","🚇","🌅","📚","🌃","🎞️"];
+  c.innerHTML=`<div class="card"><h2>mavin</h2><p>collecting moments, not things</p><b>11</b> posts　<b>483</b> followers　<b>291</b> following</div><div class="photoGrid">${pics.map((x,i)=>`<button data-photo="${i}">${x}</button>`).join("")}</div><h3>For you</h3>${["gotham.daily","peterp","m.jane"].map((x,i)=>`<div class="card"><b>${x}</b><p style="font-size:50px;text-align:center">${["🌇","🕷️","🎧"][i]}</p><button data-like>♡ Like</button>　Comment</div>`).join("")}`;
+  $$("[data-photo]").forEach(b=>b.addEventListener("click",()=>photo("Mavin photo "+(+b.dataset.photo+1),b.textContent)));
+  $$("[data-like]").forEach(b=>b.addEventListener("click",()=>{b.textContent=b.textContent.includes("♡")?"♥ Liked":"♡ Like"}));
+ }
+ else if(name==="X"){
+  c.innerHTML=`<div class="card"><h2>@mavin 🔒</h2><p>private account · camera in hand, deadlines in mind</p>87 Following　42 Followers</div>${["gotham.news: Gotham looks suspiciously peaceful today.","mavin: the light was good for approximately 14 seconds and i was READY","peterp: anyone seen my backpack?","mavin: daily bugle wants the photos yesterday."].map(x=>`<div class="card"><b>${esc(x.split(":")[0])}</b><p>${esc(x.split(":").slice(1).join(":"))}</p><button data-like>♡ Like</button> <button data-reply>Reply</button><p class="muted"></p></div>`).join("")}`;
+  $$("[data-like]").forEach(b=>b.addEventListener("click",()=>{b.textContent=b.textContent.includes("♡")?"♥ Liked":"♡ Like"}));
+  $$("[data-reply]").forEach(b=>b.addEventListener("click",()=>{const v=prompt("Write a reply");if(v)b.parentElement.querySelector(".muted").textContent="Reply saved: "+v}));
+ }
+ else if(name==="Spotify"||name==="Music"){
+  c.innerHTML=`<div class="card" style="text-align:center;background:#173d2b;color:white"><div style="width:min(190px,75%);aspect-ratio:1;margin:0 auto 12px;border-radius:12px;overflow:hidden"><img src="https://raw.githubusercontent.com/runweebss/Interactive-Winrina-AU/main/camera-wallpaper.jpg" style="width:100%;height:100%;object-fit:cover;filter:grayscale(1)" alt="Album art"></div><h2>everything u are</h2><p>Hindia</p><button class="primary" id="openSpotify">Open in Spotify ↗</button><p class="notice" style="color:#ddd">Spotify opens the original track.</p></div><h3>Your playlists</h3>${["Liked Songs","Menari dengan Bayangan","Indie Indonesia","Late night thoughts","Giselle mix"].map(x=>`<button class="item" data-list="${x}">🎧　${x}　›</button>`).join("")}`;
+  $("#openSpotify").addEventListener("click",()=>window.open("https://open.spotify.com/track/5WOSNVChcadlsCRiqXE45K?si=eDLWuk--RMOb2kCRwV4k0w","_blank","noopener"));
+  $$("[data-list]").forEach(b=>b.addEventListener("click",()=>alert("Playlist demo: "+b.dataset.list)));
+ }
+ else if(name==="Photos"){
+  const pics=["📷","🌆","☕","🌧️","🏙️","🌿","🚇","🌅","📚","🌃","🎞️"];
+  c.innerHTML=`<h2>Library</h2><p class="muted">All Photos · 11 Items</p><div class="photoGrid">${pics.map((x,i)=>`<button data-photo="${i}">${x}</button>`).join("")}</div><h3>Albums</h3><div class="card">Recents · 11 photos</div><div class="card">Camera · 4 photos</div>`;
+  $$("[data-photo]").forEach(b=>b.addEventListener("click",()=>photo("Photo "+(+b.dataset.photo+1),b.textContent)));
+ }
+ else if(name==="Notes"){
+  function list(){
+   c.innerHTML=`<input class="field" id="notefind" placeholder="Search notes">${notes.map((x,i)=>`<button class="item" data-note="${i}">📝 <span><b>${esc(x.split(":")[0])}</b><br><span class="muted">${esc(x)}</span></span> ›</button>`).join("")}<button class="primary" id="newnote">＋ New Note</button>`;
+   $$("[data-note]").forEach(b=>b.addEventListener("click",()=>edit(+b.dataset.note)));
+   $("#newnote").addEventListener("click",()=>edit(-1));
+   $("#notefind").addEventListener("input",e=>$$("[data-note]").forEach(b=>b.classList.toggle("hide",!(notes[+b.dataset.note]||"").toLowerCase().includes(e.target.value.toLowerCase()))));
   }
-
-  /* INSTAGRAM */
-
-  else if (name === "Instagram") {
-    const pics = [
-      "📷","🌆","☕","🌧️","🏙️","🌿",
-      "🚇","🌅","📚","🌃","🎞️"
-    ];
-
-    c.innerHTML = `
-      <div class="card">
-        <h2>mavin</h2>
-        <p>collecting moments, not things</p>
-        <b>11</b> posts　
-        <b>483</b> followers　
-        <b>291</b> following
-      </div>
-
-      <div class="photoGrid">
-        ${pics.map((x,i) => `
-          <button data-photo="${i}">${x}</button>
-        `).join("")}
-      </div>
-
-      <h3>For you</h3>
-
-      ${["gotham.daily","peterp","m.jane"].map((x,i) => `
-        <div class="card">
-          <b>${x}</b>
-          <p style="font-size:50px;text-align:center">
-            ${["🌇","🕷️","🎧"][i]}
-          </p>
-          <button data-like>♡ Like</button>　Comment
-        </div>
-      `).join("")}
-    `;
-
-    $$("[data-photo]").forEach(b => {
-      b.addEventListener("click", () => {
-        photo("Mavin photo " + (+b.dataset.photo + 1), b.textContent);
-      });
-    });
-
-    $$("[data-like]").forEach(b => {
-      b.addEventListener("click", () => {
-        b.textContent = b.textContent.includes("♡")
-          ? "♥ Liked"
-          : "♡ Like";
-      });
-    });
+  function edit(i){
+   const old=i<0?"":notes[i];
+   c.innerHTML=`<button id="noteback" style="background:none;color:#087cff">‹ Notes</button><textarea id="notetext" class="field" rows="12" placeholder="Write something...">${esc(old)}</textarea><button class="primary" id="savenote">Save</button>${i>=0?'<button id="deletenote" style="background:none;color:#d33">Delete</button>':""}`;
+   $("#noteback").addEventListener("click",list);
+   $("#savenote").addEventListener("click",()=>{const value=$("#notetext").value.trim();if(i>=0)notes[i]=value||"Untitled note";else notes.unshift(value||"Untitled note");localStorage.setItem("mavin-notes",JSON.stringify(notes));list()});
+   if(i>=0)$("#deletenote").addEventListener("click",()=>{notes.splice(i,1);localStorage.setItem("mavin-notes",JSON.stringify(notes));list()});
   }
-
-  /* X */
-
-  else if (name === "X") {
-    c.innerHTML = `
-      <div class="card">
-        <h2>@mavin 🔒</h2>
-        <p>private account · camera in hand, deadlines in mind</p>
-        87 Following　42 Followers
-      </div>
-
-      ${[
-        "gotham.news: Gotham looks suspiciously peaceful today.",
-        "mavin: the light was good for approximately 14 seconds and i was READY",
-        "peterp: anyone seen my backpack?",
-        "mavin: daily bugle wants the photos yesterday."
-      ].map(x => `
-        <div class="card">
-          <b>${esc(x.split(":")[0])}</b>
-          <p>${esc(x.split(":").slice(1).join(":"))}</p>
-          <button data-like>♡ Like</button>
-          <button data-reply>Reply</button>
-          <p class="muted"></p>
-        </div>
-      `).join("")}
-    `;
-
-    $$("[data-like]").forEach(b => {
-      b.addEventListener("click", () => {
-        b.textContent = b.textContent.includes("♡")
-          ? "♥ Liked"
-          : "♡ Like";
-      });
-    });
-
-    $$("[data-reply]").forEach(b => {
-      b.addEventListener("click", () => {
-        const v = prompt("Write a reply");
-
-        if (v) {
-          b.parentElement.querySelector(".muted").textContent =
-            "Reply saved: " + v;
-        }
-      });
-    });
-  }
-
-  /* MUSIC DAN SPOTIFY */
-
-  else if (name === "Spotify" || name === "Music") {
-    c.innerHTML = `
-      <div class="card" style="text-align:center;background:#173d2b;color:white">
-        <div class="album"
-          style="width:min(190px,75%);height:auto;aspect-ratio:1;margin:0 auto 12px;font-size:55px">
-          🎵
-        </div>
-
-        <h2>everything u are</h2>
-        <p>Hindia</p>
-
-        <input id="range" type="range" min="0" max="244" value="113"
-          style="width:100%">
-
-        <div><span id="elapsed">1:53</span> / 4:04</div>
-
-        <p>
-          <button id="prevSong">◀◀</button>
-          <button id="play">▶</button>
-          <button id="nextSong">▶▶</button>
-        </p>
-
-        <small id="state">Interactive demo player, audio not connected</small>
-      </div>
-
-      <h3>Your playlists</h3>
-
-      ${[
-        "Liked Songs",
-        "Menari dengan Bayangan",
-        "Indie Indonesia",
-        "Late night thoughts",
-        "Giselle mix"
-      ].map(x => `
-        <button class="item" data-list="${x}">
-          🎧　${x}　›
-        </button>
-      `).join("")}
-
-      <p class="notice">
-        Player controls work as a demo. No audio is bundled.
-      </p>
-    `;
-
-    $("#play").addEventListener("click", () => {
-      playing = !playing;
-
-      $("#play").textContent = playing ? "Ⅱ" : "▶";
-      $("#state").textContent = playing
-        ? "Playing demo"
-        : "Paused demo";
-    });
-
-    $("#prevSong").addEventListener("click", () => {
-      $("#state").textContent = "Previous track selected (demo)";
-    });
-
-    $("#nextSong").addEventListener("click", () => {
-      $("#state").textContent = "Next track selected (demo)";
-    });
-
-    $("#range").addEventListener("input", e => {
-      const seconds = Number(e.target.value);
-
-      $("#elapsed").textContent =
-        Math.floor(seconds / 60) + ":" +
-        String(seconds % 60).padStart(2, "0");
-    });
-
-    $$("[data-list]").forEach(b => {
-      b.addEventListener("click", () => {
-        $("#state").textContent =
-          "Playlist opened: " + b.dataset.list;
-      });
-    });
-  }
-
-    /* PHOTOS */
-
-  else if (name === "Photos") {
-    const pics = [
-      "📷","🌆","☕","🌧️","🏙️","🌿",
-      "🚇","🌅","📚","🌃","🎞️"
-    ];
-
-    c.innerHTML = `
-      <h2>Library</h2>
-      <p class="muted">All Photos · 11 Items</p>
-
-      <div class="photoGrid">
-        ${pics.map((x,i) => `
-          <button data-photo="${i}">${x}</button>
-        `).join("")}
-      </div>
-
-      <h3>Albums</h3>
-      <div class="card">Recents · 11 photos</div>
-      <div class="card">Camera · 4 photos</div>
-    `;
-
-    $$("[data-photo]").forEach(b => {
-      b.addEventListener("click", () => {
-        photo("Photo " + (+b.dataset.photo + 1), b.textContent);
-      });
-    });
-  }
-
-  /* NOTES */
-
-  else if (name === "Notes") {
-    function list() {
-      c.innerHTML = `
-        <input class="field" id="notefind" placeholder="Search notes">
-
-        ${notes.map((x,i) => `
-          <button class="item" data-note="${i}">
-            📝
-            <span>
-              <b>${esc(x.split(":")[0])}</b><br>
-              <span class="muted">${esc(x)}</span>
-            </span>
-            ›
-          </button>
-        `).join("")}
-
-        <button class="primary" id="newnote">＋ New Note</button>
-      `;
-
-      $$("[data-note]").forEach(b => {
-        b.addEventListener("click", () => edit(+b.dataset.note));
-      });
-
-      $("#newnote").addEventListener("click", () => edit(-1));
-
-      $("#notefind").addEventListener("input", e => {
-        $$("[data-note]").forEach(b => {
-          const note = notes[+b.dataset.note] || "";
-
-          b.classList.toggle(
-            "hide",
-            !note.toLowerCase().includes(e.target.value.toLowerCase())
-          );
-        });
-      });
-    }
-
-    function edit(i) {
-      const old = i < 0 ? "" : notes[i];
-
-      c.innerHTML = `
-        <button id="noteback" style="background:none;color:#087cff">
-          ‹ Notes
-        </button>
-
-        <textarea id="notetext" class="field" rows="12"
-          placeholder="Write something...">${esc(old)}</textarea>
-
-        <button class="primary" id="savenote">Save</button>
-
-        ${i >= 0
-          ? '<button id="deletenote" style="background:none;color:#d33">Delete</button>'
-          : ""}
-      `;
-
-      $("#noteback").addEventListener("click", list);
-
-      $("#savenote").addEventListener("click", () => {
-        const value = $("#notetext").value.trim();
-
-        if (i >= 0) {
-          notes[i] = value || "Untitled note";
-        } else {
-          notes.unshift(value || "Untitled note");
-        }
-
-        localStorage.setItem("mavin-notes", JSON.stringify(notes));
-        list();
-      });
-
-      if (i >= 0) {
-        $("#deletenote").addEventListener("click", () => {
-          notes.splice(i, 1);
-
-          localStorage.setItem("mavin-notes", JSON.stringify(notes));
-          list();
-        });
-      }
-    }
-
-    list();
-  }
-
-  /* YOUTUBE */
-
-  else if (name === "YouTube") {
-    c.innerHTML = `
-      <h2>YouTube</h2>
-
-      <input id="ytsearch" class="field" placeholder="Search YouTube">
-
-      <div class="card">
-        <h3>aespa 에스파</h3>
-        <p>Official channel</p>
-        <button class="primary" id="channel">
-          Open official aespa channel ↗
-        </button>
-      </div>
-
-      ${[
-        "aespa Official Videos",
-        "aespa Drama",
-        "aespa Supernova"
-      ].map((x,i) => `
-        <button class="item" data-video="${i}">▶　${x}</button>
-      `).join("")}
-
-      <p class="notice">Videos open on YouTube.</p>
-    `;
-
-    $("#channel").addEventListener("click", () => {
-      window.open("https://www.youtube.com/@aespa", "_blank", "noopener");
-    });
-
-    $$("[data-video]").forEach(b => {
-      b.addEventListener("click", () => {
-        window.open(
-          "https://www.youtube.com/results?search_query=" +
-          encodeURIComponent("aespa " + b.textContent),
-          "_blank",
-          "noopener"
-        );
-      });
-    });
-
-    $("#ytsearch").addEventListener("keydown", e => {
-      if (e.key === "Enter") {
-        window.open(
-          "https://www.youtube.com/results?search_query=" +
-          encodeURIComponent(e.target.value),
-          "_blank",
-          "noopener"
-        );
-      }
-    });
-  }
-
-  /* CAMERA */
-
-  else if (name === "Camera") {
-    c.innerHTML = `
-      <div class="card" style="text-align:center">
-        <video id="video" autoplay playsinline></video>
-
-        <p id="cammsg">Tap Start Camera and allow permission.</p>
-
-        <button id="startcam" class="primary">Start Camera</button>
-        <button id="capture" class="primary">Capture</button>
-
-        <canvas id="canvas" class="hide"></canvas>
-        <div id="result"></div>
-      </div>
-    `;
-
-    $("#startcam").addEventListener("click", async () => {
-      try {
-        if (cameraStream) {
-          cameraStream.getTracks().forEach(t => t.stop());
-        }
-
-        cameraStream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: "environment" }
-        });
-
-        $("#video").srcObject = cameraStream;
-        $("#cammsg").textContent = "Camera active.";
-      } catch (e) {
-        $("#cammsg").textContent =
-          "Camera unavailable. Allow camera permission and use HTTPS.";
-      }
-    });
-
-    $("#capture").addEventListener("click", () => {
-      const v = $("#video");
-      const cv = $("#canvas");
-
-      if (!v.videoWidth) {
-        $("#cammsg").textContent = "Start camera first.";
-        return;
-      }
-
-      cv.width = v.videoWidth;
-      cv.height = v.videoHeight;
-
-      cv.getContext("2d").drawImage(v, 0, 0);
-
-      const u = cv.toDataURL("image/png");
-
-      $("#result").innerHTML = `
-        <p>Captured photo</p>
-        <img src="${u}" style="width:100%;border-radius:12px">
-        <p><a download="mavin-photo.png" href="${u}">Save photo</a></p>
-      `;
-    });
-  }
-
-  /* CALCULATOR */
-
-  else if (name === "Calculator") {
-    c.innerHTML = `
-      <div class="card" style="background:#111;color:white">
-        <input id="display" class="calc-display" value="0" readonly>
-
-        <div class="calc-grid">
-          ${[
-            "AC","±","%","÷",
-            "7","8","9","×",
-            "4","5","6","−",
-            "1","2","3","+",
-            "0",".","⌫","="
-          ].map(x => `
-            <button data-calc="${x}"
-              class="${
-                ["÷","×","−","+","="].includes(x)
-                  ? "operator"
-                  : ["AC","±","%","⌫"].includes(x)
-                    ? "function"
-                    : ""
-              }">
-              ${x}
-            </button>
-          `).join("")}
-        </div>
-      </div>
-    `;
-
-    let expr = "";
-    let fresh = true;
-
-    $$("[data-calc]").forEach(b => {
-      b.addEventListener("click", () => {
-        const x = b.dataset.calc;
-        const d = $("#display");
-
-        if (x === "AC") {
-          expr = "";
-          d.value = "0";
-          fresh = true;
-          return;
-        }
-
-        if (x === "⌫") {
-          expr = expr.slice(0, -1);
-          d.value = expr || "0";
-          return;
-        }
-
-        if (x === "±") {
-          expr = expr.startsWith("-")
-            ? expr.slice(1)
-            : "-" + expr;
-
-          d.value = expr;
-          return;
-        }
-
-        if (x === "%") {
-          const value = Number(expr);
-
-          if (expr && Number.isFinite(value)) {
-            expr = String(value / 100);
-            d.value = expr;
-          }
-
-          return;
-        }
-
-        if (x === "=") {
-          try {
-            const q = expr.replace(/[×÷−]/g, m => ({
-              "×": "*",
-              "÷": "/",
-              "−": "-"
-            })[m]);
-
-            if (!/^[0-9+*/.() -]+$/.test(q)) {
-              throw Error("Invalid expression");
-            }
-
-            const result = Function('"use strict";return (' + q + ')')();
-
-            if (!Number.isFinite(result)) {
-              throw Error("Invalid result");
-            }
-
-            expr = String(Number(result.toFixed(8)));
-            d.value = expr;
-            fresh = true;
-          } catch (e) {
-            d.value = "Error";
-            expr = "";
-            fresh = true;
-          }
-
-          return;
-        }
-
-        if (["+", "−", "×", "÷"].includes(x)) {
-          expr += x;
-          fresh = false;
-        } else {
-          if (fresh) {
-            expr = "";
-            fresh = false;
-          }
-
-          expr += x;
-        }
-
-        d.value = expr || "0";
-      });
-    });
-  }
-
-  /* GMAIL */
-
-  else if (name === "Gmail") {
-    c.innerHTML = `
-      <h2>Inbox</h2>
-
-      <div class="card">
-        <b>J. Jonah Jameson · Daily Bugle · 9:42 AM</b>
-
-        <h3>WHERE ARE THE PHOTOS, MAVIN?</h3>
-
-        <p>
-          Are you still interested in working for the Daily Bugle?
-          Because if you are, I expect those photographs on my desk
-          immediately. I did not hire you to admire the skyline.
-          Send the shots. Today. No more excuses.
-        </p>
-
-        <p>
-          J. Jonah Jameson<br>
-          Editor-in-Chief, Daily Bugle
-        </p>
-      </div>
-
-      ${[
-        "Assignment desk · Tomorrow’s front page",
-        "HR · Freelance paperwork",
-        "Peter Parker · You got this"
-      ].map(x => `<div class="item">${x}</div>`).join("")}
-
-      <h3>Compose</h3>
-
-      <input class="field" placeholder="To">
-      <input class="field" placeholder="Subject">
-      <textarea class="field" placeholder="Compose email"></textarea>
-
-      <button class="primary" id="sendmail">Send (demo)</button>
-
-      <p class="notice">
-        Fictional inbox. No real Gmail account connected.
-      </p>
-    `;
-
-    $("#sendmail").addEventListener("click", () => {
-      alert("Demo only. No email sent.");
-    });
-  }
-
-  /* SETTINGS */
-
-  else if (name === "Settings") {
-    const items = [
-      ["✈️", "Airplane Mode"],
-      ["📶", "Wi-Fi"],
-      ["ᛒ", "Bluetooth"],
-      ["🔔", "Notifications"],
-      ["☀️", "Display & Brightness"],
-      ["🖼️", "Wallpaper"],
-      ["🔊", "Sounds & Haptics"],
-      ["🔒", "Privacy & Security"],
-      ["☁️", "iCloud · mavin@icloud.example"],
-      ["🔐", "Lock Screen"]
-    ];
-
-    c.innerHTML = `
-      <div class="card">
-        <h2>👤 Mavin</h2>
-        <p class="muted">Apple Account, iCloud and more</p>
-      </div>
-
-      ${items.map(([icon, label]) => `
-        <button class="item" data-setting="${label}">
-          ${icon}　${label}
-          <span style="margin-left:auto;color:#999">›</span>
-        </button>
-      `).join("")}
-
-      <p class="notice">
-        Fictional profile. No real Apple Account connected.
-      </p>
-    `;
-
-    $$("[data-setting]").forEach(b => {
-      b.addEventListener("click", () => {
-        const s = b.dataset.setting;
-
-        if (s === "Lock Screen") {
-          lock();
-          return;
-        }
-
-        c.innerHTML = `
-          <button id="setback" style="background:none;color:#087cff">
-            ‹ Settings
-          </button>
-
-          <h2>${esc(s)}</h2>
-
-          <div class="card">
-            ${
-              s.includes("iCloud")
-                ? "Mavin’s fictional iCloud profile. No sign-in required."
-                : esc(s) + " settings"
-            }
-          </div>
-
-          <label>
-            <input type="checkbox" checked>
-            Enable ${esc(s)}
-          </label>
-        `;
-
-        $("#setback").addEventListener("click", () => render("Settings"));
-      });
-    });
-  }
+  list();
+ }
+ else if(name==="YouTube"){
+  c.innerHTML=`<h2>YouTube</h2><input id="ytsearch" class="field" placeholder="Search YouTube"><div class="card"><h3>aespa 에스파</h3><p>Official channel</p><button class="primary" id="channel">Open official aespa channel ↗</button></div>${["aespa Official Videos","aespa Drama","aespa Supernova"].map((x,i)=>`<button class="item" data-video="${i}">▶　${x}</button>`).join("")}<p class="notice">Videos open on YouTube.</p>`;
+  $("#channel").addEventListener("click",()=>window.open("https://www.youtube.com/@aespa","_blank","noopener"));
+  $$("[data-video]").forEach(b=>b.addEventListener("click",()=>window.open("https://www.youtube.com/results?search_query="+encodeURIComponent("aespa "+b.textContent),"_blank","noopener")));
+  $("#ytsearch").addEventListener("keydown",e=>{if(e.key==="Enter")window.open("https://www.youtube.com/results?search_query="+encodeURIComponent(e.target.value),"_blank","noopener")});
+ }
+ else if(name==="Camera"){
+  c.innerHTML=`<div class="card" style="text-align:center"><video id="video" autoplay playsinline></video><p id="cammsg">Tap Start Camera and allow permission.</p><button id="startcam" class="primary">Start Camera</button> <button id="capture" class="primary">Capture</button><canvas id="canvas" class="hide"></canvas><div id="result"></div></div>`;
+  $("#startcam").addEventListener("click",async()=>{try{if(cameraStream)cameraStream.getTracks().forEach(t=>t.stop());cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});$("#video").srcObject=cameraStream;$("#cammsg").textContent="Camera active."}catch(e){$("#cammsg").textContent="Camera unavailable. Allow camera permission and use HTTPS."}});
+  $("#capture").addEventListener("click",()=>{const v=$("#video"),cv=$("#canvas");if(!v.videoWidth){$("#cammsg").textContent="Start camera first.";return}cv.width=v.videoWidth;cv.height=v.videoHeight;cv.getContext("2d").drawImage(v,0,0);const u=cv.toDataURL("image/png");$("#result").innerHTML=`<p>Captured photo</p><img src="${u}" style="width:100%;border-radius:12px"><p><a download="mavin-photo.png" href="${u}">Save photo</a></p>`});
+ }
+ else if(name==="Calculator"){
+  c.innerHTML=`<div class="card" style="background:#111;color:white"><input id="display" class="calc-display" value="0" readonly><div class="calc-grid">${["AC","±","%","÷","7","8","9","×","4","5","6","−","1","2","3","+","0",".","⌫","="].map(x=>`<button data-calc="${x}" class="${["÷","×","−","+","="].includes(x)?"operator":["AC","±","%","⌫"].includes(x)?"function":""}">${x}</button>`).join("")}</div></div>`;
+  let expr="",fresh=true;
+  $$("[data-calc]").forEach(b=>b.addEventListener("click",()=>{
+   const x=b.dataset.calc,d=$("#display");
+   if(x==="AC"){expr="";d.value="0";fresh=true;return}
+   if(x==="⌫"){expr=expr.slice(0,-1);d.value=expr||"0";return}
+   if(x==="±"){expr=expr.startsWith("-")?expr.slice(1):"-"+expr;d.value=expr;return}
+   if(x==="%"){const v=Number(expr);if(expr&&Number.isFinite(v)){expr=String(v/100);d.value=expr}return}
+   if(x==="="){try{const q=expr.replace(/[×÷−]/g,m=>({"×":"*","÷":"/","−":"-"}[m]));if(!/^[0-9+*/.() -]+$/.test(q))throw Error();const result=Function('"use strict";return ('+q+')')();if(!Number.isFinite(result))throw Error();expr=String(Number(result.toFixed(8)));d.value=expr;fresh=true}catch(e){d.value="Error";expr="";fresh=true}return}
+   if(["+","−","×","÷"].includes(x)){expr+=x;fresh=false}else{if(fresh){expr="";fresh=false}expr+=x}d.value=expr||"0";
+  }));
+ }
+ else if(name==="Gmail"){
+  c.innerHTML=`<h2>Inbox</h2><div class="card"><b>J. Jonah Jameson · Daily Bugle · 9:42 AM</b><h3>WHERE ARE THE PHOTOS, MAVIN?</h3><p>Are you still interested in working for the Daily Bugle? Because if you are, I expect those photographs on my desk immediately. I did not hire you to admire the skyline. Send the shots. Today. No more excuses.</p><p>J. Jonah Jameson<br>Editor-in-Chief, Daily Bugle</p></div>${["Assignment desk · Tomorrow’s front page","HR · Freelance paperwork","Peter Parker · You got this"].map(x=>`<div class="item">${x}</div>`).join("")}<h3>Compose</h3><input class="field" placeholder="To"><input class="field" placeholder="Subject"><textarea class="field" placeholder="Compose email"></textarea><button class="primary" id="sendmail">Send (demo)</button><p class="notice">Fictional inbox. No real Gmail account connected.</p>`;
+  $("#sendmail").addEventListener("click",()=>alert("Demo only. No email sent."));
+ }
+ else if(name==="Settings"){
+  const items=[["✈️","Airplane Mode"],["📶","Wi-Fi"],["ᛒ","Bluetooth"],["🔔","Notifications"],["☀️","Display & Brightness"],["🖼️","Wallpaper"],["🔊","Sounds & Haptics"],["🔒","Privacy & Security"],["☁️","iCloud · mavin@icloud.example"],["🔐","Lock Screen"]];
+  c.innerHTML=`<div class="card"><h2>👤 Mavin</h2><p class="muted">Apple Account, iCloud and more</p></div>${items.map(([icon,label])=>`<button class="item" data-setting="${label}">${icon}　${label}<span style="margin-left:auto;color:#999">›</span></button>`).join("")}<p class="notice">Fictional profile. No real Apple Account connected.</p>`;
+  $$("[data-setting]").forEach(b=>b.addEventListener("click",()=>{
+   const s=b.dataset.setting;if(s==="Lock Screen"){lock();return}
+   c.innerHTML=`<button id="setback" style="background:none;color:#087cff">‹ Settings</button><h2>${esc(s)}</h2><div class="card">${s.includes("iCloud")?"Mavin’s fictional iCloud profile. No sign-in required.":esc(s)+" settings"}</div><label><input type="checkbox" checked> Enable ${esc(s)}</label>`;
+   $("#setback").addEventListener("click",()=>render("Settings"));
+  }));
+ }
 }
 
-/* WHATSAPP CHAT */
-
-function chat(name) {
-  const c = $("#content");
-
-  const messages = chats[name] ||
-    ["Hey, are we still on for today?"];
-
-  chats[name] = messages;
-
-  c.innerHTML = `
-    <button id="chatback" style="background:none;color:#087cff">
-      ‹ Chats
-    </button>
-
-    <h2>${esc(name)}</h2>
-
-    <div id="bubbles">
-      ${messages.map((m, i) => `
-        <div class="bubble ${i % 2 ? "me" : ""}">
-          ${esc(m)}
-        </div>
-      `).join("")}
-    </div>
-
-    <form id="send"
-      style="display:flex;gap:7px;position:sticky;bottom:0;background:#f4f4f7;padding:8px">
-      <input id="message" class="field"
-        style="margin:0;border-radius:20px" placeholder="Message">
-      <button class="primary">➤</button>
-    </form>
-  `;
-
-  $("#chatback").addEventListener("click", () => render("WhatsApp"));
-
-  $("#send").addEventListener("submit", e => {
-    e.preventDefault();
-
-    const t = $("#message").value.trim();
-
-    if (t) {
-      chats[name].push(t);
-      chat(name);
-    }
-  });
+function chat(name){
+ const c=$("#content"),messages=chats[name]||["Hey, are we still on for today?"];chats[name]=messages;
+ c.innerHTML=`<button id="chatback" style="background:none;color:#087cff">‹ Chats</button><h2>${esc(name)}</h2><div id="bubbles">${messages.map((m,i)=>`<div class="bubble ${i%2?"me":""}">${esc(m)}</div>`).join("")}</div><form id="send" style="display:flex;gap:7px;position:sticky;bottom:0;background:#f4f4f7;padding:8px"><input id="message" class="field" style="margin:0;border-radius:20px" placeholder="Message"><button class="primary">➤</button></form>`;
+ $("#chatback").addEventListener("click",()=>render("WhatsApp"));
+ $("#send").addEventListener("submit",e=>{e.preventDefault();const t=$("#message").value.trim();if(t){chats[name].push(t);chat(name)}});
 }
-
-/* PHOTO DETAIL */
-
-function photo(title, emoji) {
-  const c = $("#content");
-
-  c.innerHTML = `
-    <button id="photoback" style="background:none;color:#087cff">
-      ‹ Back
-    </button>
-
-    <div style="height:55vh;display:grid;place-items:center;font-size:100px;background:linear-gradient(140deg,#d4b69a,#526270);border-radius:14px;margin-top:15px">
-      ${emoji}
-    </div>
-
-    <h3>${esc(title)}</h3>
-    <p class="muted">Mavin's photo library · demo image</p>
-  `;
-
-  $("#photoback").addEventListener("click", () => render(appName));
+function photo(title,emoji){
+ const c=$("#content");
+ c.innerHTML=`<button id="photoback" style="background:none;color:#087cff">‹ Back</button><div style="height:55vh;display:grid;place-items:center;font-size:100px;background:linear-gradient(140deg,#d4b69a,#526270);border-radius:14px;margin-top:15px">${emoji}</div><h3>${esc(title)}</h3><p class="muted">Mavin's photo library · demo image</p>`;
+ $("#photoback").addEventListener("click",()=>render(appName));
 }
-
-/* KEYBOARD SHORTCUT */
-
-document.addEventListener("keydown", e => {
-  if (e.key === "Escape") {
-    if ($("#app").classList.contains("active")) {
-      home();
-    } else {
-      $("#pin").classList.remove("show");
-    }
-  }
+document.addEventListener("keydown",e=>{
+ if(e.key==="Escape"){
+  if($("#app").classList.contains("active"))home();
+  else $("#pin").classList.remove("show");
+ }
 });
 </script>
 </body>
