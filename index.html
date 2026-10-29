@@ -1219,6 +1219,195 @@ button {
   cursor: pointer;
 }
 
+  
+/* APPLE WEATHER PAGE */
+.weather-app {
+  --weather-text: #fff;
+  width: 100%;
+  min-height: 100%;
+  padding: 20px 16px 32px;
+  color: var(--weather-text);
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background:
+    radial-gradient(ellipse at 15% 5%, #8bc8f5 0%, transparent 42%),
+    linear-gradient(180deg, #397fbd 0%, #24568c 48%, #172f52 100%);
+}
+
+.weather-app .weather-location {
+  text-align: center;
+  font-size: 27px;
+  font-weight: 600;
+  letter-spacing: -.5px;
+}
+
+.weather-app .weather-subtitle {
+  text-align: center;
+  margin-top: 3px;
+  font-size: 13px;
+  color: #e1efff;
+}
+
+.weather-app .weather-current {
+  position: relative;
+  text-align: center;
+  padding: 12px 0 22px;
+}
+
+.weather-app .weather-temp {
+  font-size: clamp(78px, 22vw, 104px);
+  line-height: 1.08;
+  font-weight: 200;
+  letter-spacing: -5px;
+}
+
+.weather-app .weather-condition {
+  font-size: 21px;
+  font-weight: 500;
+  margin-top: -2px;
+}
+
+.weather-app .weather-highlow {
+  margin-top: 5px;
+  font-size: 15px;
+  color: #e3efff;
+}
+
+.weather-app .weather-big-icon {
+  font-size: 39px;
+  margin-top: 7px;
+}
+
+.weather-app .weather-card {
+  margin-top: 13px;
+  padding: 15px 14px;
+  border: 1px solid #ffffff20;
+  border-radius: 20px;
+  background: #ffffff16;
+  box-shadow: 0 8px 24px #102c4b12;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.weather-app .weather-card-title {
+  margin-bottom: 15px;
+  color: #d5e8fb;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .8px;
+}
+
+.weather-app .weather-hours {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 3px;
+  text-align: center;
+}
+
+.weather-app .weather-hours > div {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 11px;
+}
+
+.weather-app .weather-hours span {
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.weather-app .weather-hours b {
+  font-size: 21px;
+  font-weight: 400;
+}
+
+.weather-app .weather-hours strong {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.weather-app .weather-day {
+  display: grid;
+  grid-template-columns: 1.2fr 30px .6fr .6fr;
+  gap: 8px;
+  align-items: center;
+  min-height: 43px;
+  border-bottom: 1px solid #ffffff20;
+  font-size: 14px;
+}
+
+.weather-app .weather-day:last-child {
+  border-bottom: 0;
+}
+
+.weather-app .weather-day b {
+  font-size: 20px;
+  font-weight: 400;
+  text-align: center;
+}
+
+.weather-app .weather-day small {
+  color: #d4e3f5;
+  text-align: right;
+  font-size: 13px;
+}
+
+.weather-app .weather-day strong {
+  text-align: right;
+  font-size: 14px;
+}
+
+.weather-app .weather-details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.weather-app .weather-detail {
+  min-height: 108px;
+  padding: 14px;
+  border: 1px solid #ffffff20;
+  border-radius: 18px;
+  background: #ffffff16;
+}
+
+.weather-app .weather-detail small {
+  display: block;
+  color: #d5e8fb;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .7px;
+}
+
+.weather-app .weather-detail b {
+  display: block;
+  margin-top: 10px;
+  font-size: 27px;
+  font-weight: 500;
+}
+
+.weather-app .weather-detail span {
+  display: block;
+  margin-top: 5px;
+  color: #e1efff;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.weather-app .weather-demo-note {
+  padding-top: 16px;
+  color: #d5e8fb;
+  text-align: center;
+  font-size: 11px;
+}
+
+.weather-app .weather-error {
+  padding: 14px 0;
+  color: #ffe3bd;
+  font-size: 13px;
+}
+
 </style>
 </head>
 
@@ -1565,7 +1754,8 @@ function weatherHourLabel(dateString, index) {
   }).replace(" ", "");
 }
 
-async function loadBandungWeather() {
+let bandungWeatherData = null;
+  async function loadBandungWeather() {
   const updated = document.getElementById("weatherUpdated");
 
   try {
@@ -1576,6 +1766,8 @@ async function loadBandungWeather() {
     if (!response.ok) throw new Error("Weather request failed");
 
     const data = await response.json();
+    bandungWeatherData = data;
+renderWeatherApp();
     const current = data.current;
     const hourly = data.hourly;
     const daily = data.daily;
@@ -1636,6 +1828,110 @@ async function loadBandungWeather() {
     updated.textContent = "Weather · Bandung · Gagal memuat";
     document.getElementById("weatherCondition").textContent =
       "Cuaca tidak tersedia";
+  }
+  }
+
+function renderWeatherApp() {
+  if (!bandungWeatherData) return;
+
+  const data = bandungWeatherData;
+  const current = data.current;
+  const daily = data.daily;
+  const hourly = data.hourly;
+
+  const temp = document.querySelector(".weather-temp");
+  const condition = document.querySelector(".weather-condition");
+  const highlow = document.querySelector(".weather-highlow");
+  const bigIcon = document.querySelector(".weather-big-icon");
+  const subtitle = document.querySelector(".weather-subtitle");
+
+  if (!temp) return;
+
+  const [description, icon] = weatherDescription(current.weather_code);
+
+  temp.textContent = `${Math.round(current.temperature_2m)}°`;
+  condition.textContent = description;
+  highlow.textContent =
+    `H:${Math.round(daily.temperature_2m_max[0])}°  ` +
+    `L:${Math.round(daily.temperature_2m_min[0])}°`;
+  bigIcon.textContent = icon;
+  subtitle.textContent = "Bandung";
+
+  const hours = document.querySelector(".weather-hours");
+  if (hours) {
+    hours.innerHTML = "";
+
+    let startIndex = hourly.time.findIndex(
+      time => time.slice(0, 13) >= current.time.slice(0, 13)
+    );
+    if (startIndex < 0) startIndex = 0;
+
+    for (let i = 0; i < 6; i++) {
+      const index = startIndex + i;
+      if (index >= hourly.time.length) break;
+
+      const [desc, symbol] =
+        weatherDescription(hourly.weather_code[index]);
+
+      const hour = document.createElement("div");
+      const time = document.createElement("span");
+      const weatherIcon = document.createElement("b");
+      const temperature = document.createElement("strong");
+
+      time.textContent = weatherHourLabel(hourly.time[index], i);
+      weatherIcon.textContent = symbol;
+      weatherIcon.title = desc;
+      temperature.textContent =
+        `${Math.round(hourly.temperature_2m[index])}°`;
+
+      hour.append(time, weatherIcon, temperature);
+      hours.appendChild(hour);
+    }
+  }
+
+  const days = document.querySelectorAll(".weather-day");
+  const dayNames = ["Today", "Tomorrow"];
+
+  days.forEach((day, index) => {
+    if (index >= daily.time.length) return;
+
+    const [desc, symbol] =
+      weatherDescription(daily.weather_code[index]);
+
+    const date = new Date(`${daily.time[index]}T12:00:00`);
+    const name = index === 0
+      ? "Today"
+      : date.toLocaleDateString("en-US", { weekday: "short" });
+
+    const label = day.querySelector("span");
+    const iconElement = day.querySelector("b");
+    const low = day.querySelector("small");
+    const high = day.querySelector("strong");
+
+    if (label) label.textContent = name;
+    if (iconElement) {
+      iconElement.textContent = symbol;
+      iconElement.title = desc;
+    }
+    if (low) low.textContent =
+      `${Math.round(daily.temperature_2m_min[index])}°`;
+    if (high) high.textContent =
+      `${Math.round(daily.temperature_2m_max[index])}°`;
+  });
+
+  const details = document.querySelectorAll(".weather-detail");
+  if (details.length >= 3) {
+    details[0].querySelector("b").textContent =
+      `${Math.round(current.apparent_temperature)}°`;
+    details[1].querySelector("b").textContent =
+      `${current.relative_humidity_2m}%`;
+    details[2].querySelector("b").textContent =
+      `${Math.round(current.wind_speed_10m)} km/h`;
+  }
+
+  const note = document.querySelector(".weather-demo-note");
+  if (note) {
+    note.textContent = "Live weather · Open-Meteo";
   }
 }
 
