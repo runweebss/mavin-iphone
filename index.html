@@ -1292,7 +1292,7 @@ button {
 
     <!-- DOCK -->
     <nav class="dock">
-      <button onclick="openApp('Camera')" aria-label="Camera">
+      <button onclick="openCamera()" aria-label="Camera">
         <img src="camera%20logo.png" alt="Camera">
       </button>
       <button onclick="openApp('Calculator')" aria-label="Calculator">
@@ -1492,6 +1492,201 @@ function openYouTube() {
     "_blank"
   );
   }
+  
+let cameraStream = null;
+let cameraFacing = "environment";
+
+async function openCamera() {
+  if (!navigator.mediaDevices?.getUserMedia) {
+    alert("Kamera tidak didukung browser ini. Coba buka website lewat Chrome.");
+    return;
+  }
+
+  const oldCamera = document.getElementById("cameraOverlay");
+  if (oldCamera) oldCamera.remove();
+
+  const overlay = document.createElement("div");
+  overlay.id = "cameraOverlay";
+
+  overlay.innerHTML = `
+    <style>
+      #cameraOverlay {
+        position: fixed;
+        inset: 0;
+        z-index: 99999;
+        background: #000;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        font-family: Arial, sans-serif;
+      }
+      #cameraOverlay .cam-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 18px;
+      }
+      #cameraOverlay button {
+        border: 0;
+        cursor: pointer;
+        color: white;
+        background: #292929;
+        border-radius: 30px;
+        padding: 12px 16px;
+        font-size: 16px;
+      }
+      #cameraOverlay .cam-view {
+        flex: 1;
+        min-height: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      #cameraOverlay video,
+      #cameraOverlay .cam-result {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+      #cameraOverlay .cam-bottom {
+        min-height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        padding: 12px;
+      }
+      #cameraOverlay .shutter {
+        width: 72px;
+        height: 72px;
+        padding: 0;
+        border: 5px solid white;
+        background: white;
+        box-shadow: inset 0 0 0 3px #777;
+      }
+      #cameraOverlay .cam-hidden {
+        display: none;
+      }
+    </style>
+
+    <div class="cam-top">
+      <button id="camClose">✕</button>
+      <span>CAMERA</span>
+      <button id="camSwitch">🔄</button>
+    </div>
+
+    <div class="cam-view">
+      <video id="camVideo" autoplay playsinline></video>
+      <img id="camResult" class="cam-result cam-hidden" alt="Hasil foto">
+    </div>
+
+    <div class="cam-bottom">
+      <button id="camRetake" class="cam-hidden">Ulangi</button>
+      <button id="camShutter" class="shutter" aria-label="Ambil foto"></button>
+      <button id="camSave" class="cam-hidden">Simpan</button>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  const video = overlay.querySelector("#camVideo");
+  const result = overlay.querySelector("#camResult");
+  const shutter = overlay.querySelector("#camShutter");
+  const switchButton = overlay.querySelector("#camSwitch");
+  const retake = overlay.querySelector("#camRetake");
+  const save = overlay.querySelector("#camSave");
+
+  let photoData = null;
+
+  async function startCamera() {
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(track => track.stop());
+      cameraStream = null;
+    }
+
+    try {
+      cameraStream = await navigator.mediaDevices.getUserMedia({
+        audio: false,
+        video: {
+          facingMode: { ideal: cameraFacing }
+        }
+      });
+
+      video.srcObject = cameraStream;
+      await video.play();
+    } catch (error) {
+      alert("Kamera tidak bisa dibuka. Pastikan izin kamera diberikan ke browser.");
+    }
+  }
+
+  function stopCamera() {
+    if (cameraStream) {
+      cameraStream.getTracks().forEach(track => track.stop());
+      cameraStream = null;
+    }
+  }
+
+  overlay.querySelector("#camClose").onclick = () => {
+    stopCamera();
+    overlay.remove();
+  };
+
+  switchButton.onclick = async () => {
+    cameraFacing =
+      cameraFacing === "environment" ? "user" : "environment";
+    await startCamera();
+  };
+
+  shutter.onclick = () => {
+    if (!video.videoWidth) {
+      alert("Tunggu sampai kamera siap dulu!");
+      return;
+    }
+
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+
+    canvas.getContext("2d").drawImage(
+      video, 0, 0, canvas.width, canvas.height
+    );
+
+    photoData = canvas.toDataURL("image/jpeg", 0.92);
+    result.src = photoData;
+    result.classList.remove("cam-hidden");
+    video.classList.add("cam-hidden");
+    shutter.classList.add("cam-hidden");
+    switchButton.classList.add("cam-hidden");
+    retake.classList.remove("cam-hidden");
+    save.classList.remove("cam-hidden");
+    stopCamera();
+  };
+
+  retake.onclick = async () => {
+    result.classList.add("cam-hidden");
+    video.classList.remove("cam-hidden");
+    shutter.classList.remove("cam-hidden");
+    switchButton.classList.remove("cam-hidden");
+    retake.classList.add("cam-hidden");
+    save.classList.add("cam-hidden");
+    photoData = null;
+    await startCamera();
+  };
+
+  save.onclick = () => {
+    if (!photoData) return;
+
+    const link = document.createElement("a");
+    link.href = photoData;
+    link.download = `mavin-photo-${Date.now()}.jpg`;
+    link.click();
+  };
+
+  await startCamera();
+}
+
+function openApp(name) {
+
 function openApp(name) {
   const screen = document.getElementById("appScreen");
   const title = document.getElementById("appTitle");
