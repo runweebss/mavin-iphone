@@ -1352,12 +1352,31 @@ function openApp(name) {
       </div>`,
 
     "Calendar": `
-      <div class="demo-card">
-        <h2>October 29</h2>
-        <p>Mavin's Calendar</p>
-        <input placeholder="Add an event...">
-      </div>`,
+  <div class="apple-calendar">
+    <div class="cal-top">
+      <div>
+        <div class="cal-label">CALENDAR</div>
+        <h2 id="calMonthTitle"></h2>
+      </div>
+      <button onclick="changeCalendarMonth(-1)">‹</button>
+      <button onclick="changeCalendarMonth(1)">›</button>
+    </div>
 
+    <div class="cal-weekdays">
+      <span>Sun</span><span>Mon</span><span>Tue</span>
+      <span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+    </div>
+
+    <div class="cal-days" id="calDays"></div>
+
+    <div class="cal-agenda">
+      <h3 id="calSelectedDate"></h3>
+      <input id="calEventInput" placeholder="New event">
+      <button onclick="addCalendarEvent()">Add Event</button>
+      <div id="calEventList"></div>
+    </div>
+  </div>`,
+    
     "Instagram": `
       <div class="demo-card">
         <h3>Instagram</h3>
