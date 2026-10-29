@@ -1171,8 +1171,19 @@ button {
 <script>
 const CORRECT_PIN = "1711";
 
-const spotifyUrl =
-  "https://open.spotify.com/track/5WOSNVChcadlsCRiqXE45K?si=eDLWuk--RMOb2kCRwV4k0w&utm_source=copy-link";
+const hindiaTrackUrl =
+  "https://open.spotify.com/track/5WOSNVChcadlsCRiqXE45K?si=89Q7H6evShCsNx8vaVlS4A&utm_source=copy-link";
+
+const mavinPlaylistUrl =
+  "https://open.spotify.com/playlist/30Fzjy09CeBzAeeFzp2b19?si=xObLRb6DTS-2ScVuf0nCgw&utm_source=copy-link";
+
+function openSpotify() {
+  window.open(mavinPlaylistUrl, "_blank", "noopener,noreferrer");
+}
+
+function openHindia() {
+  window.open(hindiaTrackUrl, "_blank", "noopener,noreferrer");
+}
 
 let enteredPin = "";
 let isPlaying = false;
