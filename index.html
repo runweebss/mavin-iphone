@@ -1307,55 +1307,32 @@ button {
       </div>
     </header>
 
-    <!-- WEATHER -->
-    <section class="weather-wrap" onclick="openApp('Weather')" style="cursor:pointer">
-      <div class="weather-card">
-        <div class="city">Bandung</div>
+    
+<!-- WEATHER -->
+<section class="weather-wrap">
+  <div class="weather-card">
+    <div class="city">Bandung</div>
 
-        <div class="weather-main">
-          <div class="temperature">26°</div>
-          <div class="condition">
-            <strong>☁</strong>
-            Cloudy<br>
-            <span class="high-low">H:27° L:22°</span>
-          </div>
-        </div>
-
-        <div class="forecast">
-          <div class="forecast-item">
-            <span class="forecast-time">2PM</span>
-            <span class="cloud"></span>
-            <span class="forecast-temp">26°</span>
-          </div>
-          <div class="forecast-item">
-            <span class="forecast-time">3PM</span>
-            <span class="cloud"></span>
-            <span class="forecast-temp">27°</span>
-          </div>
-          <div class="forecast-item">
-            <span class="forecast-time">4PM</span>
-            <span class="cloud"></span>
-            <span class="forecast-temp">26°</span>
-          </div>
-          <div class="forecast-item">
-            <span class="forecast-time">5PM</span>
-            <span class="cloud"></span>
-            <span class="forecast-temp">27°</span>
-          </div>
-          <div class="forecast-item">
-            <span class="forecast-time">6PM</span>
-            <span class="cloud"></span>
-            <span class="forecast-temp">26°</span>
-          </div>
-          <div class="forecast-item">
-            <span class="forecast-time">7PM</span>
-            <span class="cloud"></span>
-            <span class="forecast-temp">25°</span>
-          </div>
-        </div>
+    <div class="weather-main">
+      <div class="temperature" id="weatherTemp">--°</div>
+      <div class="condition">
+        <strong id="weatherIcon">☁️</strong>
+        <span id="weatherCondition">Memuat cuaca...</span><br>
+        <span class="high-low" id="weatherHighLow">H:--° L:--°</span>
       </div>
-      <div class="weather-label">Weather</div>
-    </section>
+    </div>
+
+    <div class="forecast" id="weatherForecast">
+      <div class="forecast-item">
+        <span class="forecast-time">Loading</span>
+        <span class="cloud"></span>
+        <span class="forecast-temp">--°</span>
+      </div>
+    </div>
+  </div>
+  <div class="weather-label" id="weatherUpdated">Weather · Bandung</div>
+</section>
+
 
     <!-- APP GRID -->
     <section class="home-grid">
@@ -1547,6 +1524,122 @@ function updateClock() {
 
 updateClock();
 setInterval(updateClock, 30000);
+
+  
+/* REAL WEATHER: BANDUNG, OPEN-METEO */
+
+const BANDUNG_WEATHER_URL =
+  "https://api.open-meteo.com/v1/forecast" +
+  "?latitude=-6.9175" +
+  "&longitude=107.6191" +
+  "&current=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,wind_speed_10m" +
+  "&hourly=temperature_2m,weather_code" +
+  "&daily=temperature_2m_max,temperature_2m_min,weather_code" +
+  "&timezone=Asia%2FJakarta" +
+  "&forecast_days=5";
+
+function weatherDescription(code) {
+  if (code === 0) return ["Cerah", "☀️"];
+  if (code === 1) return ["Cerah berawan", "🌤️"];
+  if (code === 2) return ["Berawan sebagian", "⛅"];
+  if (code === 3) return ["Berawan", "☁️"];
+  if ([45, 48].includes(code)) return ["Berkabut", "🌫️"];
+  if ([51, 53, 55, 56, 57].includes(code)) return ["Gerimis", "🌦️"];
+  if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) {
+    return ["Hujan", "🌧️"];
+  }
+  if ([71, 73, 75, 77, 85, 86].includes(code)) {
+    return ["Bersalju", "🌨️"];
+  }
+  if ([95, 96, 99].includes(code)) return ["Badai petir", "⛈️"];
+  return ["Berawan", "☁️"];
+}
+
+function weatherHourLabel(dateString, index) {
+  const hour = Number(dateString.slice(11, 13));
+  if (index === 0) return "Now";
+  return new Date(2000, 0, 1, hour).toLocaleTimeString("en-US", {
+    hour: "numeric",
+    hour12: true
+  }).replace(" ", "");
+}
+
+async function loadBandungWeather() {
+  const updated = document.getElementById("weatherUpdated");
+
+  try {
+    const response = await fetch(BANDUNG_WEATHER_URL, {
+      cache: "no-store"
+    });
+
+    if (!response.ok) throw new Error("Weather request failed");
+
+    const data = await response.json();
+    const current = data.current;
+    const hourly = data.hourly;
+    const daily = data.daily;
+
+    const [description, icon] = weatherDescription(current.weather_code);
+
+    document.getElementById("weatherTemp").textContent =
+      `${Math.round(current.temperature_2m)}°`;
+
+    document.getElementById("weatherIcon").textContent = icon;
+    document.getElementById("weatherCondition").textContent = description;
+
+    document.getElementById("weatherHighLow").textContent =
+      `H:${Math.round(daily.temperature_2m_max[0])}° ` +
+      `L:${Math.round(daily.temperature_2m_min[0])}°`;
+
+    const forecast = document.getElementById("weatherForecast");
+    forecast.innerHTML = "";
+
+    // Cari jam sekarang atau jam prakiraan terdekat.
+    let startIndex = hourly.time.findIndex(
+      time => time.slice(0, 13) >= current.time.slice(0, 13)
+    );
+
+    if (startIndex < 0) startIndex = 0;
+
+    for (let offset = 0; offset < 6; offset++) {
+      const index = startIndex + offset;
+      if (index >= hourly.time.length) break;
+
+      const [hourDescription, hourIcon] =
+        weatherDescription(hourly.weather_code[index]);
+
+      const item = document.createElement("div");
+      item.className = "forecast-item";
+
+      const time = document.createElement("span");
+      time.className = "forecast-time";
+      time.textContent = weatherHourLabel(hourly.time[index], offset);
+
+      const symbol = document.createElement("span");
+      symbol.style.fontSize = "19px";
+      symbol.textContent = hourIcon;
+      symbol.title = hourDescription;
+
+      const temperature = document.createElement("span");
+      temperature.className = "forecast-temp";
+      temperature.textContent =
+        `${Math.round(hourly.temperature_2m[index])}°`;
+
+      item.append(time, symbol, temperature);
+      forecast.appendChild(item);
+    }
+
+    updated.textContent = "Weather · Bandung · Live forecast";
+  } catch (error) {
+    console.error("Weather error:", error);
+    updated.textContent = "Weather · Bandung · Gagal memuat";
+    document.getElementById("weatherCondition").textContent =
+      "Cuaca tidak tersedia";
+  }
+}
+
+loadBandungWeather();
+setInterval(loadBandungWeather, 15 * 60 * 1000);
 
 /* SWIPE UP */
 
