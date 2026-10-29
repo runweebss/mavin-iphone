@@ -1,322 +1,703 @@
-
 <!doctype html>
 <html lang="id">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#080808">
 <title>Mavin's iPhone</title>
 
 <style>
 :root {
-  --blue:#087cff;
-  --paper:#f2f2f7;
-  --ink:#171719;
-  --gold:#f6d9a5;
+  --blue: #087cff;
+  --paper: #f4f4f7;
+  --ink: #171719;
+  --glass: rgba(35, 35, 38, .91);
 }
-* { box-sizing:border-box; }
-html,body {
-  width:100%; height:100%; margin:0;
-  overflow:hidden;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
-  background:#080808; color:white;
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #111;
+  color: white;
+  -webkit-tap-highlight-color: transparent;
 }
-button,input,textarea,select { font:inherit; }
-button { cursor:pointer; border:0; }
+
+button, input, textarea { font: inherit; }
+button { cursor: pointer; border: 0; }
+button:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
 #phone {
-  width:100%; height:100%; height:100dvh;
-  max-width:430px; margin:auto; position:relative;
-  overflow:hidden; isolation:isolate; background:#080808;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  isolation: isolate;
+  background: #080808;
 }
+
 #wall {
-  position:absolute; inset:0;
-  background:url('https://raw.githubusercontent.com/runweebss/Interactive-Winrina-AU/main/camera-wallpaper.jpg') center/cover no-repeat;
-  z-index:0;
+  position: absolute;
+  inset: 0;
+  background-image: url("https://raw.githubusercontent.com/runweebss/Interactive-Winrina-AU/main/camera-wallpaper.jpg");
+  background-position: center;
+  background-size: cover;
+  z-index: 0;
 }
-.screen { position:absolute; inset:0; display:none; }
-.screen.active { display:block; }
+
+#wall::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.05);
+}
+
+/* Status bar tetap ada pada lock screen dan home screen */
 .status {
-  position:absolute; top:8px; left:7%; right:7%;
-  z-index:20; display:flex; justify-content:space-between;
-  align-items:center; font-size:14px; font-weight:700;
-  text-shadow:0 1px 5px #000; pointer-events:none;
+  position: absolute;
+  z-index: 20;
+  top: max(9px, env(safe-area-inset-top));
+  left: 7%;
+  right: 7%;
+  height: 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 650;
+  text-shadow: 0 1px 5px #0008;
+  pointer-events: none;
 }
-.status .signals { letter-spacing:2px; white-space:nowrap; }
+
+.status-right {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  font-size: 15px;
+  white-space: nowrap;
+}
+
+.screen {
+  position: absolute;
+  inset: 0;
+  display: none;
+}
+
+.screen.active { display: block; }
+
+/* LOCK SCREEN */
 .lock {
-  z-index:10; background:#000; overflow:hidden;
-  touch-action:pan-y;
+  z-index: 10;
+  background: #000;
+  touch-action: pan-y;
 }
-.lock img {
-  width:100%; height:100%; object-fit:cover;
-  position:absolute; inset:0;
+
+.lock-wallpaper {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
+
 .lockdate {
-  position:absolute; top:18%; width:100%; text-align:center;
-  font-size:16px; text-shadow:0 2px 8px #000;
+  position: absolute;
+  top: 17%;
+  width: 100%;
+  text-align: center;
+  font-size: clamp(16px, 4.3vw, 22px);
+  text-shadow: 0 2px 8px #000;
 }
+
 .locktime {
-  position:absolute; top:22%; width:100%; text-align:center;
-  font-size:clamp(65px,18vw,94px); font-weight:250;
-  letter-spacing:-3px; text-shadow:0 2px 8px #000;
+  position: absolute;
+  top: 20.5%;
+  width: 100%;
+  text-align: center;
+  font-size: clamp(70px, 18vw, 98px);
+  line-height: 1.15;
+  font-weight: 200;
+  letter-spacing: -3px;
+  text-shadow: 0 2px 8px #000;
 }
+
 .hint {
-  position:absolute; bottom:9%; width:100%;
-  background:transparent; color:var(--gold);
-  text-shadow:0 1px 6px #000; padding:18px;
+  position: absolute;
+  bottom: calc(8% + env(safe-area-inset-bottom));
+  width: 100%;
+  padding: 16px 0;
+  color: #f4d6a4;
+  background: transparent;
+  font-size: 17px;
+  text-shadow: 0 2px 8px #000;
+  touch-action: manipulation;
 }
+
+.lock-dock {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  bottom: calc(3.5% + env(safe-area-inset-bottom));
+  height: 76px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+  justify-items: center;
+  gap: 7px;
+  padding: 7px;
+  border-radius: 27px;
+  background: rgba(203,188,165,.78);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+  z-index: 3;
+}
+
+.lock-dock .ico {
+  width: min(100%, 55px);
+  border-radius: 16px;
+}
+
+/* HOME SCREEN */
 .home {
-  z-index:2; overflow:hidden;
+  z-index: 2;
+  overflow: hidden;
 }
-.home::after {
-  content:""; position:absolute; inset:0;
-  background:#00000008; pointer-events:none;
-}
-.home > * { position:absolute; z-index:1; }
+
+/* Widget cuaca punya ukuran tetap dan posisi independen */
 .weather {
-  top:7.5%; left:5%; width:90%; height:24%;
-  min-height:180px; max-height:235px;
-  border-radius:35px; padding:18px 20px;
-  color:white; text-align:left;
-  background:linear-gradient(135deg,#50677bdc,#1c3044ed);
-  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-  box-shadow:0 10px 28px #0002;
+  position: absolute;
+  top: calc(7.5% + env(safe-area-inset-top));
+  left: 5%;
+  width: 90%;
+  height: clamp(170px, 23.5%, 205px);
+  padding: 0;
+  overflow: hidden;
+  border-radius: 29px;
+  color: #fff;
+  text-align: left;
+  background: linear-gradient(135deg, rgba(82,104,123,.94), rgba(30,48,66,.94));
+  box-shadow: 0 8px 25px #0002;
+  backdrop-filter: blur(17px);
+  -webkit-backdrop-filter: blur(17px);
 }
-.city { font-size:clamp(17px,5vw,22px); font-weight:600; }
+
+.city {
+  position: absolute;
+  top: 13px;
+  left: 17px;
+  font-size: clamp(18px, 5vw, 22px);
+  line-height: 1.25;
+  font-weight: 600;
+}
+
 .temp {
-  font-size:clamp(52px,13vw,76px); line-height:1.1;
-  font-weight:250; letter-spacing:-2px; margin-top:4px;
+  position: absolute;
+  left: 16px;
+  top: 44px;
+  font-size: clamp(54px, 15vw, 67px);
+  line-height: 1;
+  letter-spacing: -2px;
+  font-weight: 250;
+  white-space: nowrap;
 }
+
 .desc {
-  position:absolute; top:22%; right:5%;
-  text-align:right; font-size:clamp(14px,4vw,18px);
-  line-height:1.35;
+  position: absolute;
+  right: 15px;
+  top: 17px;
+  text-align: right;
+  font-size: clamp(14px, 4vw, 17px);
+  line-height: 1.38;
+  white-space: nowrap;
 }
-.desc .weather-icon { font-size:29px; margin-bottom:3px; }
+
+.desc .weather-icon {
+  display: block;
+  font-size: 27px;
+  line-height: 1.15;
+  margin-bottom: 5px;
+}
+
 .hours {
-  position:absolute; bottom:13px; left:10px; right:10px;
-  display:grid; grid-template-columns:repeat(6,minmax(0,1fr));
-  text-align:center; align-items:center; gap:2px;
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 9px;
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  align-items: end;
+  text-align: center;
 }
-.hour { font-size:clamp(10px,3.2vw,13px); white-space:nowrap; }
-.hour b { display:block; font-size:22px; font-weight:400; margin:7px 0; }
+
+.hour {
+  min-width: 0;
+  font-size: clamp(10px, 3.2vw, 13px);
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.hour b {
+  display: block;
+  margin: 6px 0;
+  font-size: clamp(17px, 5vw, 21px);
+  line-height: 1;
+  font-weight: 400;
+}
+
 .wlabel {
-  top:31.8%; left:0; width:100%; text-align:center;
-  font-size:16px; text-shadow:0 1px 5px #000;
+  position: absolute;
+  top: calc(7.5% + env(safe-area-inset-top) + clamp(170px, 23.5%, 205px) + 7px);
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 16px;
+  text-shadow: 0 1px 5px #000;
 }
-.grid {
-  top:36.5%; left:7%; width:86%;
-  height:41%;
-  display:grid;
-  grid-template-columns:repeat(4,minmax(0,1fr));
-  grid-template-rows:repeat(3,minmax(0,1fr));
-  column-gap:9px; row-gap:12px;
-  align-items:start; justify-items:center;
+
+/* Ikon aplikasi memakai grid 4 kolom yang stabil */
+.app-grid {
+  position: absolute;
+  top: 39%;
+  left: 5.5%;
+  right: 5.5%;
+  height: 35%;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-rows: repeat(2, minmax(0, 1fr));
+  column-gap: 5px;
+  row-gap: 12px;
+  align-items: start;
+  justify-items: center;
 }
+
 .app {
-  width:100%; min-width:0; padding:0;
-  display:flex; flex-direction:column; align-items:center;
-  gap:5px; background:transparent; color:white;
-  text-shadow:0 1px 4px #000;
-  position:relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  width: 100%;
+  min-width: 0;
+  padding: 0;
+  color: white;
+  background: transparent;
+  text-align: center;
+  text-shadow: 0 1px 4px #0009;
 }
+
 .ico {
-  width:min(100%,68px); aspect-ratio:1;
-  border-radius:19px; display:grid; place-items:center;
-  font-size:32px; font-weight:600;
-  box-shadow:0 4px 10px #0002;
-  overflow:hidden;
+  display: grid;
+  place-items: center;
+  width: clamp(55px, 17vw, 68px);
+  max-width: 100%;
+  aspect-ratio: 1;
+  flex-shrink: 0;
+  border-radius: 19px;
+  font-size: clamp(27px, 8vw, 34px);
+  font-weight: 600;
+  overflow: hidden;
+  box-shadow: 0 3px 9px #0002;
 }
+
 .app label {
-  font-size:clamp(10px,3.6vw,14px);
-  white-space:nowrap; line-height:1.2;
+  font-size: clamp(11px, 3.6vw, 14px);
+  line-height: 1.2;
+  white-space: nowrap;
 }
-.wa { background:#20c967; }
+
+/* App icons */
+.wa { background: #20c967; }
 .calendar {
-  background:#fff; color:#111;
-  display:flex; flex-direction:column; justify-content:center;
-  line-height:1; gap:3px;
+  background: #fff;
+  color: #111;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1;
 }
-.calendar small { color:#d33; font-size:11px; }
-.calendar span { font-size:37px; font-weight:650; }
-.ig { background:radial-gradient(circle at 30% 105%,#ffdc80,#f74761 48%,#8a39c5 85%); }
-.xapp { background:#000; }
-.spotify { background:#101010; color:#1ed760; }
-.photos { background:#fff; color:#ef7359; }
-.notes { background:linear-gradient(#ffcf4b 19%,#fff 19%); color:#999; }
-.yt { background:#fff; color:#e00; }
-#app-whatsapp { grid-column:1; grid-row:1; }
-#app-calendar { grid-column:2; grid-row:1; }
-#app-instagram { grid-column:1; grid-row:2; }
-#app-x { grid-column:2; grid-row:2; }
-#app-spotify { grid-column:1; grid-row:3; }
-#app-photos { grid-column:2; grid-row:3; }
-#app-notes { grid-column:3; grid-row:3; }
-#app-youtube { grid-column:4; grid-row:3; }
+.calendar small {
+  color: #d22;
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+.calendar span { font-size: 32px; font-weight: 700; }
+.ig { background: radial-gradient(circle at 30% 105%, #ffd76c, #fa425f 48%, #8338c7 85%); }
+.x-icon { background: #000; }
+.spotify { background: #111; color: #1ed760; }
+.photos { background: #fff; color: #ef7359; }
+.notes { background: linear-gradient(#ffce4b 20%, #fff 20%); color: #999; }
+.yt { background: #fff; color: #e00; }
+.dock-icon { background: #eee; color: #222; }
+.mail-icon { background: #fff; color: #d44; }
 
+/* Music berada di area kanan, tidak mengubah aliran grid aplikasi */
 .music {
-  top:36.5%; right:5%; width:47%; height:31%;
-  min-height:255px; max-height:320px;
-  border-radius:27px; padding:16px;
-  background:#252527ed; color:white;
-  text-align:left; box-shadow:0 9px 28px #0003;
-  backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px);
-  display:flex; flex-direction:column;
-  overflow:hidden;
-}
-.album {
-  width:clamp(65px,19vw,92px); aspect-ratio:1;
-  flex-shrink:0; border-radius:13px;
-  background:linear-gradient(135deg,#bbb,#393939);
-  display:grid; place-items:center; font-size:36px;
-  margin-bottom:10px;
-}
-.song {
-  font-size:clamp(13px,4vw,17px);
-  font-weight:700; line-height:1.25;
-  overflow-wrap:anywhere;
-}
-.artist { font-size:14px; color:#ccc; margin-top:5px; }
-.music-progress {
-  height:4px; width:100%; border-radius:4px;
-  background:#777; margin:17px 0 7px; flex-shrink:0;
-}
-.music-progress i { display:block; width:46%; height:100%; background:#fff; }
-.track { display:flex; justify-content:space-between; font-size:11px; color:#eee; }
-.controls {
-  display:flex; justify-content:space-between; align-items:center;
-  margin-top:auto; padding-top:12px; gap:5px;
-}
-.controls button {
-  color:white; background:transparent; padding:3px;
-  font-size:17px; min-width:23px;
-}
-.pages {
-  bottom:12%; left:0; width:100%;
-  text-align:center; letter-spacing:8px; color:#fff;
-  text-shadow:0 1px 4px #000;
-}
-.dock {
-  bottom:2.2%; left:5%; right:5%; height:9%;
-  max-height:90px; min-height:68px;
-  border-radius:30px; padding:9px;
-  background:#cbbca5d9;
-  backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px);
-  display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
-  align-items:center; justify-items:center; gap:8px;
-}
-.dock .ico { width:min(100%,60px); border-radius:17px; }
-.dock .app label { display:none; }
-.homebar {
-  position:absolute; z-index:30; bottom:5px;
-  left:calc(50% - 50px); width:100px; height:4px;
-  border-radius:5px; background:#ffffffb5;
+  position: absolute;
+  z-index: 4;
+  top: 39%;
+  left: 54%;
+  width: 41%;
+  height: 28%;
+  max-height: 270px;
+  min-height: 205px;
+  padding: 12px;
+  border-radius: 25px;
+  background: rgba(38,38,40,.95);
+  color: white;
+  text-align: left;
+  overflow: hidden;
+  box-shadow: 0 8px 24px #0003;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
 
-/* Application windows */
-.appscreen {
-  z-index:12; background:var(--paper); color:var(--ink);
-  overflow-y:auto; overflow-x:hidden;
-  padding-bottom:30px; overscroll-behavior:contain;
+.album {
+  width: 65px;
+  height: 65px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #aaa, #3a3a3a);
+  font-size: 29px;
+  margin-bottom: 9px;
 }
-.topbar {
-  position:sticky; top:0; min-height:56px;
-  background:#f8f8f9ed; backdrop-filter:blur(16px);
-  padding:12px 16px; display:flex; align-items:center;
-  gap:12px; border-bottom:1px solid #ddd; z-index:5;
+
+.song {
+  font-size: clamp(12px, 3.8vw, 15px);
+  line-height: 1.3;
+  font-weight: 700;
+  overflow-wrap: anywhere;
 }
-.topbar button { background:transparent; color:var(--blue); padding:4px 0; }
-.topbar strong { font-size:18px; }
-.content { padding:16px; }
-.card {
-  background:white; color:#222; border-radius:17px;
-  padding:16px; margin-bottom:13px;
-  box-shadow:0 1px 3px #00000008;
+
+.artist {
+  font-size: clamp(12px, 3.7vw, 14px);
+  color: #ccc;
+  margin-top: 4px;
 }
-.muted { color:#777; }
-.field {
-  width:100%; padding:13px 14px; border:1px solid #d1d1d6;
-  border-radius:12px; background:white; color:#111;
-  margin:5px 0 10px; outline:none;
+
+.bar {
+  height: 4px;
+  width: 100%;
+  background: #777;
+  border-radius: 4px;
+  margin: 13px 0 6px;
+  overflow: hidden;
 }
-.field:focus { border-color:#7eafff; }
-.primary {
-  background:var(--blue); color:white;
-  border-radius:12px; padding:12px 16px;
+
+.bar i {
+  display: block;
+  width: 46%;
+  height: 100%;
+  background: white;
 }
-.item {
-  display:flex; align-items:center; gap:12px;
-  width:100%; text-align:left; padding:14px 4px;
-  border-bottom:1px solid #dedee3;
-  background:transparent; color:#222;
+
+.track {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  color: #eee;
 }
-.avatar {
-  width:44px; height:44px; border-radius:50%;
-  display:grid; place-items:center; background:#e5e5ea;
-  flex-shrink:0; font-size:22px;
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3px;
+  margin-top: 12px;
 }
-.bubble {
-  padding:10px 13px; border-radius:17px;
-  background:#e4e4e9; color:#111;
-  margin:8px 0; max-width:85%; overflow-wrap:anywhere;
+
+.controls button {
+  padding: 3px;
+  color: white;
+  background: transparent;
+  font-size: 15px;
 }
-.bubble.me { margin-left:auto; background:#a2e6a0; }
+
+.musiclabel {
+  position: absolute;
+  top: calc(39% + 28% + 4px);
+  left: 54%;
+  width: 41%;
+  text-align: center;
+  font-size: 14px;
+  text-shadow: 0 1px 4px #000;
+  pointer-events: none;
+}
+
+/* Dock */
+.pages {
+  position: absolute;
+  bottom: calc(10% + env(safe-area-inset-bottom));
+  left: 0;
+  width: 100%;
+  text-align: center;
+  letter-spacing: 7px;
+  font-size: 13px;
+  color: #fff;
+  text-shadow: 0 1px 4px #000;
+}
+
+.dock {
+  position: absolute;
+  z-index: 5;
+  left: 5%;
+  right: 5%;
+  bottom: calc(2.5% + env(safe-area-inset-bottom));
+  height: clamp(66px, 9%, 82px);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: center;
+  justify-items: center;
+  gap: 6px;
+  padding: 7px;
+  border-radius: 28px;
+  background: rgba(203,188,165,.83);
+  box-shadow: 0 6px 18px #0002;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.dock .ico {
+  width: clamp(48px, 15vw, 59px);
+  border-radius: 16px;
+}
+
+/* Passcode */
 .pinpanel {
-  position:absolute; inset:0; background:#080808f5;
-  z-index:25; display:none; text-align:center;
-  padding-top:18%;
+  position: absolute;
+  inset: 0;
+  z-index: 30;
+  display: none;
+  padding-top: 17%;
+  background: rgba(5,5,7,.97);
+  text-align: center;
 }
-.pinpanel.show { display:block; }
-.pinpanel h2 { font-weight:400; }
-.dots { letter-spacing:10px; font-size:23px; min-height:30px; }
-.error { height:20px; color:#ff9999; font-size:13px; }
+
+.pinpanel.show { display: block; }
+
+.pinpanel h2 { font-size: 24px; font-weight: 500; }
+.pinpanel p { color: #bbb; }
+.dots { min-height: 30px; font-size: 22px; letter-spacing: 8px; }
+.error { min-height: 22px; color: #ff9b9b; font-size: 13px; }
+
 .keypad {
-  display:grid; grid-template-columns:repeat(3,1fr);
-  gap:12px; max-width:280px; margin:20px auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 275px;
+  margin: 20px auto;
 }
+
 .keypad button {
-  aspect-ratio:1; border-radius:50%;
-  background:#ffffff20; border:1px solid #ffffff35;
-  color:white; font-size:24px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1px solid #ffffff25;
+  background: #ffffff1b;
+  color: white;
+  font-size: 24px;
 }
-.hide { display:none!important; }
-.photoGrid { display:grid; grid-template-columns:repeat(3,1fr); gap:3px; }
+
+.homebar {
+  position: absolute;
+  z-index: 40;
+  bottom: calc(5px + env(safe-area-inset-bottom));
+  left: calc(50% - 50px);
+  width: 100px;
+  height: 4px;
+  border-radius: 5px;
+  background: #ffffffb5;
+}
+
+.hide { display: none !important; }
+
+/* App screens */
+.appscreen {
+  z-index: 15;
+  background: var(--paper);
+  color: var(--ink);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-bottom: 35px;
+}
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 15px;
+  background: rgba(249,249,251,.96);
+  border-bottom: 1px solid #ddd;
+  backdrop-filter: blur(15px);
+}
+
+.topbar button {
+  color: var(--blue);
+  background: transparent;
+  font-size: 16px;
+}
+
+.topbar strong { font-size: 18px; }
+
+.content { padding: 16px; }
+.card {
+  padding: 15px;
+  margin-bottom: 12px;
+  border-radius: 16px;
+  background: #fff;
+  color: #222;
+  box-shadow: 0 1px 2px #00004;
+}
+.muted { color: #777; }
+
+.field {
+  width: 100%;
+  padding: 12px;
+  margin: 5px 0 10px;
+  border: 1px solid #d0d0d5;
+  border-radius: 12px;
+  background: #fff;
+  color: #111;
+  outline-color: var(--blue);
+}
+
+.primary {
+  padding: 11px 15px;
+  border-radius: 12px;
+  background: var(--blue);
+  color: #fff;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 13px 4px;
+  border-bottom: 1px solid #ddd;
+  background: transparent;
+  color: #222;
+  text-align: left;
+}
+
+.avatar {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #e1e1e5;
+  font-size: 22px;
+}
+
+.bubble {
+  max-width: 85%;
+  margin: 8px 0;
+  padding: 10px 13px;
+  border-radius: 16px;
+  background: #e4e4e9;
+  color: #111;
+  overflow-wrap: anywhere;
+}
+
+.bubble.me {
+  margin-left: auto;
+  background: #a2e6a0;
+}
+
+.photoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 3px;
+}
+
 .photoGrid button {
-  aspect-ratio:1; background:linear-gradient(140deg,#d4b69a,#526270);
-  font-size:30px;
+  aspect-ratio: 1;
+  background: linear-gradient(140deg,#d4b69a,#526270);
+  font-size: 30px;
 }
-.notice { font-size:12px; color:#777; }
+
+.notice { font-size: 12px; color: #777; }
+
+/* Kamera */
+#video {
+  width: 100%;
+  min-height: 230px;
+  border-radius: 15px;
+  background: #111;
+  object-fit: cover;
+}
+
+/* Kalkulator */
 .calc-display {
-  width:100%; font-size:44px; background:transparent;
-  color:white; border:0; text-align:right; padding:20px 4px;
-  overflow:hidden;
+  width: 100%;
+  margin: 15px 0 20px;
+  padding: 12px 0;
+  border: 0;
+  background: transparent;
+  color: white;
+  text-align: right;
+  font-size: clamp(34px, 10vw, 48px);
 }
-.calc-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:9px; }
+
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
 .calc-grid button {
-  aspect-ratio:1; border-radius:50%; font-size:22px;
-  background:#414145; color:white;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #444;
+  color: white;
+  font-size: 21px;
 }
-.calc-grid button.operator { background:#ff9f0a; }
-.calc-grid button.utility { background:#a5a5a8; color:#111; }
-.settings-row {
-  display:flex; align-items:center; gap:12px;
-  width:100%; padding:13px 0; text-align:left;
-  color:#222; background:transparent; border-bottom:1px solid #ddd;
+
+.calc-grid .operator { background: #f5a623; }
+.calc-grid .function { background: #aaa; color: #111; }
+
+@media (max-height: 760px) {
+  .weather {
+    top: calc(6.5% + env(safe-area-inset-top));
+    height: 22%;
+    min-height: 155px;
+  }
+
+  .wlabel {
+    top: calc(6.5% + env(safe-area-inset-top) + 22% + 6px);
+  }
+
+  .app-grid {
+    top: 37%;
+    height: 36%;
+    row-gap: 8px;
+  }
+
+  .music {
+    top: 37%;
+    height: 27%;
+    min-height: 195px;
+  }
+
+  .musiclabel { top: calc(37% + 27% + 3px); }
 }
-.setting-icon {
-  width:31px; height:31px; display:grid; place-items:center;
-  border-radius:8px; background:#8e8e93; color:white;
-}
-.camera-view {
-  width:100%; aspect-ratio:3/4; background:#111;
-  border-radius:20px; object-fit:cover;
-}
-@media (max-height:760px) {
-  .weather { top:6.5%; height:23%; min-height:165px; }
-  .wlabel { top:30%; }
-  .grid { top:35%; height:42%; row-gap:8px; }
-  .music { top:35%; height:31%; min-height:230px; padding:12px; }
-  .dock { bottom:2%; }
-  .pages { bottom:11%; }
+
+@media (min-width: 600px) {
+  #phone {
+    max-width: 430px;
+    margin: 0 auto;
+  }
 }
 </style>
 </head>
@@ -327,95 +708,100 @@ button { cursor:pointer; border:0; }
 
   <div class="status">
     <span id="clock">11:11</span>
-    <span class="signals">▮ ▮ ▮ ◉ ▰</span>
+    <span class="status-right"><span>▮▮▮</span><span>◉</span><span>━</span></span>
   </div>
 
+  <!-- LOCK SCREEN -->
   <section class="screen lock active" id="lock">
-    <img src="alohomora-lockscreen.jpg" alt="Alohomora lock screen">
+    <img class="lock-wallpaper" src="alohomora-lockscreen.jpg" alt="Alohomora lock screen">
     <div class="lockdate" id="date"></div>
     <div class="locktime" id="lockclock">11:11</div>
     <button class="hint" id="unlock">↑ &nbsp; swipe up to unlock</button>
   </section>
 
+  <!-- HOME SCREEN -->
   <section class="screen home" id="home">
-    <button class="weather" data-app="Weather">
-      <div class="city">Bandung</div>
-      <div class="temp">61°</div>
-      <div class="desc">
-        <div class="weather-icon">☁</div>
-        Cloudy<br>H:62° L:52°
-      </div>
-      <div class="hours">
-        <div class="hour">2PM<b>☁</b>61°</div>
-        <div class="hour">3PM<b>☁</b>62°</div>
-        <div class="hour">4PM<b>☁</b>61°</div>
-        <div class="hour">5PM<b>☁</b>62°</div>
-        <div class="hour">6PM<b>☁</b>62°</div>
-        <div class="hour">7PM<b>☁</b>61°</div>
-      </div>
+
+    <button class="weather" data-app="Weather" aria-label="Open Weather">
+      <span class="city">Bandung</span>
+      <span class="temp">61°</span>
+      <span class="desc">
+        <span class="weather-icon">☁</span>
+        Cloudy<br>
+        H:62° L:52°
+      </span>
+      <span class="hours">
+        <span class="hour">2PM<b>☁</b>61°</span>
+        <span class="hour">3PM<b>☁</b>62°</span>
+        <span class="hour">4PM<b>☁</b>61°</span>
+        <span class="hour">5PM<b>☁</b>62°</span>
+        <span class="hour">6PM<b>☁</b>62°</span>
+        <span class="hour">7PM<b>☁</b>61°</span>
+      </span>
     </button>
     <div class="wlabel">Weather</div>
 
-    <div class="grid">
-      <button class="app" id="app-whatsapp" data-app="WhatsApp">
+    <div class="app-grid">
+      <button class="app" data-app="WhatsApp">
         <span class="ico wa">☎</span><label>WhatsApp</label>
       </button>
-      <button class="app" id="app-calendar" data-app="Calendar">
+      <button class="app" data-app="Calendar">
         <span class="ico calendar"><small id="day">THU</small><span id="num">29</span></span>
         <label>Calendar</label>
       </button>
-      <button class="app" id="app-instagram" data-app="Instagram">
+      <button class="app" data-app="Instagram">
         <span class="ico ig">◎</span><label>Instagram</label>
       </button>
-      <button class="app" id="app-x" data-app="X">
-        <span class="ico xapp">𝕏</span><label>X</label>
+      <button class="app" data-app="X">
+        <span class="ico x-icon">𝕏</span><label>X</label>
       </button>
-      <button class="app" id="app-spotify" data-app="Spotify">
+      <button class="app" data-app="Spotify">
         <span class="ico spotify">●</span><label>Spotify</label>
       </button>
-      <button class="app" id="app-photos" data-app="Photos">
+      <button class="app" data-app="Photos">
         <span class="ico photos">✿</span><label>Photos</label>
       </button>
-      <button class="app" id="app-notes" data-app="Notes">
+      <button class="app" data-app="Notes">
         <span class="ico notes">▤</span><label>Notes</label>
       </button>
-      <button class="app" id="app-youtube" data-app="YouTube">
+      <button class="app" data-app="YouTube">
         <span class="ico yt">▶</span><label>YouTube</label>
       </button>
     </div>
 
-    <!-- Music is a DIV, not a button containing other buttons. -->
-    <div class="music" id="musicWidget" data-app="Music">
+    <button class="music" data-app="Music" aria-label="Open Music">
       <div class="album">♫</div>
       <div class="song">everything u are</div>
       <div class="artist">Hindia</div>
-      <div class="music-progress"><i id="progress"></i></div>
+      <div class="bar"><i id="progress"></i></div>
       <div class="track"><span>1:53</span><span>−2:04</span></div>
       <div class="controls">
-        <button data-control="prev" aria-label="Previous track">◀◀</button>
-        <button data-control="play" aria-label="Play or pause">▶</button>
-        <button data-control="next" aria-label="Next track">▶▶</button>
+        <button type="button" data-control="prev" aria-label="Previous">◀◀</button>
+        <button type="button" data-control="play" aria-label="Play">▶</button>
+        <button type="button" data-control="next" aria-label="Next">▶▶</button>
       </div>
-    </div>
+    </button>
+    <div class="musiclabel">Music</div>
 
     <div class="pages">● ○ ○</div>
 
     <div class="dock">
-      <button class="app" data-app="Camera">
-        <span class="ico" style="background:#e5e5e5;color:#222">📷</span><label>Camera</label>
+      <button class="app" data-app="Camera" aria-label="Camera">
+        <span class="ico dock-icon">📷</span>
       </button>
-      <button class="app" data-app="Calculator">
-        <span class="ico" style="background:#e5e5e5;color:#222">🧮</span><label>Calculator</label>
+      <button class="app" data-app="Calculator" aria-label="Calculator">
+        <span class="ico dock-icon">🧮</span>
       </button>
-      <button class="app" data-app="Gmail">
-        <span class="ico" style="background:#fff;color:#d44">✉</span><label>Gmail</label>
+      <button class="app" data-app="Gmail" aria-label="Gmail">
+        <span class="ico mail-icon">✉</span>
       </button>
-      <button class="app" data-app="Settings">
-        <span class="ico" style="background:#e5e5e5;color:#222">⚙</span><label>Settings</label>
+      <button class="app" data-app="Settings" aria-label="Settings">
+        <span class="ico dock-icon">⚙</span>
       </button>
     </div>
   </section>
 
+  <!-- APP WINDOW -->
   <section class="screen appscreen" id="app">
     <div class="topbar">
       <button id="back">‹ Home</button>
@@ -426,9 +812,10 @@ button { cursor:pointer; border:0; }
     <div class="content" id="content"></div>
   </section>
 
+  <!-- PIN PANEL -->
   <div class="pinpanel" id="pin">
     <h2>Enter Passcode</h2>
-    <p style="color:#ccc">Unlock Mavin's iPhone</p>
+    <p>Unlock Mavin's iPhone</p>
     <div class="dots" id="dots">○ ○ ○ ○</div>
     <div class="error" id="error"></div>
     <div class="keypad" id="keys"></div>
@@ -442,444 +829,542 @@ button { cursor:pointer; border:0; }
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 
-let pin = '';
-let appName = '';
-let notes = JSON.parse(localStorage.getItem('mavin-notes') || 'null') ||
-  ['Shot list: Gotham rooftops','Buy film for the camera','Daily Bugle deadline: submit photos'];
-let events = JSON.parse(localStorage.getItem('mavin-events') || '[]');
+let pin = "";
+let appName = "";
+let notes = JSON.parse(localStorage.getItem("mavin-notes") || '["Shot list: Gotham rooftops","Buy film for the camera","Daily Bugle deadline: submit photos"]');
+let events = JSON.parse(localStorage.getItem("mavin-events") || "[]");
 let chats = {};
 let playing = false;
-let musicOffset = 113;
+let cameraStream = null;
 
 function tick() {
   const d = new Date();
-  const time = d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
-  $('#clock').textContent = time;
-  $('#lockclock').textContent = time;
-  $('#date').textContent = d.toLocaleDateString('en-US',{
-    weekday:'long',month:'long',day:'numeric'
+  const time = d.toLocaleTimeString("en-GB", {hour:"2-digit", minute:"2-digit"});
+  $("#clock").textContent = time;
+  $("#lockclock").textContent = time;
+  $("#date").textContent = d.toLocaleDateString("en-US", {
+    weekday:"long", month:"long", day:"numeric"
   });
-  $('#day').textContent = d.toLocaleDateString('en-US',{weekday:'short'}).toUpperCase();
-  $('#num').textContent = d.getDate();
+  $("#day").textContent = d.toLocaleDateString("en-US", {weekday:"short"}).toUpperCase();
+  $("#num").textContent = d.getDate();
 }
 tick();
-setInterval(tick,15000);
+setInterval(tick, 15000);
 
 function showPin() {
-  pin = '';
+  pin = "";
   drawPin();
-  $('#error').textContent = '';
-  $('#pin').classList.add('show');
+  $("#error").textContent = "";
+  $("#pin").classList.add("show");
 }
-function drawPin() {
-  $('#dots').textContent = Array.from({length:4},(_,i)=>i<pin.length?'●':'○').join(' ');
-}
-function home() {
-  $('#pin').classList.remove('show');
-  $('#lock').classList.remove('active');
-  $('#app').classList.remove('active');
-  $('#home').classList.add('active');
-}
-function lock() {
-  $('#pin').classList.remove('show');
-  $('#home').classList.remove('active');
-  $('#app').classList.remove('active');
-  $('#lock').classList.add('active');
-}
-$('#unlock').addEventListener('click',showPin);
-$('#lock').addEventListener('click',e=>{
-  if(e.target === $('#lock') || e.target === $('#lock').querySelector('img')) showPin();
-});
-let touchStartY = 0;
-$('#lock').addEventListener('touchstart',e=>{
-  touchStartY = e.changedTouches[0].screenY;
-},{passive:true});
-$('#lock').addEventListener('touchend',e=>{
-  const delta = touchStartY - e.changedTouches[0].screenY;
-  if(delta > 35) showPin();
-},{passive:true});
 
-for(let n=1;n<=9;n++) {
-  const b=document.createElement('button');
-  b.textContent=n;
-  b.onclick=()=>addPin(String(n));
-  $('#keys').append(b);
+function drawPin() {
+  $("#dots").textContent = Array.from({length:4}, (_,i) => i < pin.length ? "●" : "○").join(" ");
 }
-$('#keys').append(document.createElement('span'));
-const zero=document.createElement('button');
-zero.textContent='0';
-zero.onclick=()=>addPin('0');
-$('#keys').append(zero);
-const del=document.createElement('button');
-del.textContent='⌫';
-del.onclick=()=>{pin=pin.slice(0,-1);drawPin();};
-$('#keys').append(del);
-$('#cancel').onclick=()=>$('#pin').classList.remove('show');
+
+function home() {
+  $("#pin").classList.remove("show");
+  $("#lock").classList.remove("active");
+  $("#app").classList.remove("active");
+  $("#home").classList.add("active");
+}
+
+function lock() {
+  $("#pin").classList.remove("show");
+  $("#home").classList.remove("active");
+  $("#app").classList.remove("active");
+  $("#lock").classList.add("active");
+}
+
+$("#unlock").addEventListener("click", showPin);
+$("#cancel").addEventListener("click", () => $("#pin").classList.remove("show"));
+$("#back").addEventListener("click", home);
+$("#lockBtn").addEventListener("click", lock);
+
+let touchStartY = null;
+$("#lock").addEventListener("touchstart", e => {
+  touchStartY = e.touches[0].clientY;
+}, {passive:true});
+
+$("#lock").addEventListener("touchend", e => {
+  if (touchStartY === null) return;
+  const distance = touchStartY - e.changedTouches[0].clientY;
+  if (distance > 35) showPin();
+  touchStartY = null;
+}, {passive:true});
+
+for (let n = 1; n <= 9; n++) {
+  const b = document.createElement("button");
+  b.textContent = n;
+  b.addEventListener("click", () => addPin(String(n)));
+  $("#keys").append(b);
+}
+
+$("#keys").append(document.createElement("span"));
+
+const zero = document.createElement("button");
+zero.textContent = "0";
+zero.addEventListener("click", () => addPin("0"));
+$("#keys").append(zero);
+
+const del = document.createElement("button");
+del.textContent = "⌫";
+del.addEventListener("click", () => {
+  pin = pin.slice(0,-1);
+  drawPin();
+});
+$("#keys").append(del);
 
 function addPin(n) {
-  if(pin.length>=4) return;
-  pin+=n;
+  if (pin.length >= 4) return;
+  pin += n;
   drawPin();
-  if(pin.length===4) {
-    if(pin==='1711') setTimeout(home,160);
-    else {
-      $('#error').textContent='Incorrect passcode';
-      setTimeout(()=>{pin='';drawPin();},650);
+
+  if (pin.length === 4) {
+    if (pin === "1711") {
+      setTimeout(home, 160);
+    } else {
+      $("#error").textContent = "Incorrect passcode";
+      setTimeout(() => {
+        pin = "";
+        drawPin();
+      }, 650);
     }
   }
 }
+
 function esc(s) {
-  return String(s).replace(/[&<>"']/g,c=>({
-    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
-  }[c]));
+  return String(s).replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+  })[c]);
 }
 
-$$('[data-app]').forEach(el=>{
-  el.addEventListener('click',e=>{
-    if(e.target.closest('[data-control]')) return;
-    openApp(el.dataset.app);
+$$("[data-app]").forEach(b => {
+  b.addEventListener("click", e => {
+    if (e.target.closest("[data-control]")) return;
+    openApp(b.dataset.app);
   });
 });
-$('#back').onclick=home;
-$('#lockBtn').onclick=lock;
-$('#homebar').onclick=()=>{
-  if($('#app').classList.contains('active')) home();
-  else if($('#lock').classList.contains('active')) showPin();
-};
 
-$$('[data-control]').forEach(b=>{
-  b.addEventListener('click',e=>{
+$$("[data-control]").forEach(b => {
+  b.addEventListener("click", e => {
     e.stopPropagation();
-    const type=b.dataset.control;
-    if(type==='play') {
-      playing=!playing;
-      b.textContent=playing?'Ⅱ':'▶';
-      $('#progress').style.width=playing?'49%':'46%';
+    const action = b.dataset.control;
+    if (action === "play") {
+      playing = !playing;
+      b.textContent = playing ? "Ⅱ" : "▶";
     } else {
-      $('#progress').style.width=type==='next'?'0%':'46%';
+      $("#progress").style.width = action === "prev" ? "20%" : "65%";
     }
   });
 });
 
-function openApp(n) {
-  appName=n;
-  $('#title').textContent=n;
-  $('#home').classList.remove('active');
-  $('#lock').classList.remove('active');
-  $('#app').classList.add('active');
-  render(n);
-}
-function render(n) {
-  const c=$('#content');
-  c.innerHTML='';
+$("#homebar").addEventListener("click", () => {
+  if ($("#app").classList.contains("active")) home();
+  else if ($("#lock").classList.contains("active")) showPin();
+});
 
-  if(n==='Weather') {
-    c.innerHTML=`
+function openApp(name) {
+  appName = name;
+  $("#title").textContent = name;
+  $("#home").classList.remove("active");
+  $("#lock").classList.remove("active");
+  $("#app").classList.add("active");
+  render(name);
+}
+
+function render(name) {
+  const c = $("#content");
+  c.innerHTML = "";
+
+  if (name === "Weather") {
+    c.innerHTML = `
       <div class="card" style="text-align:center;background:linear-gradient(140deg,#617d98,#263c51);color:white">
         <div>Bandung · Current weather</div>
         <div style="font-size:65px;font-weight:250">61°</div>
-        ☁ Cloudy<p>H: 62° · L: 52°</p>
+        ☁ Cloudy
+        <p>H: 62° · L: 52°</p>
         <p>Feels like 60° · Humidity 68% · Wind 8 km/h</p>
       </div>
       <h3>Hourly forecast</h3>
-      <div class="card">2 PM ☁ 61°　3 PM ☁ 62°　4 PM ☁ 61°　5 PM ☁ 62°</div>
+      <div class="card">2 PM ☁ 61°　3 PM ☁ 62°　4 PM ☁ 61°</div>
       <h3>10-day forecast</h3>
-      ${['Today · Cloudy · 62° / 52°','Friday · Partly cloudy · 63° / 51°','Saturday · Light rain · 60° / 50°'].map(x=>`<div class="item">${x}</div>`).join('')}
+      ${["Today · Cloudy · 62° / 52°","Friday · Partly cloudy · 63° / 51°","Saturday · Light rain · 60° / 50°"].map(x=>`<div class="item">${x}</div>`).join("")}
       <p class="notice">Demo weather, not live data.</p>`;
   }
 
-  else if(n==='WhatsApp') {
-    const names=['Sal','Kinan','Opi','Daily Bugle Desk','Peter','Aunt May','MJ','Flash'];
-    const icons=['🌻','📚','☕','📰','📷','🏠','🎧','🕸️'];
-    c.innerHTML=`<input class="field" id="search" placeholder="Search chats">
+  else if (name === "WhatsApp") {
+    const names = ["Sal","Kinan","Opi","Daily Bugle Desk","Peter","Aunt May","MJ","Flash"];
+    const emojis = ["🌻","📚","☕","📰","📷","🏠","🎧","🕸️"];
+
+    c.innerHTML = `
+      <input class="field" id="search" placeholder="Search chats">
       <div id="chatlist">${names.map((x,i)=>`
         <button class="item" data-chat="${x}">
-          <span class="avatar">${icons[i]}</span>
-          <span><b>${x}</b><br><span class="muted">${esc((chats[x]||['Hey, are we still on for today?']).slice(-1)[0])}</span></span>
+          <span class="avatar">${emojis[i]}</span>
+          <span><b>${x}</b><br><span class="muted">${esc((chats[x]||["Hey, are we still on for today?"]).slice(-1)[0])}</span></span>
           <span style="margin-left:auto" class="muted">10:${12+i}</span>
-        </button>`).join('')}</div>`;
-    $$('[data-chat]').forEach(b=>b.onclick=()=>chat(b.dataset.chat));
-    $('#search').oninput=e=>$$('[data-chat]').forEach(b=>b.classList.toggle('hide',!b.dataset.chat.toLowerCase().includes(e.target.value.toLowerCase())));
+        </button>`).join("")}</div>`;
+
+    $$("[data-chat]").forEach(b => b.addEventListener("click", () => chat(b.dataset.chat)));
+    $("#search").addEventListener("input", e => {
+      $$("[data-chat]").forEach(b => b.classList.toggle("hide",
+        !b.dataset.chat.toLowerCase().includes(e.target.value.toLowerCase())));
+    });
   }
 
-  else if(n==='Calendar') {
-    let d=new Date(),m=new Date(d.getFullYear(),d.getMonth(),1);
-    c.innerHTML=`
+  else if (name === "Calendar") {
+    let d = new Date();
+    let m = new Date(d.getFullYear(), d.getMonth(), 1);
+
+    c.innerHTML = `
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <button class="primary" id="prev">‹</button><h2 id="month"></h2>
+        <button class="primary" id="prev">‹</button>
+        <h2 id="month"></h2>
         <button class="primary" id="next">›</button>
       </div>
       <div class="card"><div id="calgrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:7px;text-align:center"></div></div>
       <h3>Events</h3><div id="events"></div>
       <input id="eventname" class="field" placeholder="Event title">
-      <input id="eventdate" class="field" type="date" value="${d.toISOString().slice(0,10)}">
+      <input id="eventdate" class="field" type="date" value="${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}">
       <button class="primary" id="addevent">Add event</button>`;
+
     function drawEvents() {
-      $('#events').innerHTML=events.map((e,i)=>`
+      $("#events").innerHTML = events.map((e,i)=>`
         <div class="item">${esc(e.date)} · ${esc(e.title)}
           <button data-del="${i}" style="margin-left:auto;color:#d33;background:none">Delete</button>
-        </div>`).join('')||'<p class="muted">No events yet.</p>';
-      $$('[data-del]').forEach(b=>b.onclick=()=>{
-        events.splice(+b.dataset.del,1);
-        localStorage.setItem('mavin-events',JSON.stringify(events));
+        </div>`).join("") || '<p class="muted">No events yet.</p>';
+
+      $$("[data-del]").forEach(b => b.addEventListener("click", () => {
+        events.splice(+b.dataset.del, 1);
+        localStorage.setItem("mavin-events", JSON.stringify(events));
         drawEvents();
-      });
+      }));
     }
+
     function draw() {
-      $('#month').textContent=m.toLocaleDateString('en-US',{month:'long',year:'numeric'});
-      const g=$('#calgrid');
-      g.innerHTML=['S','M','T','W','T','F','S'].map(x=>`<b>${x}</b>`).join('');
-      const offset=m.getDay(),count=new Date(m.getFullYear(),m.getMonth()+1,0).getDate();
-      for(let i=0;i<offset;i++) g.innerHTML+='<span></span>';
-      for(let i=1;i<=count;i++) {
-        const today=i===d.getDate()&&m.getMonth()===d.getMonth()&&m.getFullYear()===d.getFullYear();
-        g.innerHTML+=`<button data-date="${i}" style="background:${today?'#087cff':'transparent'};color:${today?'white':'#222'};border-radius:50%;padding:8px 0">${i}</button>`;
+      $("#month").textContent = m.toLocaleDateString("en-US", {month:"long",year:"numeric"});
+      const g = $("#calgrid");
+      g.innerHTML = ["S","M","T","W","T","F","S"].map(x=>`<b>${x}</b>`).join("");
+      const offset = m.getDay();
+      const count = new Date(m.getFullYear(),m.getMonth()+1,0).getDate();
+
+      for (let i=0;i<offset;i++) g.innerHTML += "<span></span>";
+
+      for (let i=1;i<=count;i++) {
+        const today = i===d.getDate() && m.getMonth()===d.getMonth() && m.getFullYear()===d.getFullYear();
+        g.innerHTML += `<button data-date="${i}" style="background:${today?"#087cff":"transparent"};color:${today?"white":"#222"};border-radius:50%;padding:7px 0">${i}</button>`;
       }
-      $$('[data-date]').forEach(b=>b.onclick=()=>{
-        $('#eventdate').value=`${m.getFullYear()}-${String(m.getMonth()+1).padStart(2,'0')}-${String(+b.dataset.date).padStart(2,'0')}`;
-      });
+
+      $$("[data-date]").forEach(b => b.addEventListener("click", () => {
+        $("#eventdate").value = `${m.getFullYear()}-${String(m.getMonth()+1).padStart(2,"0")}-${String(+b.dataset.date).padStart(2,"0")}`;
+      }));
+
       drawEvents();
     }
-    $('#prev').onclick=()=>{m.setMonth(m.getMonth()-1);draw();};
-    $('#next').onclick=()=>{m.setMonth(m.getMonth()+1);draw();};
-    $('#addevent').onclick=()=>{
-      if(!$('#eventname').value.trim()) return;
-      events.push({title:$('#eventname').value.trim(),date:$('#eventdate').value});
-      localStorage.setItem('mavin-events',JSON.stringify(events));
-      $('#eventname').value='';
+
+    $("#prev").addEventListener("click", () => { m.setMonth(m.getMonth()-1); draw(); });
+    $("#next").addEventListener("click", () => { m.setMonth(m.getMonth()+1); draw(); });
+    $("#addevent").addEventListener("click", () => {
+      const title = $("#eventname").value.trim();
+      if (!title) return;
+      events.push({title, date:$("#eventdate").value});
+      localStorage.setItem("mavin-events", JSON.stringify(events));
+      $("#eventname").value = "";
       drawEvents();
-    };
+    });
     draw();
   }
 
-  else if(n==='Instagram') {
-    const pics=['📷','🌆','☕','🌧️','🏙️','🌿','🚇','🌅','📚','🌃','🎞️'];
-    c.innerHTML=`
+  else if (name === "Instagram") {
+    const pics = ["📷","🌆","☕","🌧️","🏙️","🌿","🚇","🌅","📚","🌃","🎞️"];
+    c.innerHTML = `
       <div class="card"><h2>mavin</h2><p>collecting moments, not things</p><b>11</b> posts　<b>483</b> followers　<b>291</b> following</div>
-      <div class="photoGrid">${pics.map((x,i)=>`<button data-photo="${i}">${x}</button>`).join('')}</div>
+      <div class="photoGrid">${pics.map((x,i)=>`<button data-photo="${i}">${x}</button>`).join("")}</div>
       <h3>For you</h3>
-      ${['gotham.daily','peterp','m.jane'].map((x,i)=>`
-        <div class="card"><b>${x}</b><p style="font-size:50px;text-align:center">${['🌇','🕷️','🎧'][i]}</p>
-        <button data-like style="background:none">♡ Like</button>　Comment</div>`).join('')}`;
-    $$('[data-photo]').forEach(b=>b.onclick=()=>photo('Mavin photo '+(+b.dataset.photo+1),b.textContent));
-    $$('[data-like]').forEach(b=>b.onclick=()=>b.textContent=b.textContent.includes('♡')?'♥ Liked':'♡ Like');
+      ${["gotham.daily","peterp","m.jane"].map((x,i)=>`
+        <div class="card"><b>${x}</b><p style="font-size:50px;text-align:center">${["🌇","🕷️","🎧"][i]}</p><button data-like>♡ Like</button>　Comment</div>`).join("")}`;
+
+    $$("[data-photo]").forEach(b=>b.addEventListener("click",()=>photo("Mavin photo "+(+b.dataset.photo+1),b.textContent)));
+    $$("[data-like]").forEach(b=>b.addEventListener("click",()=>b.textContent=b.textContent.includes("♡")?"♥ Liked":"♡ Like"));
   }
 
-  else if(n==='X') {
-    c.innerHTML=`
+  else if (name === "X") {
+    c.innerHTML = `
       <div class="card"><h2>@mavin 🔒</h2><p>private account · camera in hand, deadlines in mind</p>87 Following　42 Followers</div>
-      ${['gotham.news: Gotham looks suspiciously peaceful today.','mavin: the light was good for approximately 14 seconds and i was READY','peterp: anyone seen my backpack?','mavin: daily bugle wants the photos yesterday.'].map(x=>`
-        <div class="card"><b>${esc(x.split(':')[0])}</b><p>${esc(x.split(':').slice(1).join(':'))}</p>
-        <button data-like style="background:none">♡ Like</button>　<button data-reply style="background:none">Reply</button><p class="muted"></p></div>`).join('')}`;
-    $$('[data-like]').forEach(b=>b.onclick=()=>b.textContent=b.textContent.includes('♡')?'♥ Liked':'♡ Like');
-    $$('[data-reply]').forEach(b=>b.onclick=()=>{
-      const v=prompt('Write a reply');
-      if(v) b.parentElement.querySelector('.muted').textContent='Reply saved: '+v;
-    });
+      ${[
+        "gotham.news: Gotham looks suspiciously peaceful today.",
+        "mavin: the light was good for approximately 14 seconds and i was READY",
+        "peterp: anyone seen my backpack?",
+        "mavin: daily bugle wants the photos yesterday."
+      ].map(x=>`
+        <div class="card"><b>${esc(x.split(":")[0])}</b><p>${esc(x.split(":").slice(1).join(":"))}</p>
+          <button data-like>♡ Like</button>　<button data-reply>Reply</button><p class="muted"></p>
+        </div>`).join("")}`;
+
+    $$("[data-like]").forEach(b=>b.addEventListener("click",()=>b.textContent=b.textContent.includes("♡")?"♥ Liked":"♡ Like"));
+    $$("[data-reply]").forEach(b=>b.addEventListener("click",()=>{
+      const v = prompt("Write a reply");
+      if(v) b.parentElement.querySelector(".muted").textContent = "Reply saved: "+v;
+    }));
   }
 
-  else if(n==='Spotify'||n==='Music') {
-    c.innerHTML=`
+  else if (name === "Spotify" || name === "Music") {
+    c.innerHTML = `
       <div class="card" style="text-align:center;background:#173d2b;color:white">
-        <div class="album" style="width:min(190px,70%);margin:0 auto 12px;font-size:55px">🎵</div>
+        <div class="album" style="width:min(190px,75%);height:auto;aspect-ratio:1;margin:0 auto 12px;font-size:55px">🎵</div>
         <h2>everything u are</h2><p>Hindia</p>
-        <input id="range" type="range" min="0" max="244" value="${musicOffset}" style="width:100%">
-        <div><span id="elapsed">${formatTime(musicOffset)}</span> / 4:04</div>
+        <input id="range" type="range" min="0" max="244" value="113" style="width:100%">
+        <div><span id="elapsed">1:53</span> / 4:04</div>
         <p><button id="prevSong">◀◀</button>　<button id="play">▶</button>　<button id="nextSong">▶▶</button></p>
         <small id="state">Interactive demo player, audio not connected</small>
       </div>
       <h3>Your playlists</h3>
-      ${['Liked Songs','Menari dengan Bayangan','Indie Indonesia','Late night thoughts','Giselle mix'].map(x=>`<button class="item" data-list="${x}">🎧　${x}　›</button>`).join('')}
-      <p class="notice">Player controls are a demo. No audio is bundled.</p>`;
-    $('#play').onclick=()=>{
+      ${["Liked Songs","Menari dengan Bayangan","Indie Indonesia","Late night thoughts","Giselle mix"].map(x=>`<button class="item" data-list="${x}">🎧　${x}　›</button>`).join("")}
+      <p class="notice">Player controls work as a demo. No audio is bundled.</p>`;
+
+    $("#play").addEventListener("click",()=>{
       playing=!playing;
-      $('#play').textContent=playing?'Ⅱ':'▶';
-      $('#state').textContent=playing?'Playing demo':'Paused demo';
-    };
-    $('#prevSong').onclick=()=>$('#state').textContent='Previous track selected (demo)';
-    $('#nextSong').onclick=()=>$('#state').textContent='Next track selected (demo)';
-    $('#range').oninput=e=>{
-      musicOffset=+e.target.value;
-      $('#elapsed').textContent=formatTime(musicOffset);
-    };
-    $$('[data-list]').forEach(b=>b.onclick=()=>$('#state').textContent='Playlist opened: '+b.dataset.list);
+      $("#play").textContent=playing?"Ⅱ":"▶";
+      $("#state").textContent=playing?"Playing demo":"Paused demo";
+    });
+    $("#prevSong").addEventListener("click",()=>$("#state").textContent="Previous track selected (demo)");
+    $("#nextSong").addEventListener("click",()=>$("#state").textContent="Next track selected (demo)");
+    $("#range").addEventListener("input",e=>{
+      $("#elapsed").textContent=Math.floor(e.target.value/60)+":"+String(e.target.value%60).padStart(2,"0");
+    });
+    $$("[data-list]").forEach(b=>b.addEventListener("click",()=>$("#state").textContent="Playlist opened: "+b.dataset.list));
   }
 
-  else if(n==='Photos') {
-    const pics=['📷','🌆','☕','🌧️','🏙️','🌿','🚇','🌅','📚','🌃','🎞️'];
-    c.innerHTML=`<h2>Library</h2><p class="muted">All Photos · 11 Items</p>
-      <div class="photoGrid">${pics.map((x,i)=>`<button data-photo="${i}">${x}</button>`).join('')}</div>
+  else if (name === "Photos") {
+    const pics = ["📷","🌆","☕","🌧️","🏙️","🌿","🚇","🌅","📚","🌃","🎞️"];
+    c.innerHTML = `
+      <h2>Library</h2><p class="muted">All Photos · 11 Items</p>
+      <div class="photoGrid">${pics.map((x,i)=>`<button data-photo="${i}">${x}</button>`).join("")}</div>
       <h3>Albums</h3><div class="card">Recents · 11 photos</div><div class="card">Camera · 4 photos</div>`;
-    $$('[data-photo]').forEach(b=>b.onclick=()=>photo('Photo '+(+b.dataset.photo+1),b.textContent));
+    $$("[data-photo]").forEach(b=>b.addEventListener("click",()=>photo("Photo "+(+b.dataset.photo+1),b.textContent)));
   }
 
-  else if(n==='Notes') {
+  else if (name === "Notes") {
     function list() {
-      c.innerHTML=`<input class="field" id="notefind" placeholder="Search notes">
-        ${notes.map((x,i)=>`<button class="item" data-note="${i}">📝　<span><b>${esc(x.split(':')[0])}</b><br><span class="muted">${esc(x)}</span></span>　›</button>`).join('')}
+      c.innerHTML = `
+        <input class="field" id="notefind" placeholder="Search notes">
+        ${notes.map((x,i)=>`<button class="item" data-note="${i}">📝　<span><b>${esc(x.split(":")[0])}</b><br><span class="muted">${esc(x)}</span></span>　›</button>`).join("")}
         <button class="primary" id="newnote">＋ New Note</button>`;
-      $$('[data-note]').forEach(b=>b.onclick=()=>edit(+b.dataset.note));
-      $('#newnote').onclick=()=>edit(-1);
-      $('#notefind').oninput=e=>$$('[data-note]').forEach(b=>b.classList.toggle('hide',!notes[+b.dataset.note].toLowerCase().includes(e.target.value.toLowerCase())));
+
+      $$("[data-note]").forEach(b=>b.addEventListener("click",()=>edit(+b.dataset.note)));
+      $("#newnote").addEventListener("click",()=>edit(-1));
+      $("#notefind").addEventListener("input",e=>{
+        $$("[data-note]").forEach(b=>b.classList.toggle("hide",
+          !notes[+b.dataset.note].toLowerCase().includes(e.target.value.toLowerCase())));
+      });
     }
+
     function edit(i) {
-      const old=i<0?'':notes[i];
-      c.innerHTML=`<button id="noteback" style="background:none;color:#087cff">‹ Notes</button>
+      const old = i<0 ? "" : notes[i];
+      c.innerHTML = `
+        <button id="noteback" style="background:none;color:#087cff">‹ Notes</button>
         <textarea id="notetext" class="field" rows="12">${esc(old)}</textarea>
         <button class="primary" id="savenote">Save</button>
-        ${i>=0?'<button id="deletenote" style="background:none;color:#d33">Delete</button>':''}`;
-      $('#noteback').onclick=list;
-      $('#savenote').onclick=()=>{
-        if(i>=0) notes[i]=$('#notetext').value;
-        else notes.unshift($('#notetext').value||'Untitled note');
-        localStorage.setItem('mavin-notes',JSON.stringify(notes));
+        ${i>=0?'<button id="deletenote" style="background:none;color:#d33">Delete</button>':""}`;
+
+      $("#noteback").addEventListener("click",list);
+      $("#savenote").addEventListener("click",()=>{
+        if(i>=0) notes[i]=$("#notetext").value;
+        else notes.unshift($("#notetext").value||"Untitled note");
+        localStorage.setItem("mavin-notes",JSON.stringify(notes));
         list();
-      };
-      if(i>=0) $('#deletenote').onclick=()=>{
+      });
+
+      if(i>=0) $("#deletenote").addEventListener("click",()=>{
         notes.splice(i,1);
-        localStorage.setItem('mavin-notes',JSON.stringify(notes));
+        localStorage.setItem("mavin-notes",JSON.stringify(notes));
         list();
-      };
+      });
     }
     list();
   }
 
-  else if(n==='YouTube') {
-    c.innerHTML=`<h2>YouTube</h2><input id="ytsearch" class="field" placeholder="Search YouTube">
+  else if (name === "YouTube") {
+    c.innerHTML = `
+      <h2>YouTube</h2>
+      <input id="ytsearch" class="field" placeholder="Search YouTube">
       <div class="card"><h3>aespa 에스파</h3><p>Official channel</p><button class="primary" id="channel">Open official aespa channel ↗</button></div>
-      ${['aespa Official Videos','aespa Drama','aespa Supernova'].map((x,i)=>`<button class="item" data-video="${i}">▶　${x}</button>`).join('')}
+      ${["aespa Official Videos","aespa Drama","aespa Supernova"].map((x,i)=>`<button class="item" data-video="${i}">▶　${x}</button>`).join("")}
       <p class="notice">Videos open on YouTube.</p>`;
-    $('#channel').onclick=()=>window.open('https://www.youtube.com/@aespa','_blank','noopener');
-    $$('[data-video]').forEach(b=>b.onclick=()=>window.open('https://www.youtube.com/results?search_query='+encodeURIComponent('aespa '+b.textContent),'_blank','noopener'));
-    $('#ytsearch').onkeydown=e=>{
-      if(e.key==='Enter') window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(e.target.value),'_blank','noopener');
-    };
-  }
 
-  else if(n==='Camera') {
-    c.innerHTML=`<div class="card" style="text-align:center">
-      <video id="video" class="camera-view" autoplay playsinline></video>
-      <p id="cammsg">Tap Start Camera and allow permission.</p>
-      <button id="startcam" class="primary">Start Camera</button>
-      <button id="capture" class="primary">Capture</button>
-      <canvas id="canvas" class="hide"></canvas><div id="result"></div>
-      </div>`;
-    let stream=null;
-    $('#startcam').onclick=async()=>{
-      try {
-        stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
-        $('#video').srcObject=stream;
-        $('#cammsg').textContent='Camera active.';
-      } catch(e) {
-        $('#cammsg').textContent='Camera unavailable. Allow camera permission and use HTTPS.';
-      }
-    };
-    $('#capture').onclick=()=>{
-      const v=$('#video'),cv=$('#canvas');
-      if(!v.videoWidth) { $('#cammsg').textContent='Start camera first.'; return; }
-      cv.width=v.videoWidth; cv.height=v.videoHeight;
-      cv.getContext('2d').drawImage(v,0,0);
-      const u=cv.toDataURL('image/png');
-      $('#result').innerHTML=`<p>Captured photo</p><img src="${u}" style="width:100%;border-radius:12px"><p><a download="mavin-photo.png" href="${u}">Save photo</a></p>`;
-    };
-  }
-
-  else if(n==='Calculator') {
-    c.innerHTML=`<div class="card" style="background:#1c1c1e;color:white">
-      <input id="display" class="calc-display" value="0" readonly>
-      <div class="calc-grid">${['AC','±','%','÷','7','8','9','×','4','5','6','−','1','2','3','+','0','.','⌫','='].map(x=>
-        `<button data-calc="${x}" class="${['÷','×','−','+','='].includes(x)?'operator':['AC','±','%','⌫'].includes(x)?'utility':''}">${x}</button>`
-      ).join('')}</div></div>`;
-    let expr='',fresh=true;
-    $$('[data-calc]').forEach(b=>b.onclick=()=>{
-      const x=b.dataset.calc,d=$('#display');
-      if(x==='AC'){expr='';d.value='0';fresh=true;return;}
-      if(x==='⌫'){expr=expr.slice(0,-1);d.value=expr||'0';return;}
-      if(x==='±'){expr=expr.startsWith('-')?expr.slice(1):'-'+expr;d.value=expr;return;}
-      if(x==='%'){
-        try {expr=String(Number(expr)/100);d.value=expr;} catch{}
-        return;
-      }
-      if(x==='='){
-        try {
-          const q=expr.replace(/[×÷−]/g,m=>({'×':'*','÷':'/','−':'-'}[m]));
-          if(!/^[0-9+*/.() -]+$/.test(q)) throw Error();
-          const result=Function('"use strict";return ('+q+')')();
-          if(!Number.isFinite(result)) throw Error();
-          expr=String(result);d.value=expr;fresh=true;
-        } catch {d.value='Error';expr='';fresh=true;}
-        return;
-      }
-      if(['+','−','×','÷'].includes(x)){expr+=x;fresh=false;}
-      else {if(fresh){expr='';fresh=false;}expr+=x;}
-      d.value=expr||'0';
+    $("#channel").addEventListener("click",()=>window.open("https://www.youtube.com/@aespa","_blank","noopener"));
+    $$("[data-video]").forEach(b=>b.addEventListener("click",()=>window.open(
+      "https://www.youtube.com/results?search_query="+encodeURIComponent("aespa "+b.textContent),"_blank","noopener")));
+    $("#ytsearch").addEventListener("keydown",e=>{
+      if(e.key==="Enter") window.open("https://www.youtube.com/results?search_query="+encodeURIComponent(e.target.value),"_blank","noopener");
     });
   }
 
-  else if(n==='Gmail') {
-    c.innerHTML=`<h2>Inbox</h2>
-      <div class="card"><b>J. Jonah Jameson · Daily Bugle · 9:42 AM</b>
+  else if (name === "Camera") {
+    c.innerHTML = `
+      <div class="card" style="text-align:center">
+        <video id="video" autoplay playsinline></video>
+        <p id="cammsg">Tap Start Camera and allow permission.</p>
+        <button id="startcam" class="primary">Start Camera</button>
+        <button id="capture" class="primary">Capture</button>
+        <canvas id="canvas" class="hide"></canvas>
+        <div id="result"></div>
+      </div>`;
+
+    $("#startcam").addEventListener("click",async()=>{
+      try {
+        if(cameraStream) cameraStream.getTracks().forEach(t=>t.stop());
+        cameraStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});
+        $("#video").srcObject=cameraStream;
+        $("#cammsg").textContent="Camera active.";
+      } catch(e) {
+        $("#cammsg").textContent="Camera unavailable. Allow camera permission and use HTTPS.";
+      }
+    });
+
+    $("#capture").addEventListener("click",()=>{
+      const v=$("#video"), cv=$("#canvas");
+      if(!v.videoWidth){$("#cammsg").textContent="Start camera first.";return;}
+      cv.width=v.videoWidth;
+      cv.height=v.videoHeight;
+      cv.getContext("2d").drawImage(v,0,0);
+      const u=cv.toDataURL("image/png");
+      $("#result").innerHTML=`<p>Captured photo</p><img src="${u}" style="width:100%;border-radius:12px"><p><a download="mavin-photo.png" href="${u}">Save photo</a></p>`;
+    });
+  }
+
+  else if (name === "Calculator") {
+    c.innerHTML = `
+      <div class="card" style="background:#111;color:white">
+        <input id="display" class="calc-display" value="0" readonly>
+        <div class="calc-grid">
+          ${["AC","±","%","÷","7","8","9","×","4","5","6","−","1","2","3","+","0",".","⌫","="].map(x=>`
+            <button data-calc="${x}" class="${["÷","×","−","+","="].includes(x)?"operator":["AC","±","%","⌫"].includes(x)?"function":""}">${x}</button>`).join("")}
+        </div>
+      </div>`;
+
+    let expr="", fresh=true;
+
+    $$("[data-calc]").forEach(b=>b.addEventListener("click",()=>{
+      const x=b.dataset.calc, d=$("#display");
+
+      if(x==="AC"){expr="";d.value="0";fresh=true;return;}
+      if(x==="⌫"){expr=expr.slice(0,-1);d.value=expr||"0";return;}
+      if(x==="±"){expr=expr.startsWith("-")?expr.slice(1):"-"+expr;d.value=expr;return;}
+
+      if(x==="%"){
+        const v=Number(expr);
+        if(Number.isFinite(v)){expr=String(v/100);d.value=expr;}
+        return;
+      }
+
+      if(x==="="){
+        try {
+          const q=expr.replace(/[×÷−]/g,m=>({"×":"*","÷":"/","−":"-"}[m]));
+          if(!/^[0-9+*/.() -]+$/.test(q)) throw Error("invalid");
+          const result=Function('"use strict";return ('+q+')')();
+          if(!Number.isFinite(result)) throw Error("invalid");
+          expr=String(Number(result.toFixed(8)));
+          d.value=expr;
+          fresh=true;
+        } catch(e) { d.value="Error";expr="";fresh=true; }
+        return;
+      }
+
+      if(["+","−","×","÷"].includes(x)){
+        expr+=x;
+        fresh=false;
+      } else {
+        if(fresh){expr="";fresh=false;}
+        expr+=x;
+      }
+      d.value=expr||"0";
+    }));
+  }
+
+  else if (name === "Gmail") {
+    c.innerHTML = `
+      <h2>Inbox</h2>
+      <div class="card">
+        <b>J. Jonah Jameson · Daily Bugle · 9:42 AM</b>
         <h3>WHERE ARE THE PHOTOS, MAVIN?</h3>
         <p>Are you still interested in working for the Daily Bugle? Because if you are, I expect those photographs on my desk immediately. I did not hire you to admire the skyline. Send the shots. Today. No more excuses.</p>
         <p>J. Jonah Jameson<br>Editor-in-Chief, Daily Bugle</p>
       </div>
-      ${['Assignment desk · Tomorrow’s front page','HR · Freelance paperwork','Peter Parker · You got this'].map(x=>`<button class="item">${x}</button>`).join('')}
+      ${["Assignment desk · Tomorrow’s front page","HR · Freelance paperwork","Peter Parker · You got this"].map(x=>`<div class="item">${x}</div>`).join("")}
       <h3>Compose</h3>
-      <input class="field" placeholder="To"><input class="field" placeholder="Subject">
-      <textarea class="field" placeholder="Compose email" rows="5"></textarea>
-      <button class="primary" id="sendmail">Send</button>
-      <p class="notice">Fictional inbox. No email will be sent.</p>`;
-    $('#sendmail').onclick=()=>alert('Demo only. No email sent.');
+      <input class="field" placeholder="To">
+      <input class="field" placeholder="Subject">
+      <textarea class="field" placeholder="Compose email"></textarea>
+      <button class="primary" id="sendmail">Send (demo)</button>
+      <p class="notice">Fictional inbox. No real Gmail account connected.</p>`;
+    $("#sendmail").addEventListener("click",()=>alert("Demo only. No email sent."));
   }
 
-  else if(n==='Settings') {
-    const settings=['Airplane Mode','Wi-Fi','Bluetooth','Notifications','Display & Brightness','Wallpaper','Sounds & Haptics','Privacy & Security','iCloud · mavin@icloud.example','Lock Screen'];
-    const icons=['✈️','📶','ᛒ','🔔','☀️','🖼️','🔊','🔒','☁️','🔐'];
-    c.innerHTML=`<div class="card"><h2>👤 Mavin</h2><p class="muted">Apple Account, iCloud and more</p></div>
-      ${settings.map((x,i)=>`<button class="settings-row" data-setting="${x}"><span class="setting-icon">${icons[i]}</span><span>${x}</span><span style="margin-left:auto;color:#999">›</span></button>`).join('')}
-      <p class="notice" style="margin-top:18px">Fictional profile. No real Apple Account connected.</p>`;
-    $$('[data-setting]').forEach(b=>b.onclick=()=>{
+  else if (name === "Settings") {
+    const items = [
+      ["✈️","Airplane Mode"],["📶","Wi-Fi"],["ᛒ","Bluetooth"],
+      ["🔔","Notifications"],["☀️","Display & Brightness"],
+      ["🖼️","Wallpaper"],["🔊","Sounds & Haptics"],
+      ["🔒","Privacy & Security"],["☁️","iCloud · mavin@icloud.example"],
+      ["🔐","Lock Screen"]
+    ];
+
+    c.innerHTML = `
+      <div class="card"><h2>👤 Mavin</h2><p class="muted">Apple Account, iCloud and more</p></div>
+      ${items.map(([icon,label])=>`<button class="item" data-setting="${label}">${icon}　${label}<span style="margin-left:auto;color:#999">›</span></button>`).join("")}
+      <p class="notice">Fictional profile. No real Apple Account connected.</p>`;
+
+    $$("[data-setting]").forEach(b=>b.addEventListener("click",()=>{
       const s=b.dataset.setting;
-      if(s==='Lock Screen'){lock();return;}
-      c.innerHTML=`<button id="setback" style="background:none;color:#087cff">‹ Settings</button>
+      if(s==="Lock Screen"){lock();return;}
+      c.innerHTML=`
+        <button id="setback" style="background:none;color:#087cff">‹ Settings</button>
         <h2>${esc(s)}</h2>
-        <div class="card">${s.includes('iCloud')?'Mavin’s fictional iCloud profile. No sign-in required.':esc(s)+' settings'}</div>
-        <label style="display:flex;align-items:center;gap:10px;padding:12px 0"><input type="checkbox" checked> Enable ${esc(s)}</label>`;
-      $('#setback').onclick=()=>render('Settings');
-    });
+        <div class="card">${s.includes("iCloud")?"Mavin’s fictional iCloud profile. No sign-in required.":esc(s)+" settings"}</div>
+        <label><input type="checkbox" checked> Enable ${esc(s)}</label>`;
+      $("#setback").addEventListener("click",()=>render("Settings"));
+    }));
   }
 }
 
-function formatTime(n) {
-  return Math.floor(n/60)+':'+String(n%60).padStart(2,'0');
-}
-function chat(n) {
-  const c=$('#content'),msgs=chats[n]||['Hey, are we still on for today?'];
-  chats[n]=msgs;
-  c.innerHTML=`<button id="chatback" style="background:none;color:#087cff">‹ Chats</button>
-    <h2>${esc(n)}</h2><div id="bubbles">${msgs.map((m,i)=>`<div class="bubble ${i%2?'me':''}">${esc(m)}</div>`).join('')}</div>
+function chat(name) {
+  const c=$("#content");
+  const messages=chats[name]||["Hey, are we still on for today?"];
+  chats[name]=messages;
+
+  c.innerHTML=`
+    <button id="chatback" style="background:none;color:#087cff">‹ Chats</button>
+    <h2>${esc(name)}</h2>
+    <div id="bubbles">${messages.map((m,i)=>`<div class="bubble ${i%2?"me":""}">${esc(m)}</div>`).join("")}</div>
     <form id="send" style="display:flex;gap:7px;position:sticky;bottom:0;background:#f4f4f7;padding:8px">
       <input id="message" class="field" style="margin:0;border-radius:20px" placeholder="Message">
       <button class="primary">➤</button>
     </form>`;
-  $('#chatback').onclick=()=>render('WhatsApp');
-  $('#send').onsubmit=e=>{
+
+  $("#chatback").addEventListener("click",()=>render("WhatsApp"));
+  $("#send").addEventListener("submit",e=>{
     e.preventDefault();
-    const t=$('#message').value.trim();
-    if(t){chats[n].push(t);chat(n);}
-  };
+    const t=$("#message").value.trim();
+    if(t){chats[name].push(t);chat(name);}
+  });
 }
-function photo(t,e) {
-  const c=$('#content');
-  c.innerHTML=`<button id="photoback" style="background:none;color:#087cff">‹ Back</button>
-    <div style="height:55vh;display:grid;place-items:center;font-size:100px;background:linear-gradient(140deg,#d4b69a,#526270);border-radius:14px;margin-top:15px">${esc(e)}</div>
-    <h3>${esc(t)}</h3><p class="muted">Mavin's photo library · demo image</p>`;
-  $('#photoback').onclick=()=>render(appName);
+
+function photo(title, emoji) {
+  const c=$("#content");
+  c.innerHTML=`
+    <button id="photoback" style="background:none;color:#087cff">‹ Back</button>
+    <div style="height:55vh;display:grid;place-items:center;font-size:100px;background:linear-gradient(140deg,#d4b69a,#526270);border-radius:14px;margin-top:15px">${emoji}</div>
+    <h3>${esc(title)}</h3>
+    <p class="muted">Mavin's photo library · demo image</p>`;
+  $("#photoback").addEventListener("click",()=>render(appName));
 }
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape') {
-    if($('#app').classList.contains('active')) home();
-    else $('#pin').classList.remove('show');
+
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape"){
+    if($("#app").classList.contains("active")) home();
+    else $("#pin").classList.remove("show");
   }
 });
 </script>
