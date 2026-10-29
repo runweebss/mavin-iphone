@@ -21,15 +21,15 @@ html, body {
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background: #171717;
   color: white;
+  background: #171717;
   overflow: hidden;
 }
 
 button {
   font: inherit;
-  cursor: pointer;
   color: inherit;
+  cursor: pointer;
 }
 
 .phone {
@@ -188,7 +188,6 @@ button {
   letter-spacing: -4px;
 }
 
-/* Only one swipe indicator. No extra home-indicator line. */
 .lock-bottom {
   position: absolute;
   bottom: max(22px, env(safe-area-inset-bottom));
@@ -229,7 +228,6 @@ button {
   align-items: center;
   padding: 12vh 30px 35px;
   background: rgba(28,27,32,.97);
-  color: white;
 }
 
 .passcode-screen.active {
@@ -329,58 +327,66 @@ button {
   visibility: visible;
 }
 
-/* WEATHER: moved upward, with a clear gap below */
+/* WEATHER */
 
 .weather-wrap {
   position: absolute;
-  top: 9.2%;
+  top: 8.2%;
   left: 8.7%;
   width: 82.6%;
 }
 
 .weather-card {
-  height: clamp(174px, 23.5vh, 300px);
-  min-height: 174px;
-  padding: clamp(12px, 2.1vh, 19px) clamp(14px, 3.8vw, 25px) 10px;
+  width: 100%;
+  height: clamp(174px, 24vh, 205px);
+  padding: 12px 16px 10px;
   overflow: hidden;
-  border-radius: clamp(23px, 5vw, 34px);
+  border-radius: 27px;
   background: linear-gradient(
     145deg,
     rgba(77,93,107,.96),
     rgba(31,48,62,.98)
   );
   box-shadow: 0 8px 22px #0002;
+  display: flex;
+  flex-direction: column;
 }
 
 .city {
-  font-size: clamp(20px, 5.5vw, 27px);
+  font-size: clamp(20px, 5.5vw, 26px);
+  line-height: 1.2;
   font-weight: 600;
+  flex-shrink: 0;
 }
 
 .weather-main {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  margin-top: 1px;
 }
 
 .temperature {
-  font-size: clamp(49px, 13vw, 66px);
-  line-height: 1.08;
+  font-size: clamp(49px, 13vw, 62px);
+  line-height: 1.04;
   font-weight: 300;
   letter-spacing: -2px;
 }
 
 .condition {
+  min-width: 90px;
   text-align: right;
-  padding-top: 4px;
-  font-size: clamp(11px, 3.2vw, 14px);
-  line-height: 1.4;
+  font-size: clamp(11px, 3.1vw, 14px);
+  line-height: 1.35;
 }
 
 .condition strong {
   display: block;
-  font-size: clamp(21px, 5vw, 27px);
+  font-size: 23px;
+  line-height: 1.1;
   font-weight: 500;
+  margin-bottom: 3px;
 }
 
 .condition .high-low {
@@ -390,8 +396,10 @@ button {
 .forecast {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 2px;
-  margin-top: clamp(7px, 1.2vh, 13px);
+  align-items: start;
+  gap: 0;
+  margin-top: auto;
+  padding-top: 6px;
   text-align: center;
 }
 
@@ -400,19 +408,21 @@ button {
   min-width: 0;
   flex-direction: column;
   align-items: center;
-  gap: clamp(3px, .7vh, 6px);
+  gap: 4px;
 }
 
 .forecast-time {
-  font-size: clamp(10px, 3vw, 14px);
+  font-size: clamp(10px, 3vw, 13px);
+  line-height: 1.2;
+  white-space: nowrap;
   color: #e3e7eb;
 }
 
 .cloud {
   position: relative;
-  width: clamp(23px, 6vw, 31px);
-  height: clamp(17px, 4.6vw, 21px);
-  margin-top: 1px;
+  width: 27px;
+  height: 19px;
+  flex-shrink: 0;
 }
 
 .cloud::before {
@@ -420,8 +430,8 @@ button {
   position: absolute;
   left: 2px;
   bottom: 2px;
-  width: 22px;
-  height: 9px;
+  width: 23px;
+  height: 10px;
   border-radius: 10px;
   background: white;
 }
@@ -440,6 +450,7 @@ button {
 
 .forecast-temp {
   font-size: clamp(11px, 3.1vw, 14px);
+  line-height: 1.15;
   font-weight: 650;
 }
 
@@ -447,18 +458,26 @@ button {
   margin-top: 5px;
   text-align: center;
   font-size: 12px;
+  line-height: 1.2;
   text-shadow: 0 1px 4px #000a;
 }
 
-/* APP GRID: consistent columns and vertical spacing */
+/* HOME GRID
+   First row is positioned from the widget's actual bottom.
+   The lower rows use the same vertical interval. */
 
 .home-grid {
   position: absolute;
-  top: 38.5%;
+  top: 0;
   left: 7%;
   right: 7%;
-  height: 65vw;
-  max-height: 500px;
+  height: 100%;
+  pointer-events: none;
+}
+
+.app,
+.music-wrap {
+  pointer-events: auto;
 }
 
 .app {
@@ -491,14 +510,25 @@ button {
   text-shadow: 0 1px 4px #000d;
 }
 
-.whatsapp { left: 0; top: 0; }
-.calendar { left: 25%; top: 0; }
-.instagram { left: 0; top: 28vw; }
-.xapp { left: 25%; top: 28vw; }
-.spotify { left: 0; top: 61vw; }
-.photos { left: 25%; top: 61vw; }
-.notes { left: 50%; top: 61vw; }
-.youtube { left: 75%; top: 61vw; }
+/* Music widget aligns with the first row */
+.music-wrap {
+  position: absolute;
+  top: 37.2%;
+  left: 50%;
+  width: 50%;
+  padding-left: 8px;
+}
+
+.whatsapp { left: 0; top: 37.2%; }
+.calendar { left: 25%; top: 37.2%; }
+
+.instagram { left: 0; top: calc(37.2% + 28vw); }
+.xapp { left: 25%; top: calc(37.2% + 28vw); }
+
+.spotify { left: 0; top: calc(37.2% + 52vw); }
+.photos { left: 25%; top: calc(37.2% + 52vw); }
+.notes { left: 50%; top: calc(37.2% + 52vw); }
+.youtube { left: 75%; top: calc(37.2% + 52vw); }
 
 .calendar-fallback {
   width: 100%;
@@ -520,22 +550,13 @@ button {
   font-weight: 850;
 }
 
-/* MUSIC PLAYER: square widget and evenly spaced controls */
-
-.music-wrap {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 50%;
-  padding-left: 8px;
-}
+/* MUSIC WIDGET: EXACT 1:1 */
 
 .music-widget {
   width: 100%;
   aspect-ratio: 1 / 1;
-  min-height: 0;
-  padding: clamp(9px, 1.6vw, 13px);
-  border-radius: clamp(23px, 5vw, 31px);
+  padding: clamp(8px, 2.2vw, 12px);
+  border-radius: clamp(22px, 5vw, 30px);
   background: rgba(38,39,41,.97);
   box-shadow: 0 6px 20px #0003;
   display: flex;
@@ -548,27 +569,27 @@ button {
   justify-content: space-between;
   align-items: flex-start;
   flex-shrink: 0;
-  margin-bottom: clamp(6px, 1vw, 9px);
+  margin-bottom: 5px;
 }
 
 .album-art {
   display: block;
-  width: 43%;
+  width: 42%;
   aspect-ratio: 1 / 1;
   flex-shrink: 0;
   object-fit: cover;
-  border-radius: 10px;
+  border-radius: 9px;
   background: #777;
 }
 
 .music-note {
-  font-size: clamp(23px, 5vw, 31px);
+  font-size: clamp(22px, 5vw, 30px);
   line-height: 1;
   padding: 2px 2px 0 0;
 }
 
 .track-title {
-  font-size: clamp(12px, 3.6vw, 17px);
+  font-size: clamp(11px, 3.4vw, 15px);
   line-height: 1.2;
   font-weight: 550;
   white-space: nowrap;
@@ -577,14 +598,15 @@ button {
 }
 
 .track-artist {
-  font-size: clamp(11px, 3.4vw, 15px);
+  font-size: clamp(10px, 3.1vw, 13px);
+  line-height: 1.2;
   color: #d1d1d1;
   margin-top: 3px;
 }
 
 .progress-area {
   margin-top: auto;
-  padding-top: 8px;
+  padding-top: 6px;
   flex-shrink: 0;
 }
 
@@ -606,18 +628,20 @@ button {
 .track-times {
   display: flex;
   justify-content: space-between;
-  font-size: clamp(10px, 2.9vw, 13px);
-  margin-top: 5px;
+  align-items: center;
+  font-size: clamp(10px, 2.8vw, 12px);
+  line-height: 1.2;
+  margin-top: 4px;
 }
 
-/* Four equal-width button slots keep the icons aligned */
+/* Each control has an identical grid cell and a centered SVG */
 .music-controls {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: center;
-  justify-items: center;
+  justify-items: stretch;
   width: 100%;
-  margin-top: clamp(7px, 1.2vw, 11px);
+  margin-top: 6px;
   flex-shrink: 0;
 }
 
@@ -627,26 +651,32 @@ button {
   justify-content: center;
   width: 100%;
   min-width: 0;
-  height: clamp(25px, 7vw, 32px);
+  height: 27px;
   padding: 0;
   border: 0;
   background: transparent;
   color: white;
-  line-height: 1;
 }
 
-.music-controls .skip-button {
-  font-size: clamp(13px, 3.5vw, 19px);
-  letter-spacing: -3px;
-  padding-right: 3px;
+.music-controls svg {
+  display: block;
+  width: clamp(17px, 4.8vw, 23px);
+  height: clamp(17px, 4.8vw, 23px);
+  fill: currentColor;
+  flex-shrink: 0;
 }
 
-.music-controls .play-button {
-  font-size: clamp(23px, 6vw, 31px);
+.music-controls .play-button svg {
+  width: clamp(22px, 6vw, 28px);
+  height: clamp(22px, 6vw, 28px);
 }
 
-.music-controls .airplay {
-  font-size: clamp(17px, 4.5vw, 23px);
+.music-controls .airplay svg {
+  width: clamp(17px, 4.5vw, 21px);
+  height: clamp(17px, 4.5vw, 21px);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
 }
 
 .music-controls button:active {
@@ -657,6 +687,7 @@ button {
   margin-top: 5px;
   text-align: center;
   font-size: 12px;
+  line-height: 1.2;
   text-shadow: 0 1px 4px #000c;
 }
 
@@ -792,21 +823,17 @@ button {
 
 @media (max-height: 740px) {
   .weather-wrap {
-    top: 8.5%;
+    top: 7.5%;
   }
 
   .weather-card {
-    height: 165px;
-    min-height: 165px;
+    height: 174px;
     padding-top: 10px;
-  }
-
-  .forecast {
-    margin-top: 5px;
+    padding-bottom: 9px;
   }
 
   .home-grid {
-    top: 37%;
+    /* Keep a consistent gap below weather on shorter screens */
   }
 
   .music-widget {
@@ -814,7 +841,11 @@ button {
   }
 
   .music-controls {
-    margin-top: 5px;
+    margin-top: 4px;
+  }
+
+  .music-controls button {
+    height: 25px;
   }
 
   .page-dots {
@@ -828,13 +859,14 @@ button {
   .lock-clock {
     top: 12%;
   }
-
-  .lock-bottom {
-    bottom: max(22px, env(safe-area-inset-bottom));
-  }
 }
 
 @media (max-width: 360px) {
+  .weather-card {
+    padding-left: 11px;
+    padding-right: 11px;
+  }
+
   .music-wrap {
     padding-left: 5px;
   }
@@ -848,13 +880,8 @@ button {
     font-size: 11px;
   }
 
-  .music-controls .skip-button {
-    letter-spacing: -4px;
-  }
-
-  .weather-card {
-    padding-left: 11px;
-    padding-right: 11px;
+  .music-controls button {
+    height: 23px;
   }
 }
 </style>
@@ -961,12 +988,36 @@ button {
         </div>
 
         <div class="forecast">
-          <div class="forecast-item"><span class="forecast-time">2PM</span><span class="cloud"></span><span class="forecast-temp">26°</span></div>
-          <div class="forecast-item"><span class="forecast-time">3PM</span><span class="cloud"></span><span class="forecast-temp">27°</span></div>
-          <div class="forecast-item"><span class="forecast-time">4PM</span><span class="cloud"></span><span class="forecast-temp">26°</span></div>
-          <div class="forecast-item"><span class="forecast-time">5PM</span><span class="cloud"></span><span class="forecast-temp">27°</span></div>
-          <div class="forecast-item"><span class="forecast-time">6PM</span><span class="cloud"></span><span class="forecast-temp">26°</span></div>
-          <div class="forecast-item"><span class="forecast-time">7PM</span><span class="cloud"></span><span class="forecast-temp">25°</span></div>
+          <div class="forecast-item">
+            <span class="forecast-time">2PM</span>
+            <span class="cloud"></span>
+            <span class="forecast-temp">26°</span>
+          </div>
+          <div class="forecast-item">
+            <span class="forecast-time">3PM</span>
+            <span class="cloud"></span>
+            <span class="forecast-temp">27°</span>
+          </div>
+          <div class="forecast-item">
+            <span class="forecast-time">4PM</span>
+            <span class="cloud"></span>
+            <span class="forecast-temp">26°</span>
+          </div>
+          <div class="forecast-item">
+            <span class="forecast-time">5PM</span>
+            <span class="cloud"></span>
+            <span class="forecast-temp">27°</span>
+          </div>
+          <div class="forecast-item">
+            <span class="forecast-time">6PM</span>
+            <span class="cloud"></span>
+            <span class="forecast-temp">26°</span>
+          </div>
+          <div class="forecast-item">
+            <span class="forecast-time">7PM</span>
+            <span class="cloud"></span>
+            <span class="forecast-temp">25°</span>
+          </div>
         </div>
       </div>
       <div class="weather-label">Weather</div>
@@ -1019,7 +1070,7 @@ button {
         <span class="app-name">YouTube</span>
       </button>
 
-      <!-- SQUARE MUSIC PLAYER -->
+      <!-- MUSIC PLAYER -->
       <div class="music-wrap">
         <section class="music-widget" aria-label="Music player">
 
@@ -1046,16 +1097,37 @@ button {
           </div>
 
           <div class="music-controls">
-            <button class="skip-button" aria-label="Previous track" onclick="openSpotify()">◀◀</button>
+            <button class="skip-button" aria-label="Previous track" onclick="openSpotify()">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 5v14H2V5h3zm16 0L9 12l12 7V5z"/>
+              </svg>
+            </button>
+
             <button
               class="play-button"
               id="playButton"
               aria-label="Play"
               aria-pressed="false"
               onclick="togglePlayback()"
-            >▶</button>
-            <button class="skip-button" aria-label="Next track" onclick="openSpotify()">▶▶</button>
-            <button class="airplay" aria-label="Open Spotify" onclick="openSpotify()">◎</button>
+            >
+              <svg id="playIcon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7 4v16l13-8z"/>
+              </svg>
+            </button>
+
+            <button class="skip-button" aria-label="Next track" onclick="openSpotify()">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M19 5v14h3V5h-3zM3 5l12 7-12 7V5z"/>
+              </svg>
+            </button>
+
+            <button class="airplay" aria-label="Open Spotify" onclick="openSpotify()">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="8.5"/>
+                <circle cx="12" cy="12" r="4.5"/>
+                <path d="M8.5 17.5h7"/>
+              </svg>
+            </button>
           </div>
 
         </section>
@@ -1069,10 +1141,18 @@ button {
 
     <!-- DOCK -->
     <nav class="dock">
-      <button onclick="openApp('Camera')" aria-label="Camera"><img src="camera%20logo.png" alt="Camera"></button>
-      <button onclick="openApp('Calculator')" aria-label="Calculator"><img src="calculator%20logo.png" alt="Calculator"></button>
-      <button onclick="openApp('Gmail')" aria-label="Gmail"><img src="gmail%20logo.png" alt="Gmail"></button>
-      <button onclick="openApp('Settings')" aria-label="Settings"><img src="setting%20logo.png" alt="Settings"></button>
+      <button onclick="openApp('Camera')" aria-label="Camera">
+        <img src="camera%20logo.png" alt="Camera">
+      </button>
+      <button onclick="openApp('Calculator')" aria-label="Calculator">
+        <img src="calculator%20logo.png" alt="Calculator">
+      </button>
+      <button onclick="openApp('Gmail')" aria-label="Gmail">
+        <img src="gmail%20logo.png" alt="Gmail">
+      </button>
+      <button onclick="openApp('Settings')" aria-label="Settings">
+        <img src="setting%20logo.png" alt="Settings">
+      </button>
     </nav>
   </section>
 
@@ -1123,7 +1203,7 @@ function updateClock() {
 updateClock();
 setInterval(updateClock, 30000);
 
-/* SWIPE UP TO OPEN PASSCODE */
+/* SWIPE UP */
 
 const lockScreen = document.getElementById("lockScreen");
 
@@ -1154,10 +1234,8 @@ lockScreen.addEventListener("mousedown", function(event) {
 });
 
 lockScreen.addEventListener("mouseup", function(event) {
-  const deltaY = mouseStartY - event.clientY;
-
   if (
-    deltaY > 45 &&
+    mouseStartY - event.clientY > 45 &&
     !document.getElementById("passcodeScreen").classList.contains("active")
   ) {
     showPasscode();
@@ -1227,8 +1305,16 @@ function togglePlayback() {
   isPlaying = !isPlaying;
 
   const button = document.getElementById("playButton");
-  button.textContent = isPlaying ? "Ⅱ" : "▶";
-  button.setAttribute("aria-label", isPlaying ? "Pause" : "Play");
+  const icon = document.getElementById("playIcon");
+
+  if (isPlaying) {
+    icon.innerHTML = '<path d="M6 4h4v16H6zM14 4h4v16h-4z"/>';
+    button.setAttribute("aria-label", "Pause");
+  } else {
+    icon.innerHTML = '<path d="M7 4v16l13-8z"/>';
+    button.setAttribute("aria-label", "Play");
+  }
+
   button.setAttribute("aria-pressed", String(isPlaying));
 }
 
