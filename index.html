@@ -4,34 +4,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#b9a98e">
+<meta name="theme-color" content="#1c1b20">
 <title>Mavin's iPhone</title>
 
 <style>
-* {
-  box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-}
-
-html, body {
-  margin: 0;
-  width: 100%;
-  height: 100%;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
-
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; width: 100%; height: 100%; }
 body {
-  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   background: #171717;
   color: white;
+  overflow: hidden;
 }
-
-button {
-  font: inherit;
-  color: inherit;
-  cursor: pointer;
-}
-
+button { font: inherit; cursor: pointer; color: inherit; }
 .phone {
   position: relative;
   width: 100%;
@@ -41,236 +26,230 @@ button {
   isolation: isolate;
   background: #b9a98e;
 }
-
 .wallpaper {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center;
   z-index: -2;
 }
-
 .shade {
   position: absolute;
   inset: 0;
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(
-    180deg,
-    rgba(0,0,0,.07),
-    transparent 40%,
-    rgba(0,0,0,.05)
-  );
+  background: linear-gradient(180deg, #0002, transparent 45%, #0001);
 }
 
 /* STATUS BAR */
-
 .status {
   position: absolute;
+  z-index: 2;
   top: 0;
   left: 0;
   width: 100%;
-  height: 45px;
+  height: 44px;
   padding: 10px 7%;
   display: flex;
-  justify-content: space-between;
   align-items: flex-start;
-  font-size: 16px;
+  justify-content: space-between;
+  font-size: 15px;
   font-weight: 650;
   text-shadow: 0 1px 4px #0005;
 }
-
-.status-right {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.signal {
-  display: flex;
-  align-items: flex-end;
-  height: 14px;
-  gap: 2px;
-}
-
-.signal i {
-  display: block;
-  width: 3px;
-  background: white;
-  border-radius: 2px 2px 0 0;
-}
-
+.status-right { display: flex; align-items: center; gap: 5px; }
+.signal { display: flex; align-items: flex-end; height: 14px; gap: 2px; }
+.signal i { width: 3px; background: white; border-radius: 2px 2px 0 0; }
 .signal i:nth-child(1) { height: 5px; }
 .signal i:nth-child(2) { height: 8px; }
 .signal i:nth-child(3) { height: 11px; }
 .signal i:nth-child(4) { height: 14px; }
-
 .battery {
-  position: relative;
-  width: 23px;
-  height: 12px;
-  margin-left: 3px;
-  border: 1.5px solid white;
-  border-radius: 3px;
+  position: relative; width: 22px; height: 12px;
+  border: 1.5px solid white; border-radius: 3px;
 }
-
 .battery::before {
-  content: "";
-  position: absolute;
-  right: -4px;
-  top: 3px;
-  width: 2px;
-  height: 4px;
-  background: white;
+  content: ""; position: absolute; right: -4px; top: 3px;
+  width: 2px; height: 4px; background: white;
 }
-
 .battery::after {
-  content: "";
-  position: absolute;
-  top: 2px;
-  bottom: 2px;
-  left: 2px;
-  width: 70%;
-  border-radius: 1px;
-  background: white;
+  content: ""; position: absolute; left: 2px; top: 2px; bottom: 2px;
+  width: 70%; background: white; border-radius: 1px;
 }
 
-/* WEATHER */
-
-.weather-wrap {
+/* LOCK SCREEN */
+.lock-screen {
   position: absolute;
-  top: 12.5%;
-  left: 8.7%;
-  width: 82.6%;
-}
-
-.weather-card {
-  height: clamp(170px, 22vh, 205px);
-  padding: 13px 15px 10px;
+  inset: 0;
+  z-index: 20;
   overflow: hidden;
-  border-radius: 26px;
-  background: linear-gradient(
-    145deg,
-    rgba(77, 93, 107, .96),
-    rgba(31, 48, 62, .98)
-  );
-  box-shadow: 0 8px 22px #0002;
+  background: #26252a;
+  transition: opacity .3s ease, visibility .3s ease;
 }
-
-.city {
-  font-size: clamp(18px, 5vw, 22px);
-  font-weight: 500;
-}
-
-.weather-main {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.temperature {
-  font-size: clamp(49px, 13vw, 62px);
-  line-height: 1.08;
-  font-weight: 300;
-  letter-spacing: -2px;
-}
-
-.condition {
-  text-align: right;
-  padding-top: 4px;
-  font-size: 12px;
-  line-height: 1.4;
-}
-
-.condition strong {
-  display: block;
-  font-size: 17px;
-  font-weight: 500;
-}
-
-.forecast {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 2px;
-  margin-top: 8px;
-  text-align: center;
-}
-
-.forecast-item {
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.forecast-time {
-  font-size: clamp(10px, 3vw, 12px);
-  color: #e3e7eb;
-}
-
-.cloud {
-  position: relative;
-  width: 25px;
-  height: 17px;
-  margin-top: 1px;
-}
-
-.cloud::before {
-  content: "";
+.lock-wallpaper {
   position: absolute;
-  left: 2px;
-  bottom: 2px;
-  width: 22px;
-  height: 9px;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.lock-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,.12),
+    transparent 38%,
+    rgba(0,0,0,.3)
+  );
+}
+.lock-clock {
+  position: absolute;
+  top: 15%;
+  width: 100%;
+  text-align: center;
+  text-shadow: 0 2px 12px #0003;
+}
+.lock-date {
+  font-size: 17px;
+  font-weight: 550;
+  margin-bottom: 2px;
+}
+.lock-time {
+  font-size: clamp(76px, 22vw, 100px);
+  line-height: 1.05;
+  font-weight: 250;
+  letter-spacing: -4px;
+}
+.lock-bottom {
+  position: absolute;
+  bottom: 7%;
+  width: 100%;
+  text-align: center;
+  padding: 0 24px;
+}
+.lock-hint {
+  font-size: 13px;
+  margin-bottom: 18px;
+  text-shadow: 0 1px 4px #0009;
+}
+.unlock-button {
+  border: 1px solid #ffffff80;
+  background: #ffffff20;
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 10px 25px;
+  border-radius: 30px;
+  font-size: 14px;
+}
+.home-indicator {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 108px;
+  height: 4px;
   border-radius: 10px;
   background: white;
 }
 
-.cloud::after {
-  content: "";
+/* PASSCODE */
+.passcode-screen {
   position: absolute;
-  left: 7px;
-  bottom: 5px;
-  width: 12px;
-  height: 12px;
+  inset: 0;
+  z-index: 30;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding: 12vh 30px 35px;
+  background: rgba(28,27,32,.97);
+  color: white;
+}
+.passcode-screen.active { display: flex; }
+.passcode-title { font-size: 22px; font-weight: 600; margin-bottom: 9px; }
+.passcode-subtitle { font-size: 14px; color: #ccc; margin-bottom: 24px; }
+.pin-dots { display: flex; gap: 17px; margin-bottom: 30px; }
+.pin-dot {
+  width: 11px; height: 11px; border: 1px solid white;
   border-radius: 50%;
-  background: white;
-  box-shadow: 7px 4px 0 -1px white;
 }
-
-.forecast-temp {
-  font-size: clamp(11px, 3.2vw, 13px);
-  font-weight: 600;
+.pin-dot.filled { background: white; }
+.pin-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 66px);
+  gap: 12px 19px;
+  justify-content: center;
 }
-
-.weather-label {
-  margin-top: 5px;
-  text-align: center;
-  font-size: 12px;
-  font-weight: 500;
-  text-shadow: 0 1px 4px #000a;
+.pin-key {
+  width: 66px; height: 66px;
+  border: 0; border-radius: 50%;
+  background: #ffffff22;
+  font-size: 27px; font-weight: 350;
 }
+.pin-key:active { background: #ffffff45; }
+.pin-key small { display: block; font-size: 8px; letter-spacing: 2px; }
+.pin-bottom {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+.pin-bottom button { border: 0; background: transparent; }
+.pin-error { min-height: 20px; font-size: 12px; color: #ffb4b4; margin-top: -21px; margin-bottom: 12px; }
 
-/* APP GRID */
+/* WEATHER */
+.weather-wrap {
+  position: absolute;
+  top: 12.2%;
+  left: 8.7%;
+  width: 82.6%;
+}
+.weather-card {
+  height: clamp(170px, 21.5vh, 202px);
+  padding: 13px 15px 9px;
+  overflow: hidden;
+  border-radius: 26px;
+  background: linear-gradient(145deg, rgba(77,93,107,.96), rgba(31,48,62,.98));
+  box-shadow: 0 8px 22px #0002;
+}
+.city { font-size: 21px; font-weight: 550; }
+.weather-main { display: flex; justify-content: space-between; align-items: center; }
+.temperature { font-size: clamp(49px, 13vw, 62px); line-height: 1.08; font-weight: 300; letter-spacing: -2px; }
+.condition { text-align: right; padding-top: 4px; font-size: 12px; line-height: 1.4; }
+.condition strong { display: block; font-size: 17px; font-weight: 500; }
+.forecast { display: grid; grid-template-columns: repeat(6,minmax(0,1fr)); gap: 2px; margin-top: 8px; text-align: center; }
+.forecast-item { display: flex; min-width: 0; flex-direction: column; align-items: center; gap: 4px; }
+.forecast-time { font-size: clamp(10px,3vw,12px); color: #e3e7eb; }
+.cloud { position: relative; width: 25px; height: 17px; margin-top: 1px; }
+.cloud::before { content: ""; position: absolute; left: 2px; bottom: 2px; width: 22px; height: 9px; border-radius: 10px; background: white; }
+.cloud::after { content: ""; position: absolute; left: 7px; bottom: 5px; width: 12px; height: 12px; border-radius: 50%; background: white; box-shadow: 7px 4px 0 -1px white; }
+.forecast-temp { font-size: 12px; font-weight: 650; }
+.weather-label { margin-top: 5px; text-align: center; font-size: 12px; text-shadow: 0 1px 4px #000a; }
 
+/* HOME SCREEN */
+.home-screen {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .25s ease;
+}
+.home-screen.active { opacity: 1; visibility: visible; }
+
+/* App grid: icons stay clear of the music widget */
 .home-grid {
   position: absolute;
-  top: 36.5%;
+  top: 37%;
   left: 7%;
   right: 7%;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-template-rows: 76px 76px 76px;
-  column-gap: 8px;
-  row-gap: 13px;
-  align-items: start;
+  height: 390px;
 }
-
 .app {
-  min-width: 0;
+  position: absolute;
+  width: 18%;
   padding: 0;
   border: 0;
   background: transparent;
@@ -279,37 +258,33 @@ button {
   align-items: center;
   gap: 5px;
 }
-
 .app img {
   display: block;
-  width: 78%;
+  width: 100%;
   aspect-ratio: 1;
   object-fit: contain;
   border-radius: 22%;
   filter: drop-shadow(0 1px 2px #0002);
 }
-
 .app-name {
   width: 145%;
   text-align: center;
-  font-size: clamp(10px, 3.4vw, 13px);
-  line-height: 1.1;
-  font-weight: 450;
+  font-size: 12px;
+  line-height: 1.15;
   white-space: nowrap;
   text-shadow: 0 1px 4px #000d;
 }
-
-.whatsapp { grid-column: 1; grid-row: 1; }
-.calendar { grid-column: 2; grid-row: 1; }
-.instagram { grid-column: 1; grid-row: 2; }
-.xapp { grid-column: 2; grid-row: 2; }
-.spotify { grid-column: 1; grid-row: 3; }
-.photos { grid-column: 2; grid-row: 3; }
-.notes { grid-column: 3; grid-row: 3; }
-.youtube { grid-column: 4; grid-row: 3; }
+.whatsapp { left: 0; top: 0; }
+.calendar { left: 25%; top: 0; }
+.instagram { left: 0; top: 118px; }
+.xapp { left: 25%; top: 118px; }
+.spotify { left: 0; top: 258px; }
+.photos { left: 25%; top: 258px; }
+.notes { left: 50%; top: 258px; }
+.youtube { left: 75%; top: 258px; }
 
 .calendar-fallback {
-  width: 78%;
+  width: 100%;
   aspect-ratio: 1;
   border-radius: 23%;
   background: white;
@@ -318,178 +293,68 @@ button {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 29px;
-  font-weight: 600;
-}
-
-.calendar-fallback small {
-  color: #d64545;
-  font-size: 11px;
+  font-size: 27px;
   font-weight: 800;
 }
+.calendar-fallback small { color: #d64545; font-size: 11px; font-weight: 850; }
 
 /* MUSIC WIDGET */
-
 .music-wrap {
-  grid-column: 3 / 5;
-  grid-row: 1 / 3;
-  min-width: 0;
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  padding-left: 8px;
 }
-
 .music-widget {
   width: 100%;
-  height: 215px;
+  aspect-ratio: .92 / 1;
+  min-height: 0;
   padding: 11px;
-  border-radius: 24px;
-  background: rgba(38, 39, 41, .97);
+  border-radius: 25px;
+  background: rgba(38,39,41,.97);
   box-shadow: 0 6px 20px #0003;
   display: flex;
   flex-direction: column;
   overflow: hidden;
 }
-
-.music-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 7px;
-}
-
-/* Artwork sementara, bisa diganti dengan file album asli */
+.music-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 7px; }
 .album-art {
+  display: block;
   width: 43%;
   aspect-ratio: 1;
+  height: auto;
   flex-shrink: 0;
+  object-fit: cover;
   border-radius: 9px;
-  overflow: hidden;
-  position: relative;
-  background: linear-gradient(145deg, #d0d0d0, #777 65%, #bcbcbc);
+  background: #777;
 }
-
-.album-art::before {
-  content: "♠";
-  position: absolute;
-  left: 5%;
-  bottom: 0;
-  color: #ededed;
-  font-size: clamp(25px, 8vw, 36px);
-  transform: rotate(25deg);
-  text-shadow: 0 2px 4px #3338;
-}
-
-.album-art::after {
-  content: "♠";
-  position: absolute;
-  right: 10%;
-  top: 1%;
-  color: #333;
-  font-size: clamp(20px, 6vw, 28px);
-  transform: rotate(205deg);
-}
-
-.music-note {
-  font-size: 26px;
-  line-height: 1;
-}
-
+.music-note { font-size: 26px; line-height: 1; }
 .track-title {
-  font-size: clamp(12px, 3.7vw, 15px);
+  font-size: clamp(12px,3.6vw,15px);
   line-height: 1.25;
   font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
-.track-artist {
-  font-size: clamp(11px, 3.5vw, 14px);
-  color: #d1d1d1;
-  margin-top: 2px;
-}
-
-.progress-area {
-  margin-top: auto;
-  padding-top: 9px;
-}
-
-.progress-track {
-  width: 100%;
-  height: 4px;
-  background: #777;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  width: 48%;
-  height: 100%;
-  background: #eee;
-}
-
-.track-times {
-  display: flex;
-  justify-content: space-between;
-  font-size: 10px;
-  margin-top: 4px;
-}
-
-.music-controls {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 8px;
-}
-
-.music-controls button {
-  width: 24%;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  font-size: 16px;
-  line-height: 1;
-}
-
-.music-controls .play-button {
-  font-size: 25px;
-}
-
-.music-controls .airplay {
-  font-size: 19px;
-}
-
-.music-label {
-  margin-top: 5px;
-  text-align: center;
-  font-size: 12px;
-  text-shadow: 0 1px 4px #000c;
-}
+.track-artist { font-size: 12px; color: #d1d1d1; margin-top: 2px; }
+.progress-area { margin-top: auto; padding-top: 8px; }
+.progress-track { width: 100%; height: 4px; background: #777; border-radius: 10px; overflow: hidden; }
+.progress-fill { width: 48%; height: 100%; background: #eee; }
+.track-times { display: flex; justify-content: space-between; font-size: 10px; margin-top: 4px; }
+.music-controls { display: flex; align-items: center; justify-content: space-between; margin-top: 8px; }
+.music-controls button { width: 24%; padding: 0; border: 0; background: transparent; font-size: 16px; line-height: 1; }
+.music-controls .play-button { font-size: 24px; }
+.music-controls .airplay { font-size: 19px; }
+.music-label { margin-top: 5px; text-align: center; font-size: 12px; text-shadow: 0 1px 4px #000c; }
 
 /* PAGE DOTS */
-
-.page-dots {
-  position: absolute;
-  bottom: 15%;
-  left: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 9px;
-}
-
-.page-dots span {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #ffffff80;
-}
-
-.page-dots span:first-child {
-  background: white;
-}
+.page-dots { position: absolute; bottom: 15%; left: 0; width: 100%; display: flex; justify-content: center; gap: 9px; }
+.page-dots span { width: 7px; height: 7px; border-radius: 50%; background: #ffffff80; }
+.page-dots span:first-child { background: white; }
 
 /* DOCK */
-
 .dock {
   position: absolute;
   left: 7%;
@@ -499,140 +364,48 @@ button {
   min-height: 68px;
   max-height: 92px;
   border-radius: 35px;
-  background: rgba(190, 177, 154, .84);
+  background: rgba(190,177,154,.84);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(4,minmax(0,1fr));
   align-items: center;
   justify-items: center;
   padding: 7px 10px;
 }
+.dock button { width: 72%; max-width: 61px; padding: 0; border: 0; background: transparent; }
+.dock img { display: block; width: 100%; aspect-ratio: 1; object-fit: contain; border-radius: 23%; }
 
-.dock button {
-  width: 72%;
-  max-width: 61px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-}
-
-.dock img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 1;
-  object-fit: contain;
-  border-radius: 23%;
-}
-
-/* APP DEMO */
-
+/* DEMO APPS */
 .app-screen {
   position: absolute;
   inset: 0;
-  z-index: 10;
+  z-index: 15;
   display: none;
   flex-direction: column;
   background: #f5f5f7;
   color: #222;
 }
+.app-screen.active { display: flex; }
+.app-header { min-height: 60px; padding: 10px 18px; display: flex; align-items: center; gap: 16px; border-bottom: 1px solid #ddd; font-size: 18px; font-weight: 650; }
+.back-button { border: 0; background: transparent; color: #087bfa; font-size: 16px; }
+.app-content { padding: 20px; overflow: auto; flex: 1; }
+.demo-card { padding: 18px; border-radius: 16px; background: white; margin-bottom: 12px; }
+.demo-card textarea, .demo-card input { width: 100%; padding: 10px; margin-top: 8px; border: 1px solid #ddd; border-radius: 8px; font: inherit; }
+.demo-card textarea { min-height: 110px; }
+.app-footer { padding: 12px; text-align: center; font-size: 12px; color: #888; }
 
-.app-screen.active {
-  display: flex;
-}
-
-.app-header {
-  min-height: 60px;
-  padding: 10px 18px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  border-bottom: 1px solid #ddd;
-  font-size: 18px;
-  font-weight: 650;
-}
-
-.back-button {
-  border: 0;
-  background: transparent;
-  color: #087bfa;
-  font-size: 16px;
-}
-
-.app-content {
-  padding: 20px;
-  overflow: auto;
-  flex: 1;
-}
-
-.demo-card {
-  padding: 18px;
-  border-radius: 16px;
-  background: white;
-  margin-bottom: 12px;
-}
-
-.demo-card textarea,
-.demo-card input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 8px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  font: inherit;
-}
-
-.demo-card textarea {
-  min-height: 110px;
-}
-
-.app-footer {
-  padding: 12px;
-  text-align: center;
-  font-size: 12px;
-  color: #888;
-}
-
-/* SHORT SCREENS */
-
+/* SMALLER PHONES */
 @media (max-height: 740px) {
-  .weather-wrap {
-    top: 10%;
-  }
-
-  .weather-card {
-    height: 165px;
-    padding-top: 10px;
-  }
-
-  .forecast {
-    margin-top: 5px;
-  }
-
-  .home-grid {
-    top: 36%;
-    grid-template-rows: 66px 66px 66px;
-    row-gap: 11px;
-  }
-
-  .music-widget {
-    height: 190px;
-  }
-
-  .page-dots {
-    bottom: 14%;
-  }
-
-  .dock {
-    bottom: 2%;
-  }
-}
-
-@media (min-width: 600px) {
-  .phone {
-    max-width: 430px;
-    margin: auto;
-  }
+  .weather-wrap { top: 10%; }
+  .weather-card { height: 165px; padding-top: 10px; }
+  .forecast { margin-top: 5px; }
+  .home-grid { top: 36%; }
+  .app.instagram, .app.xapp { top: 105px; }
+  .app.spotify, .app.photos, .app.notes, .app.youtube { top: 232px; }
+  .music-widget { padding: 9px; }
+  .page-dots { bottom: 14%; }
+  .dock { bottom: 2%; }
 }
 </style>
 </head>
@@ -640,173 +413,195 @@ button {
 <body>
 <main class="phone">
 
-  <img
-    class="wallpaper"
-    src="https://raw.githubusercontent.com/runweebss/Interactive-Winrina-AU/main/camera-wallpaper.jpg"
-    alt="Wallpaper kamera"
-  >
-  <div class="shade"></div>
+  <!-- LOCKSCREEN WALLPAPER -->
+  <section class="lock-screen" id="lockScreen">
+    <img
+      class="lock-wallpaper"
+      src="alohomora-lockscreen.jpg"
+      alt="Lock screen wallpaper"
+      onerror="this.style.display='none';document.getElementById('lockScreen').style.backgroundImage='linear-gradient(135deg,#665d50,#25242b)'"
+    >
+    <div class="lock-shade"></div>
 
-  <header class="status">
-    <span id="clock">10:24</span>
-    <div class="status-right">
-      <div class="signal"><i></i><i></i><i></i><i></i></div>
-      <span>◔</span>
-      <div class="battery"></div>
-    </div>
-  </header>
-
-  <!-- WEATHER -->
-  <section class="weather-wrap">
-    <div class="weather-card">
-      <div class="city">Bandung</div>
-
-      <div class="weather-main">
-        <div class="temperature">26°</div>
-        <div class="condition">
-          <strong>☁</strong>
-          Cloudy<br>
-          H:27° L:22°
-        </div>
+    <header class="status">
+      <span id="lockStatusTime">10:24</span>
+      <div class="status-right">
+        <div class="signal"><i></i><i></i><i></i><i></i></div>
+        <span>◔</span>
+        <div class="battery"></div>
       </div>
+    </header>
 
-      <div class="forecast">
-        <div class="forecast-item">
-          <span class="forecast-time">2PM</span>
-          <span class="cloud"></span>
-          <span class="forecast-temp">26°</span>
-        </div>
-        <div class="forecast-item">
-          <span class="forecast-time">3PM</span>
-          <span class="cloud"></span>
-          <span class="forecast-temp">27°</span>
-        </div>
-        <div class="forecast-item">
-          <span class="forecast-time">4PM</span>
-          <span class="cloud"></span>
-          <span class="forecast-temp">26°</span>
-        </div>
-        <div class="forecast-item">
-          <span class="forecast-time">5PM</span>
-          <span class="cloud"></span>
-          <span class="forecast-temp">27°</span>
-        </div>
-        <div class="forecast-item">
-          <span class="forecast-time">6PM</span>
-          <span class="cloud"></span>
-          <span class="forecast-temp">26°</span>
-        </div>
-        <div class="forecast-item">
-          <span class="forecast-time">7PM</span>
-          <span class="cloud"></span>
-          <span class="forecast-temp">25°</span>
-        </div>
-      </div>
+    <div class="lock-clock">
+      <div class="lock-date" id="lockDate">Kamis, 29 Oktober</div>
+      <div class="lock-time" id="lockTime">10:24</div>
     </div>
-    <div class="weather-label">Weather</div>
+
+    <div class="lock-bottom">
+      <div class="lock-hint">Ketuk untuk membuka iPhone</div>
+      <button class="unlock-button" onclick="showPasscode()">Buka iPhone</button>
+    </div>
+    <div class="home-indicator"></div>
   </section>
 
-  <!-- HOME ICONS -->
-  <section class="home-grid">
+  <!-- PASSCODE SCREEN -->
+  <section class="passcode-screen" id="passcodeScreen">
+    <div class="passcode-title">Masukkan Kode Sandi</div>
+    <div class="passcode-subtitle">Masukkan kode sandi untuk membuka iPhone</div>
+    <div class="pin-dots" id="pinDots">
+      <span class="pin-dot"></span><span class="pin-dot"></span>
+      <span class="pin-dot"></span><span class="pin-dot"></span>
+    </div>
+    <div class="pin-error" id="pinError"></div>
 
-    <button class="app whatsapp" onclick="openApp('WhatsApp')">
-      <img src="whatsapp%20logo.png" alt="WhatsApp">
-      <span class="app-name">WhatsApp</span>
-    </button>
-
-    <button class="app calendar" onclick="openApp('Calendar')">
-      <img
-        src="calendar%20logo.png"
-        alt="Calendar"
-        onerror="this.outerHTML='<div class=&quot;calendar-fallback&quot;><small>TUE</small>29</div>'"
-      >
-      <span class="app-name">Calendar</span>
-    </button>
-
-    <button class="app instagram" onclick="openApp('Instagram')">
-      <img src="instagram%20logo.png" alt="Instagram">
-      <span class="app-name">Instagram</span>
-    </button>
-
-    <button class="app xapp" onclick="openApp('X')">
-      <img src="x%20logo.png" alt="X">
-      <span class="app-name">X</span>
-    </button>
-
-    <button class="app spotify" onclick="openSpotify()">
-      <img src="spotify%20logo.png" alt="Spotify">
-      <span class="app-name">Spotify</span>
-    </button>
-
-    <button class="app photos" onclick="openApp('Photos')">
-      <img src="photo%20logo.png" alt="Photos">
-      <span class="app-name">Photos</span>
-    </button>
-
-    <button class="app notes" onclick="openApp('Notes')">
-      <img src="notes%20logo.png" alt="Notes">
-      <span class="app-name">Notes</span>
-    </button>
-
-    <button class="app youtube" onclick="openApp('YouTube')">
-      <img src="youtube%20logo.png" alt="YouTube">
-      <span class="app-name">YouTube</span>
-    </button>
-
-    <!-- MUSIC WIDGET -->
-    <div class="music-wrap">
-      <section class="music-widget">
-        <div class="music-top">
-          <div class="album-art" aria-label="Artwork sementara"></div>
-          <span class="music-note">♫</span>
-        </div>
-
-        <div class="track-title">everything u are</div>
-        <div class="track-artist">Hindia</div>
-
-        <div class="progress-area">
-          <div class="progress-track">
-            <div class="progress-fill"></div>
-          </div>
-          <div class="track-times">
-            <span>1:53</span>
-            <span>-2:04</span>
-          </div>
-        </div>
-
-        <div class="music-controls">
-          <button aria-label="Previous" onclick="openSpotify()">◀◀</button>
-          <button class="play-button" aria-label="Open Spotify" onclick="openSpotify()">Ⅱ</button>
-          <button aria-label="Next" onclick="openSpotify()">▶▶</button>
-          <button class="airplay" aria-label="Open Spotify" onclick="openSpotify()">◎</button>
-        </div>
-      </section>
-      <div class="music-label">Music</div>
+    <div class="pin-pad">
+      <button class="pin-key" onclick="enterPin('1')">1<small>&nbsp;</small></button>
+      <button class="pin-key" onclick="enterPin('2')">2<small>ABC</small></button>
+      <button class="pin-key" onclick="enterPin('3')">3<small>DEF</small></button>
+      <button class="pin-key" onclick="enterPin('4')">4<small>GHI</small></button>
+      <button class="pin-key" onclick="enterPin('5')">5<small>JKL</small></button>
+      <button class="pin-key" onclick="enterPin('6')">6<small>MNO</small></button>
+      <button class="pin-key" onclick="enterPin('7')">7<small>PQRS</small></button>
+      <button class="pin-key" onclick="enterPin('8')">8<small>TUV</small></button>
+      <button class="pin-key" onclick="enterPin('9')">9<small>WXYZ</small></button>
+      <button class="pin-key" style="visibility:hidden"></button>
+      <button class="pin-key" onclick="enterPin('0')">0<small>&nbsp;</small></button>
+      <button class="pin-key" onclick="deletePin()" style="font-size:14px">Hapus</button>
     </div>
 
+    <div class="pin-bottom">
+      <button onclick="hidePasscode()">Batal</button>
+      <span> </span>
+    </div>
+    <div class="home-indicator"></div>
   </section>
 
-  <div class="page-dots">
-    <span></span><span></span><span></span>
-  </div>
+  <!-- HOME SCREEN -->
+  <section class="home-screen" id="homeScreen">
+    <img
+      class="wallpaper"
+      src="https://raw.githubusercontent.com/runweebss/Interactive-Winrina-AU/main/camera-wallpaper.jpg"
+      alt="Wallpaper kamera"
+    >
+    <div class="shade"></div>
 
-  <!-- DOCK -->
-  <nav class="dock">
-    <button onclick="openApp('Camera')" aria-label="Camera">
-      <img src="camera%20logo.png" alt="Camera">
-    </button>
-    <button onclick="openApp('Calculator')" aria-label="Calculator">
-      <img src="calculator%20logo.png" alt="Calculator">
-    </button>
-    <button onclick="openApp('Gmail')" aria-label="Gmail">
-      <img src="gmail%20logo.png" alt="Gmail">
-    </button>
-    <button onclick="openApp('Settings')" aria-label="Settings">
-      <img src="setting%20logo.png" alt="Settings">
-    </button>
-  </nav>
+    <header class="status">
+      <span id="homeStatusTime">10:24</span>
+      <div class="status-right">
+        <div class="signal"><i></i><i></i><i></i><i></i></div>
+        <span>◔</span>
+        <div class="battery"></div>
+      </div>
+    </header>
 
-  <!-- APP PREVIEW -->
+    <section class="weather-wrap">
+      <div class="weather-card">
+        <div class="city">Bandung</div>
+        <div class="weather-main">
+          <div class="temperature">26°</div>
+          <div class="condition">
+            <strong>☁</strong>
+            Cloudy<br>
+            H:27° L:22°
+          </div>
+        </div>
+        <div class="forecast">
+          <div class="forecast-item"><span class="forecast-time">2PM</span><span class="cloud"></span><span class="forecast-temp">26°</span></div>
+          <div class="forecast-item"><span class="forecast-time">3PM</span><span class="cloud"></span><span class="forecast-temp">27°</span></div>
+          <div class="forecast-item"><span class="forecast-time">4PM</span><span class="cloud"></span><span class="forecast-temp">26°</span></div>
+          <div class="forecast-item"><span class="forecast-time">5PM</span><span class="cloud"></span><span class="forecast-temp">27°</span></div>
+          <div class="forecast-item"><span class="forecast-time">6PM</span><span class="cloud"></span><span class="forecast-temp">26°</span></div>
+          <div class="forecast-item"><span class="forecast-time">7PM</span><span class="cloud"></span><span class="forecast-temp">25°</span></div>
+        </div>
+      </div>
+      <div class="weather-label">Weather</div>
+    </section>
+
+    <section class="home-grid">
+
+      <button class="app whatsapp" onclick="openApp('WhatsApp')">
+        <img src="whatsapp%20logo.png" alt="WhatsApp">
+        <span class="app-name">WhatsApp</span>
+      </button>
+
+      <button class="app calendar" onclick="openApp('Calendar')">
+        <img
+          src="calendar%20logo.png"
+          alt="Calendar"
+          onerror="this.outerHTML='<div class=&quot;calendar-fallback&quot;><small>TUE</small>29</div>'"
+        >
+        <span class="app-name">Calendar</span>
+      </button>
+
+      <button class="app instagram" onclick="openApp('Instagram')">
+        <img src="instagram%20logo.png" alt="Instagram">
+        <span class="app-name">Instagram</span>
+      </button>
+
+      <button class="app xapp" onclick="openApp('X')">
+        <img src="x%20logo.png" alt="X">
+        <span class="app-name">X</span>
+      </button>
+
+      <button class="app spotify" onclick="openSpotify()">
+        <img src="spotify%20logo.png" alt="Spotify">
+        <span class="app-name">Spotify</span>
+      </button>
+
+      <button class="app photos" onclick="openApp('Photos')">
+        <img src="photo%20logo.png" alt="Photos">
+        <span class="app-name">Photos</span>
+      </button>
+
+      <button class="app notes" onclick="openApp('Notes')">
+        <img src="notes%20logo.png" alt="Notes">
+        <span class="app-name">Notes</span>
+      </button>
+
+      <button class="app youtube" onclick="openApp('YouTube')">
+        <img src="youtube%20logo.png" alt="YouTube">
+        <span class="app-name">YouTube</span>
+      </button>
+
+      <div class="music-wrap">
+        <section class="music-widget">
+          <div class="music-top">
+            <img
+              class="album-art"
+              src="https://raw.githubusercontent.com/runweebss/mavin-iphone/feb271aa049efe1d2556f12ff488f8e57fb24d9a/hindia%20everything%20u%20are.jpg"
+              alt="Hindia - everything u are"
+            >
+            <span class="music-note">♫</span>
+          </div>
+          <div class="track-title">everything u are</div>
+          <div class="track-artist">Hindia</div>
+          <div class="progress-area">
+            <div class="progress-track"><div class="progress-fill"></div></div>
+            <div class="track-times"><span>1:53</span><span>-2:04</span></div>
+          </div>
+          <div class="music-controls">
+            <button aria-label="Previous" onclick="openSpotify()">◀◀</button>
+            <button class="play-button" aria-label="Open Spotify" onclick="openSpotify()">Ⅱ</button>
+            <button aria-label="Next" onclick="openSpotify()">▶▶</button>
+            <button class="airplay" aria-label="Open Spotify" onclick="openSpotify()">◎</button>
+          </div>
+        </section>
+        <div class="music-label">Music</div>
+      </div>
+
+    </section>
+
+    <div class="page-dots"><span></span><span></span><span></span></div>
+
+    <nav class="dock">
+      <button onclick="openApp('Camera')" aria-label="Camera"><img src="camera%20logo.png" alt="Camera"></button>
+      <button onclick="openApp('Calculator')" aria-label="Calculator"><img src="calculator%20logo.png" alt="Calculator"></button>
+      <button onclick="openApp('Gmail')" aria-label="Gmail"><img src="gmail%20logo.png" alt="Gmail"></button>
+      <button onclick="openApp('Settings')" aria-label="Settings"><img src="setting%20logo.png" alt="Settings"></button>
+    </nav>
+  </section>
+
+  <!-- DEMO APP WINDOWS -->
   <section class="app-screen" id="appScreen">
     <header class="app-header">
       <button class="back-button" onclick="closeApp()">‹ Home</button>
@@ -819,21 +614,72 @@ button {
 </main>
 
 <script>
-const spotifyUrl =
-  "https://open.spotify.com/track/5WOSNVChcadlsCRiqXE45K?si=eDLWuk--RMOb2kCRwV4k0w&utm_source=copy-link";
+const CORRECT_PIN = "1711";
+const spotifyUrl = "https://open.spotify.com/track/5WOSNVChcadlsCRiqXE45K?si=eDLWuk--RMOb2kCRwV4k0w&utm_source=copy-link";
+let enteredPin = "";
 
 function updateClock() {
   const now = new Date();
-  document.getElementById("clock").textContent =
-    now.toLocaleTimeString("id-ID", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false
-    });
+  const time = now.toLocaleTimeString("id-ID", {
+    hour: "2-digit", minute: "2-digit", hour12: false
+  });
+  document.getElementById("lockTime").textContent = time;
+  document.getElementById("lockStatusTime").textContent = time;
+  document.getElementById("homeStatusTime").textContent = time;
+  document.getElementById("lockDate").textContent =
+    now.toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "long" });
 }
-
 updateClock();
 setInterval(updateClock, 30000);
+
+function showPasscode() {
+  enteredPin = "";
+  updatePinDots();
+  document.getElementById("pinError").textContent = "";
+  document.getElementById("passcodeScreen").classList.add("active");
+}
+
+function hidePasscode() {
+  document.getElementById("passcodeScreen").classList.remove("active");
+}
+
+function enterPin(number) {
+  if (enteredPin.length >= 4) return;
+  enteredPin += number;
+  updatePinDots();
+
+  if (enteredPin.length === 4) {
+    if (enteredPin === CORRECT_PIN) {
+      setTimeout(unlockPhone, 180);
+    } else {
+      document.getElementById("pinError").textContent = "Kode sandi salah, coba lagi";
+      setTimeout(() => {
+        enteredPin = "";
+        updatePinDots();
+        document.getElementById("pinError").textContent = "";
+      }, 650);
+    }
+  }
+}
+
+function deletePin() {
+  enteredPin = enteredPin.slice(0, -1);
+  updatePinDots();
+  document.getElementById("pinError").textContent = "";
+}
+
+function updatePinDots() {
+  document.querySelectorAll(".pin-dot").forEach((dot, index) => {
+    dot.classList.toggle("filled", index < enteredPin.length);
+  });
+}
+
+function unlockPhone() {
+  document.getElementById("passcodeScreen").classList.remove("active");
+  document.getElementById("lockScreen").style.opacity = "0";
+  document.getElementById("lockScreen").style.visibility = "hidden";
+  document.getElementById("homeScreen").classList.add("active");
+}
 
 function openSpotify() {
   window.open(spotifyUrl, "_blank", "noopener,noreferrer");
@@ -843,87 +689,23 @@ function openApp(name) {
   const screen = document.getElementById("appScreen");
   const title = document.getElementById("appTitle");
   const content = document.getElementById("appContent");
-
   title.textContent = name;
 
   const pages = {
-    "WhatsApp": `
-      <div class="demo-card">
-        <h3>WhatsApp</h3>
-        <p>Chats</p>
-        <p>Belum ada percakapan di demo ini.</p>
-      </div>`,
-
-    "Calendar": `
-      <div class="demo-card">
-        <h2>Selasa, 29</h2>
-        <p>Kalender Mavin</p>
-        <input type="text" placeholder="Tambah acara...">
-      </div>`,
-
-    "Instagram": `
-      <div class="demo-card">
-        <h3>Instagram</h3>
-        <p>Feed demo belum tersedia.</p>
-      </div>`,
-
-    "X": `
-      <div class="demo-card">
-        <h3>Post</h3>
-        <textarea placeholder="Apa yang sedang terjadi?"></textarea>
-      </div>`,
-
-    "Photos": `
-      <div class="demo-card">
-        <h3>Photos</h3>
-        <p>Album foto demo masih kosong.</p>
-      </div>`,
-
-    "Notes": `
-      <div class="demo-card">
-        <h3>Catatan baru</h3>
-        <textarea placeholder="Tulis catatan di sini..."></textarea>
-      </div>`,
-
-    "YouTube": `
-      <div class="demo-card">
-        <h3>YouTube</h3>
-        <p>Video belum tersedia di demo ini.</p>
-      </div>`,
-
-    "Camera": `
-      <div class="demo-card">
-        <h3>Camera</h3>
-        <p>Ini tampilan simulasi kamera.</p>
-      </div>`,
-
-    "Calculator": `
-      <div class="demo-card">
-        <h3>Calculator</h3>
-        <input id="calcA" type="number" placeholder="Angka pertama">
-        <input id="calcB" type="number" placeholder="Angka kedua">
-        <button onclick="calculate()" style="margin-top:10px;padding:10px 16px;background:#ff9500;color:white;border:0;border-radius:10px">Jumlahkan</button>
-        <p id="calcResult"></p>
-      </div>`,
-
-    "Gmail": `
-      <div class="demo-card">
-        <h3>Gmail</h3>
-        <p>Email demo belum tersedia.</p>
-      </div>`,
-
-    "Settings": `
-      <div class="demo-card">
-        <h3>Settings</h3>
-        <p>Wi-Fi　Terhubung</p>
-        <p>Bluetooth　Aktif</p>
-        <p>Wallpaper　Kamera</p>
-      </div>`
+    "WhatsApp": `<div class="demo-card"><h3>WhatsApp</h3><p>Chats</p><p>Belum ada percakapan di demo ini.</p></div>`,
+    "Calendar": `<div class="demo-card"><h2>29 Oktober</h2><p>Kalender Mavin</p><input placeholder="Tambah acara..."></div>`,
+    "Instagram": `<div class="demo-card"><h3>Instagram</h3><p>Feed demo belum tersedia.</p></div>`,
+    "X": `<div class="demo-card"><h3>Post</h3><textarea placeholder="Apa yang sedang terjadi?"></textarea></div>`,
+    "Photos": `<div class="demo-card"><h3>Photos</h3><p>Album foto demo masih kosong.</p></div>`,
+    "Notes": `<div class="demo-card"><h3>Catatan baru</h3><textarea placeholder="Tulis catatan di sini..."></textarea></div>`,
+    "YouTube": `<div class="demo-card"><h3>YouTube</h3><p>Video belum tersedia di demo ini.</p></div>`,
+    "Camera": `<div class="demo-card"><h3>Camera</h3><p>Ini tampilan simulasi kamera.</p></div>`,
+    "Calculator": `<div class="demo-card"><h3>Calculator</h3><input id="calcA" type="number" placeholder="Angka pertama"><input id="calcB" type="number" placeholder="Angka kedua"><button onclick="calculate()" style="margin-top:10px;padding:10px 16px;background:#ff9500;color:white;border:0;border-radius:10px">Jumlahkan</button><p id="calcResult"></p></div>`,
+    "Gmail": `<div class="demo-card"><h3>Gmail</h3><p>Email demo belum tersedia.</p></div>`,
+    "Settings": `<div class="demo-card"><h3>Settings</h3><p>Wi-Fi　Terhubung</p><p>Bluetooth　Aktif</p><p>Wallpaper　Kamera</p><button onclick="lockPhone()" style="padding:10px 15px;border:0;border-radius:10px;background:#ddd;color:#222">Kunci iPhone</button></div>`
   };
 
-  content.innerHTML = pages[name] || `
-    <div class="demo-card"><h3>${name}</h3></div>`;
-
+  content.innerHTML = pages[name] || `<div class="demo-card"><h3>${name}</h3></div>`;
   screen.classList.add("active");
 }
 
@@ -936,7 +718,14 @@ function calculate() {
   const b = Number(document.getElementById("calcB").value);
   document.getElementById("calcResult").textContent = "Hasil: " + (a + b);
 }
-</script>
 
+function lockPhone() {
+  closeApp();
+  document.getElementById("homeScreen").classList.remove("active");
+  const lock = document.getElementById("lockScreen");
+  lock.style.visibility = "visible";
+  lock.style.opacity = "1";
+}
+</script>
 </body>
 </html>
