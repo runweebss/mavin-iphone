@@ -188,9 +188,10 @@ button {
   letter-spacing: -4px;
 }
 
+/* Only one swipe indicator. No extra home-indicator line. */
 .lock-bottom {
   position: absolute;
-  bottom: 7%;
+  bottom: max(22px, env(safe-area-inset-bottom));
   width: 100%;
   text-align: center;
   padding: 0 24px;
@@ -199,48 +200,22 @@ button {
 
 .lock-hint {
   font-size: 14px;
-  margin-bottom: 14px;
+  margin-bottom: 19px;
   text-shadow: 0 1px 4px #0009;
 }
 
 .swipe-indicator {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  animation: floatUp 1.8s ease-in-out infinite;
-}
-
-.swipe-arrow {
-  width: 16px;
-  height: 16px;
-  border-top: 2px solid white;
-  border-left: 2px solid white;
-  transform: rotate(45deg);
-  opacity: .9;
-}
-
-.swipe-line {
-  width: 110px;
-  height: 4px;
+  width: 112px;
+  height: 5px;
+  margin: 0 auto;
   border-radius: 10px;
   background: white;
+  animation: floatUp 1.8s ease-in-out infinite;
 }
 
 @keyframes floatUp {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-
-.home-indicator {
-  position: absolute;
-  bottom: 12px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 108px;
-  height: 4px;
-  border-radius: 10px;
-  background: white;
+  50% { transform: translateY(-4px); }
 }
 
 /* PASSCODE */
@@ -354,11 +329,11 @@ button {
   visibility: visible;
 }
 
-/* WEATHER */
+/* WEATHER: moved upward, with a clear gap below */
 
 .weather-wrap {
   position: absolute;
-  top: 10.2%;
+  top: 9.2%;
   left: 8.7%;
   width: 82.6%;
 }
@@ -475,11 +450,11 @@ button {
   text-shadow: 0 1px 4px #000a;
 }
 
-/* APP GRID */
+/* APP GRID: consistent columns and vertical spacing */
 
 .home-grid {
   position: absolute;
-  top: 36.3%;
+  top: 38.5%;
   left: 7%;
   right: 7%;
   height: 65vw;
@@ -525,8 +500,6 @@ button {
 .notes { left: 50%; top: 61vw; }
 .youtube { left: 75%; top: 61vw; }
 
-/* CALENDAR FALLBACK */
-
 .calendar-fallback {
   width: 100%;
   aspect-ratio: 1 / 1;
@@ -547,7 +520,7 @@ button {
   font-weight: 850;
 }
 
-/* MUSIC PLAYER */
+/* MUSIC PLAYER: square widget and evenly spaced controls */
 
 .music-wrap {
   position: absolute;
@@ -637,31 +610,35 @@ button {
   margin-top: 5px;
 }
 
+/* Four equal-width button slots keep the icons aligned */
 .music-controls {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: center;
   justify-items: center;
-  margin-top: clamp(8px, 1.4vw, 12px);
+  width: 100%;
+  margin-top: clamp(7px, 1.2vw, 11px);
   flex-shrink: 0;
 }
 
 .music-controls button {
-  min-width: 0;
-  width: 100%;
-  height: 30px;
-  padding: 0;
-  border: 0;
-  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  min-width: 0;
+  height: clamp(25px, 7vw, 32px);
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: white;
+  line-height: 1;
 }
 
 .music-controls .skip-button {
   font-size: clamp(13px, 3.5vw, 19px);
   letter-spacing: -3px;
+  padding-right: 3px;
 }
 
 .music-controls .play-button {
@@ -743,7 +720,7 @@ button {
   border-radius: 23%;
 }
 
-/* DEMO APPS */
+/* DEMO APP WINDOWS */
 
 .app-screen {
   position: absolute;
@@ -815,7 +792,7 @@ button {
 
 @media (max-height: 740px) {
   .weather-wrap {
-    top: 9%;
+    top: 8.5%;
   }
 
   .weather-card {
@@ -829,7 +806,7 @@ button {
   }
 
   .home-grid {
-    top: 35%;
+    top: 37%;
   }
 
   .music-widget {
@@ -853,7 +830,7 @@ button {
   }
 
   .lock-bottom {
-    bottom: 6%;
+    bottom: max(22px, env(safe-area-inset-bottom));
   }
 }
 
@@ -912,12 +889,8 @@ button {
 
     <div class="lock-bottom">
       <div class="lock-hint">Swipe up to open</div>
-      <div class="swipe-indicator" aria-hidden="true">
-        <div class="swipe-arrow"></div>
-        <div class="swipe-line"></div>
-      </div>
+      <div class="swipe-indicator" aria-hidden="true"></div>
     </div>
-    <div class="home-indicator"></div>
   </section>
 
   <!-- PASSCODE -->
@@ -953,8 +926,6 @@ button {
       <button onclick="hidePasscode()">Cancel</button>
       <span></span>
     </div>
-
-    <div class="home-indicator"></div>
   </section>
 
   <!-- HOME SCREEN -->
@@ -990,36 +961,12 @@ button {
         </div>
 
         <div class="forecast">
-          <div class="forecast-item">
-            <span class="forecast-time">2PM</span>
-            <span class="cloud"></span>
-            <span class="forecast-temp">26°</span>
-          </div>
-          <div class="forecast-item">
-            <span class="forecast-time">3PM</span>
-            <span class="cloud"></span>
-            <span class="forecast-temp">27°</span>
-          </div>
-          <div class="forecast-item">
-            <span class="forecast-time">4PM</span>
-            <span class="cloud"></span>
-            <span class="forecast-temp">26°</span>
-          </div>
-          <div class="forecast-item">
-            <span class="forecast-time">5PM</span>
-            <span class="cloud"></span>
-            <span class="forecast-temp">27°</span>
-          </div>
-          <div class="forecast-item">
-            <span class="forecast-time">6PM</span>
-            <span class="cloud"></span>
-            <span class="forecast-temp">26°</span>
-          </div>
-          <div class="forecast-item">
-            <span class="forecast-time">7PM</span>
-            <span class="cloud"></span>
-            <span class="forecast-temp">25°</span>
-          </div>
+          <div class="forecast-item"><span class="forecast-time">2PM</span><span class="cloud"></span><span class="forecast-temp">26°</span></div>
+          <div class="forecast-item"><span class="forecast-time">3PM</span><span class="cloud"></span><span class="forecast-temp">27°</span></div>
+          <div class="forecast-item"><span class="forecast-time">4PM</span><span class="cloud"></span><span class="forecast-temp">26°</span></div>
+          <div class="forecast-item"><span class="forecast-time">5PM</span><span class="cloud"></span><span class="forecast-temp">27°</span></div>
+          <div class="forecast-item"><span class="forecast-time">6PM</span><span class="cloud"></span><span class="forecast-temp">26°</span></div>
+          <div class="forecast-item"><span class="forecast-time">7PM</span><span class="cloud"></span><span class="forecast-temp">25°</span></div>
         </div>
       </div>
       <div class="weather-label">Weather</div>
@@ -1122,18 +1069,10 @@ button {
 
     <!-- DOCK -->
     <nav class="dock">
-      <button onclick="openApp('Camera')" aria-label="Camera">
-        <img src="camera%20logo.png" alt="Camera">
-      </button>
-      <button onclick="openApp('Calculator')" aria-label="Calculator">
-        <img src="calculator%20logo.png" alt="Calculator">
-      </button>
-      <button onclick="openApp('Gmail')" aria-label="Gmail">
-        <img src="gmail%20logo.png" alt="Gmail">
-      </button>
-      <button onclick="openApp('Settings')" aria-label="Settings">
-        <img src="setting%20logo.png" alt="Settings">
-      </button>
+      <button onclick="openApp('Camera')" aria-label="Camera"><img src="camera%20logo.png" alt="Camera"></button>
+      <button onclick="openApp('Calculator')" aria-label="Calculator"><img src="calculator%20logo.png" alt="Calculator"></button>
+      <button onclick="openApp('Gmail')" aria-label="Gmail"><img src="gmail%20logo.png" alt="Gmail"></button>
+      <button onclick="openApp('Settings')" aria-label="Settings"><img src="setting%20logo.png" alt="Settings"></button>
     </nav>
   </section>
 
@@ -1163,7 +1102,7 @@ let touchStartX = 0;
 function updateClock() {
   const now = new Date();
 
-  const time = now.toLocaleTimeString("en-US", {
+  const time = now.toLocaleTimeString("en-GB", {
     hour: "2-digit",
     minute: "2-digit",
     hour12: false
@@ -1189,9 +1128,7 @@ setInterval(updateClock, 30000);
 const lockScreen = document.getElementById("lockScreen");
 
 lockScreen.addEventListener("touchstart", function(event) {
-  if (document.getElementById("passcodeScreen").classList.contains("active")) {
-    return;
-  }
+  if (document.getElementById("passcodeScreen").classList.contains("active")) return;
 
   const touch = event.changedTouches[0];
   touchStartY = touch.screenY;
@@ -1199,9 +1136,7 @@ lockScreen.addEventListener("touchstart", function(event) {
 }, { passive: true });
 
 lockScreen.addEventListener("touchend", function(event) {
-  if (document.getElementById("passcodeScreen").classList.contains("active")) {
-    return;
-  }
+  if (document.getElementById("passcodeScreen").classList.contains("active")) return;
 
   const touch = event.changedTouches[0];
   const deltaY = touchStartY - touch.screenY;
@@ -1211,8 +1146,6 @@ lockScreen.addEventListener("touchend", function(event) {
     showPasscode();
   }
 }, { passive: true });
-
-/* DESKTOP TESTING: CLICK OR DRAG UP */
 
 let mouseStartY = 0;
 
@@ -1236,7 +1169,6 @@ lockScreen.addEventListener("mouseup", function(event) {
 function showPasscode() {
   enteredPin = "";
   updatePinDots();
-
   document.getElementById("pinError").textContent = "";
   document.getElementById("passcodeScreen").classList.add("active");
 }
@@ -1289,15 +1221,12 @@ function unlockPhone() {
   document.getElementById("homeScreen").classList.add("active");
 }
 
-/* MUSIC PLAYER
-   The play/pause button is a visual demo.
-   Spotify playback itself is controlled by Spotify. */
+/* MUSIC PLAYER VISUAL TOGGLE */
 
 function togglePlayback() {
   isPlaying = !isPlaying;
 
   const button = document.getElementById("playButton");
-
   button.textContent = isPlaying ? "Ⅱ" : "▶";
   button.setAttribute("aria-label", isPlaying ? "Pause" : "Play");
   button.setAttribute("aria-pressed", String(isPlaying));
@@ -1326,7 +1255,7 @@ function openApp(name) {
 
     "Calendar": `
       <div class="demo-card">
-        <h2 id="calendarDate">October 29</h2>
+        <h2>October 29</h2>
         <p>Mavin's Calendar</p>
         <input placeholder="Add an event...">
       </div>`,
