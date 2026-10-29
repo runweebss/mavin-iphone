@@ -1566,10 +1566,129 @@ function openApp(name) {
     <div class="demo-card"><h3>${name}</h3></div>`;
 
   screen.classList.add("active");
+  if (name === "Calendar") {
+  renderCalendar();
+  }
 }
+
 
 function closeApp() {
   document.getElementById("appScreen").classList.remove("active");
+}
+
+  
+/* APPLE CALENDAR LOGIC */
+let calendarViewDate = new Date();
+let calendarSelectedDate = new Date();
+let calendarEvents = {};
+
+function renderCalendar() {
+  const title = document.getElementById("calMonthTitle");
+  const days = document.getElementById("calDays");
+  const selectedTitle = document.getElementById("calSelectedDate");
+
+  if (!title || !days || !selectedTitle) return;
+
+  const year = calendarViewDate.getFullYear();
+  const month = calendarViewDate.getMonth();
+
+  title.textContent = calendarViewDate.toLocaleDateString("en-US", {
+    month: "long",
+    year: "numeric"
+  });
+
+  days.innerHTML = "";
+
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const today = new Date();
+
+  for (let i = 0; i < firstDay; i++) {
+    const blank = document.createElement("span");
+    days.appendChild(blank);
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const button = document.createElement("button");
+    button.className = "cal-day";
+    button.textContent = day;
+
+    const isToday =
+      day === today.getDate() &&
+      month === today.getMonth() &&
+      year === today.getFullYear();
+
+    const isSelected =
+      day === calendarSelectedDate.getDate() &&
+      month === calendarSelectedDate.getMonth() &&
+      year === calendarSelectedDate.getFullYear();
+
+    if (isToday) button.classList.add("today");
+    if (isSelected) button.classList.add("selected");
+
+    button.onclick = () => {
+      calendarSelectedDate = new Date(year, month, day);
+      renderCalendar();
+    };
+
+    days.appendChild(button);
+  }
+
+  selectedTitle.textContent =
+    calendarSelectedDate.toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric"
+    });
+
+  renderCalendarEvents();
+}
+
+function changeCalendarMonth(amount) {
+  calendarViewDate = new Date(
+    calendarViewDate.getFullYear(),
+    calendarViewDate.getMonth() + amount,
+    1
+  );
+
+  renderCalendar();
+}
+
+function addCalendarEvent() {
+  const input = document.getElementById("calEventInput");
+  if (!input || !input.value.trim()) return;
+
+  const dateKey = [
+    calendarSelectedDate.getFullYear(),
+    String(calendarSelectedDate.getMonth() + 1).padStart(2, "0"),
+    String(calendarSelectedDate.getDate()).padStart(2, "0")
+  ].join("-");
+
+  if (!calendarEvents[dateKey]) calendarEvents[dateKey] = [];
+  calendarEvents[dateKey].push(input.value.trim());
+
+  input.value = "";
+  renderCalendarEvents();
+}
+
+function renderCalendarEvents() {
+  const list = document.getElementById("calEventList");
+  if (!list) return;
+
+  const dateKey = [
+    calendarSelectedDate.getFullYear(),
+    String(calendarSelectedDate.getMonth() + 1).padStart(2, "0"),
+    String(calendarSelectedDate.getDate()).padStart(2, "0")
+  ].join("-");
+
+  list.innerHTML = "";
+
+  (calendarEvents[dateKey] || []).forEach(event => {
+    const item = document.createElement("div");
+    item.className = "cal-event";
+    item.textContent = "• " + event;
+    list.appendChild(item);
+  });
 }
 
 function calculate() {
