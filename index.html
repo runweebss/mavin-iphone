@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html lang="id">
 <head>
@@ -5,65 +6,64 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#080808">
 <title>Mavin's iPhone</title>
+
 <style>
-:root{--ink:#171719;--paper:#f4f4f7;--blue:#087cff;--gold:#f4d39a}
+:root{--blue:#087cff;--paper:#f4f4f7}
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;overflow:hidden}
-body{background:#111;color:#fff;font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",sans-serif}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#111;color:white}
 button,input,textarea,select{font:inherit}
 button{cursor:pointer;border:0}
 #phone{position:relative;width:100%;height:100dvh;max-width:430px;margin:auto;overflow:hidden;background:#111;isolation:isolate}
-#wall{position:absolute;inset:0;background:url('https://raw.githubusercontent.com/runweebss/Interactive-Winrina-AU/main/camera-wallpaper.jpg') center/cover no-repeat;z-index:0}
-#wall:after{content:"";position:absolute;inset:0;background:#00000012;pointer-events:none}
-.status{position:absolute;z-index:20;top:0;left:0;right:0;height:38px;padding:8px 7% 0;display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:700;text-shadow:0 1px 4px #000;color:white;pointer-events:none}
-.status-right{letter-spacing:2px}
-.screen{position:absolute;inset:0;display:none;z-index:2}
+#wall{position:absolute;inset:0;background:url('https://raw.githubusercontent.com/runweebss/Interactive-Winrina-AU/main/camera-wallpaper.jpg') center/cover;z-index:0}
+.screen{position:absolute;inset:0;display:none}
 .screen.active{display:block}
-.lock{z-index:10;background:#000}
-.lock img{position:absolute;width:100%;height:100%;inset:0;object-fit:cover}
+.status{position:absolute;z-index:30;top:0;left:0;right:0;height:36px;padding:8px 7% 0;display:flex;justify-content:space-between;font-size:14px;font-weight:700;text-shadow:0 1px 4px #000;pointer-events:none}
+.lock{z-index:10;background:#000;touch-action:pan-y}
+.lock img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .lockdate{position:absolute;top:17%;left:0;right:0;text-align:center;font-size:16px;text-shadow:0 2px 8px #000}
-.locktime{position:absolute;top:20.5%;left:0;right:0;text-align:center;font-size:clamp(66px,18vw,88px);font-weight:200;letter-spacing:-3px;line-height:1.1;text-shadow:0 2px 8px #000}
-.hint{position:absolute;bottom:8.5%;width:100%;padding:15px;background:transparent;color:var(--gold);font-size:16px;text-shadow:0 2px 6px #000}
-.home{padding:52px 5% 124px;overflow:hidden}
-.weather{position:relative;display:block;width:100%;height:174px;padding:15px 16px;border-radius:29px;background:linear-gradient(145deg,rgba(83,104,123,.94),rgba(29,48,65,.94));color:white;text-align:left;box-shadow:0 8px 24px #0002}
+.locktime{position:absolute;top:21%;left:0;right:0;text-align:center;font-size:clamp(68px,18vw,88px);font-weight:200;letter-spacing:-3px;text-shadow:0 2px 8px #000}
+.hint{position:absolute;bottom:7%;width:100%;padding:16px;background:transparent;color:#f4d39a;font-size:16px;text-shadow:0 2px 6px #000}
+.home{z-index:2;padding:52px 5% 120px;overflow:hidden}
+.weather{position:relative;width:100%;height:174px;padding:14px 16px;border-radius:29px;background:linear-gradient(145deg,#566b7beF,#203447ef);color:white;text-align:left;box-shadow:0 8px 24px #0002}
 .city{font-size:18px;font-weight:600}
-.temp{font-size:56px;font-weight:250;letter-spacing:-2px;line-height:1.05;margin-top:4px}
-.desc{position:absolute;right:15px;top:61px;text-align:right;font-size:14px;line-height:1.35}
-.hours{position:absolute;left:13px;right:13px;bottom:11px;display:flex;justify-content:space-between;gap:3px;text-align:center;font-size:10px}
+.temp{font-size:55px;font-weight:250;line-height:1.1}
+.desc{position:absolute;right:15px;top:58px;text-align:right;font-size:14px;line-height:1.4}
+.hours{position:absolute;bottom:10px;left:12px;right:12px;display:flex;justify-content:space-between;gap:3px;text-align:center;font-size:10px}
 .hours div{flex:1;min-width:0}
-.hours b{display:block;font-size:18px;font-weight:400;margin:4px 0}
-.wlabel{text-align:center;font-size:13px;margin:6px 0 12px;text-shadow:0 1px 4px #000}
-.app-layout{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,auto);column-gap:7px;row-gap:17px;align-items:start}
-.app{min-width:0;display:flex;align-items:center;flex-direction:column;gap:5px;background:transparent;color:white;padding:0;text-shadow:0 1px 4px #000}
-.ico{width:min(100%,65px);aspect-ratio:1;border-radius:17px;display:grid;place-items:center;font-size:31px;font-weight:650;box-shadow:0 4px 9px #0002;overflow:hidden}
-.app label{font-size:11px;line-height:1.2;white-space:nowrap}
+.hours b{display:block;font-size:17px;font-weight:400;margin:4px 0}
+.wlabel{text-align:center;font-size:13px;margin:6px 0 13px;text-shadow:0 1px 4px #000}
+.app-layout{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(3,auto);column-gap:7px;row-gap:18px;align-items:start}
+.app{min-width:0;display:flex;flex-direction:column;align-items:center;gap:5px;padding:0;background:transparent;color:white;text-shadow:0 1px 4px #000}
+.ico{width:min(100%,65px);aspect-ratio:1;border-radius:17px;display:grid;place-items:center;font-size:31px;box-shadow:0 4px 9px #0002;overflow:hidden}
+.app label{font-size:11px;white-space:nowrap}
 .wa{background:#20ce68}
-.calendar{background:#fff;color:#111;display:flex;flex-direction:column;justify-content:center;line-height:1}
+.calendar{background:white;color:#111;display:flex;flex-direction:column;justify-content:center;line-height:1}
 .calendar small{font-size:10px;color:#d22;font-weight:700}
-.calendar span{font-size:31px;font-weight:700;margin-top:2px}
-.ig{background:radial-gradient(circle at 28% 105%,#ffd66d 0%,#f34c5e 45%,#8b39c9 85%)}
+.calendar span{font-size:31px;font-weight:700}
+.ig{background:radial-gradient(circle at 28% 105%,#ffd66d,#f34c5e 48%,#8238ce)}
 .xicon{background:#000}
 .spotify{background:#111;color:#1ed760}
 .photos{background:#fff;color:#ee755e}
-.notesico{background:linear-gradient(#ffce4b 19%,#fff 19%);color:#999}
-.yt{background:#fff;color:#e00}
-.music{grid-column:3/5;grid-row:1/3;align-self:start;position:relative;width:100%;min-height:218px;padding:13px;border-radius:25px;background:rgba(36,36,38,.94);color:#fff;text-align:left;box-shadow:0 8px 24px #0003;backdrop-filter:blur(18px);z-index:3}
+.notesico{background:linear-gradient(#ffce4b 19%,white 19%);color:#999}
+.yt{background:white;color:#e00}
+.music{grid-column:3/5;grid-row:1/3;width:100%;min-height:215px;padding:13px;border-radius:25px;background:#252527ed;color:white;text-align:left;box-shadow:0 8px 24px #0003;backdrop-filter:blur(18px);z-index:3}
 .album{width:65px;height:65px;border-radius:10px;background:linear-gradient(135deg,#bbb,#393939);display:grid;place-items:center;font-size:28px;margin-bottom:9px}
-.song{font-size:14px;font-weight:700;line-height:1.25}
+.song{font-size:14px;font-weight:700}
 .artist{font-size:13px;color:#ccc;margin-top:4px}
 .bar{height:4px;background:#777;margin:13px 0 5px;border-radius:4px;overflow:hidden}
 .bar i{display:block;width:46%;height:100%;background:white}
-.track{display:flex;justify-content:space-between;font-size:10px;color:#eee}
-.controls{display:flex;justify-content:space-between;align-items:center;margin-top:12px;gap:4px}
-.controls button{background:transparent;color:#fff;font-size:17px;padding:3px 0}
+.track{display:flex;justify-content:space-between;font-size:10px}
+.controls{display:flex;justify-content:space-between;margin-top:10px}
+.controls button{background:transparent;color:white;font-size:17px;padding:3px}
 .musiclabel{grid-column:3/5;grid-row:3;text-align:center;margin-top:-12px;font-size:11px;text-shadow:0 1px 4px #000}
-.pages{position:absolute;bottom:99px;left:0;right:0;text-align:center;font-size:11px;letter-spacing:8px;color:#fff;text-shadow:0 1px 4px #000;pointer-events:none}
-.dock{position:absolute;z-index:5;bottom:15px;left:5%;right:5%;height:78px;border-radius:28px;background:rgba(207,193,171,.82);backdrop-filter:blur(22px);display:grid;grid-template-columns:repeat(4,1fr);align-items:center;padding:8px 10px;gap:8px}
+.pages{position:absolute;bottom:96px;width:100%;text-align:center;font-size:11px;letter-spacing:8px;text-shadow:0 1px 4px #000;pointer-events:none}
+.dock{position:absolute;z-index:5;bottom:15px;left:5%;right:5%;height:78px;border-radius:28px;background:#cfc1abcf;backdrop-filter:blur(22px);display:grid;grid-template-columns:repeat(4,1fr);align-items:center;padding:8px 10px;gap:8px}
 .dock .app{height:100%;justify-content:center;text-shadow:none}
-.dock .ico{width:min(100%,57px);border-radius:15px;font-size:29px}
-.homebar{position:absolute;z-index:30;bottom:5px;left:calc(50% - 50px);width:100px;height:4px;border-radius:5px;background:#ffffffb5}
-.appscreen{z-index:8;background:var(--paper);color:var(--ink);overflow:auto;padding-bottom:35px}
-.topbar{position:sticky;top:0;min-height:51px;background:rgba(249,249,251,.94);backdrop-filter:blur(15px);padding:10px 15px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #ddd;z-index:4}
+.dock .ico{width:min(100%,57px);border-radius:15px;font-size:28px}
+.homebar{position:absolute;z-index:40;bottom:5px;left:calc(50% - 50px);width:100px;height:4px;border-radius:5px;background:#ffffffb5}
+.appscreen{z-index:8;background:var(--paper);color:#171719;overflow:auto;padding-bottom:35px}
+.topbar{position:sticky;top:0;min-height:51px;background:#f9f9fbed;backdrop-filter:blur(15px);padding:10px 15px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #ddd;z-index:4}
 .topbar button{background:none;color:var(--blue);font-size:15px;padding:3px 0}
 .topbar strong{font-size:17px}
 .content{padding:16px}
@@ -76,7 +76,7 @@ button{cursor:pointer;border:0}
 .avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:#e2e2e7;flex-shrink:0;font-size:22px}
 .bubble{padding:10px 13px;border-radius:17px;background:#e4e4e9;color:#111;margin:8px 0;max-width:85%;overflow-wrap:anywhere}
 .bubble.me{margin-left:auto;background:#a4e8a0}
-.pinpanel{position:absolute;inset:0;background:#080808f5;z-index:25;display:none;text-align:center;padding-top:23%;color:#fff}
+.pinpanel{position:absolute;inset:0;background:#080808f5;z-index:25;display:none;text-align:center;padding-top:23%;color:white}
 .pinpanel.show{display:block}
 .pinpanel h2{font-weight:400;font-size:24px}
 .dots{letter-spacing:10px;font-size:23px;min-height:30px}
@@ -85,28 +85,26 @@ button{cursor:pointer;border:0}
 .keypad button{aspect-ratio:1;border-radius:50%;background:#ffffff20;border:1px solid #ffffff35;font-size:24px;color:white}
 .hide{display:none!important}
 .photoGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
-.photoGrid button{aspect-ratio:1;background:linear-gradient(140deg,#d4b69a,#526270);font-size:30px;border-radius:4px}
+.photoGrid button{aspect-ratio:1;background:linear-gradient(140deg,#d4b69a,#526270);font-size:30px}
 .notice{font-size:12px;color:#777}
 .calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .calc-grid button{aspect-ratio:1;border-radius:50%;font-size:21px}
 .calc-display{width:100%;font-size:43px;background:transparent;color:white;border:0;text-align:right;padding:16px 4px;overflow:hidden}
-.settings-row{display:flex;align-items:center;gap:12px;background:#fff;color:#222;padding:12px;border-bottom:1px solid #e5e5e9;width:100%;text-align:left}
-.settings-row:first-child{border-radius:12px 12px 0 0}
-.settings-row:last-child{border-radius:0 0 12px 12px;border-bottom:0}
+.settings-row{display:flex;align-items:center;gap:12px;background:white;color:#222;padding:12px;border-bottom:1px solid #e5e5e9;width:100%;text-align:left}
 .settings-icon{width:28px;height:28px;border-radius:7px;display:grid;place-items:center;color:white;background:#858b95}
-.switch{margin-left:auto;accent-color:#34c759}
-.form-row{display:flex;gap:8px;align-items:center}
-.form-row .field{min-width:0}
-.appscreen video{object-fit:cover}
-.lock .status{z-index:21}
-@media(min-width:600px){#phone{height:min(900px,100dvh);border:5px solid #222;border-radius:32px}.home{padding-left:23px;padding-right:23px}.ico{width:68px}.app-layout{row-gap:20px}}
-@media(max-height:730px){.home{padding-top:45px;padding-bottom:110px}.weather{height:155px}.temp{font-size:49px}.app-layout{row-gap:11px}.music{min-height:198px;padding:11px}.album{width:56px;height:56px}.dock{height:68px;bottom:13px}.pages{bottom:88px}}
+@media(max-height:730px){.home{padding-top:44px;padding-bottom:108px}.weather{height:155px}.temp{font-size:49px}.app-layout{row-gap:11px}.music{min-height:195px;padding:11px}.album{width:56px;height:56px}.dock{height:68px;bottom:13px}.pages{bottom:87px}}
+@media(min-width:600px){#phone{height:min(900px,100dvh);border:5px solid #222;border-radius:32px}.home{padding-left:23px;padding-right:23px}.app-layout{row-gap:20px}}
 </style>
 </head>
+
 <body>
 <div id="phone">
 <div id="wall"></div>
-<div class="status"><span id="clock">11:11</span><span class="status-right">▮▮▮ ◉ ▰</span></div>
+
+<div class="status">
+<span id="clock">11:11</span>
+<span>▮▮▮ ◉ ▰</span>
+</div>
 
 <section class="screen lock active" id="lock">
 <img src="alohomora-lockscreen.jpg" alt="Alohomora lock screen">
@@ -121,8 +119,12 @@ button{cursor:pointer;border:0}
 <div class="temp">61°</div>
 <div class="desc">☁<br>Cloudy<br>H:62° L:52°</div>
 <div class="hours">
-<div>2PM<b>☁</b>61°</div><div>3PM<b>☁</b>62°</div><div>4PM<b>☁</b>61°</div>
-<div>5PM<b>☁</b>62°</div><div>6PM<b>☁</b>62°</div><div>7PM<b>☁</b>61°</div>
+<div>2PM<b>☁</b>61°</div>
+<div>3PM<b>☁</b>62°</div>
+<div>4PM<b>☁</b>61°</div>
+<div>5PM<b>☁</b>62°</div>
+<div>6PM<b>☁</b>62°</div>
+<div>7PM<b>☁</b>61°</div>
 </div>
 </button>
 <div class="wlabel">Weather</div>
@@ -130,8 +132,10 @@ button{cursor:pointer;border:0}
 <div class="app-layout">
 <button class="app" data-app="WhatsApp" style="grid-column:1;grid-row:1"><span class="ico wa">☎</span><label>WhatsApp</label></button>
 <button class="app" data-app="Calendar" style="grid-column:2;grid-row:1"><span class="ico calendar"><small id="day">THU</small><span id="num">29</span></span><label>Calendar</label></button>
+
 <button class="app" data-app="Instagram" style="grid-column:1;grid-row:2"><span class="ico ig">◎</span><label>Instagram</label></button>
 <button class="app" data-app="X" style="grid-column:2;grid-row:2"><span class="ico xicon">𝕏</span><label>X</label></button>
+
 <button class="app" data-app="Spotify" style="grid-column:1;grid-row:3"><span class="ico spotify">●</span><label>Spotify</label></button>
 <button class="app" data-app="Photos" style="grid-column:2;grid-row:3"><span class="ico photos">✿</span><label>Photos</label></button>
 <button class="app" data-app="Notes" style="grid-column:3;grid-row:3"><span class="ico notesico">▤</span><label>Notes</label></button>
@@ -144,9 +148,9 @@ button{cursor:pointer;border:0}
 <div class="bar"><i id="progress"></i></div>
 <div class="track"><span>1:53</span><span>−2:04</span></div>
 <div class="controls">
-<button data-control="prev" aria-label="Previous">◀◀</button>
-<button data-control="play" aria-label="Play">▶</button>
-<button data-control="next" aria-label="Next">▶▶</button>
+<button data-control="prev">◀◀</button>
+<button data-control="play">▶</button>
+<button data-control="next">▶▶</button>
 </div>
 </div>
 <div class="musiclabel">Music</div>
@@ -156,19 +160,26 @@ button{cursor:pointer;border:0}
 <div class="dock">
 <button class="app" data-app="Camera"><span class="ico" style="background:#e7e7eb;color:#222">📷</span></button>
 <button class="app" data-app="Calculator"><span class="ico" style="background:#e7e7eb;color:#222">🧮</span></button>
-<button class="app" data-app="Gmail"><span class="ico" style="background:#fff;color:#d44">✉</span></button>
+<button class="app" data-app="Gmail"><span class="ico" style="background:white;color:#d44">✉</span></button>
 <button class="app" data-app="Settings"><span class="ico" style="background:#e7e7eb;color:#222">⚙</span></button>
 </div>
 </section>
 
 <section class="screen appscreen" id="app">
-<div class="topbar"><button id="back">‹ Home</button><strong id="title">App</strong><span style="flex:1"></span><button id="lockBtn">Lock</button></div>
+<div class="topbar">
+<button id="back">‹ Home</button>
+<strong id="title">App</strong>
+<span style="flex:1"></span>
+<button id="lockBtn">Lock</button>
+</div>
 <div class="content" id="content"></div>
 </section>
 
 <div class="pinpanel" id="pin">
-<h2>Enter Passcode</h2><p style="color:#ccc">Unlock Mavin's iPhone</p>
-<div class="dots" id="dots">○ ○ ○ ○</div><div class="error" id="error"></div>
+<h2>Enter Passcode</h2>
+<p style="color:#ccc">Unlock Mavin's iPhone</p>
+<div class="dots" id="dots">○ ○ ○ ○</div>
+<div class="error" id="error"></div>
 <div class="keypad" id="keys"></div>
 <button id="cancel" style="background:none;color:#ddd">Cancel</button>
 </div>
@@ -176,107 +187,315 @@ button{cursor:pointer;border:0}
 </div>
 
 <script>
-const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-let pin='',appName='',notes=JSON.parse(localStorage.getItem('mavin-notes')||'["Shot list: Gotham rooftops","Buy film for the camera","Daily Bugle deadline: submit photos"]'),events=JSON.parse(localStorage.getItem('mavin-events')||'[]'),chats={},playing=false;
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+let pin='',appName='',playing=false;
+let notes=JSON.parse(localStorage.getItem('mavin-notes')||'["Shot list: Gotham rooftops","Buy film for the camera","Daily Bugle deadline: submit photos"]');
+let events=JSON.parse(localStorage.getItem('mavin-events')||'[]');
+let chats={};
 
 function tick(){
-let d=new Date();
-$('#clock').textContent=d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
-$('#lockclock').textContent=$('#clock').textContent;
+const d=new Date();
+const time=d.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+$('#clock').textContent=time;
+$('#lockclock').textContent=time;
 $('#date').textContent=d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
 $('#day').textContent=d.toLocaleDateString('en-US',{weekday:'short'}).toUpperCase();
-$('#num').textContent=d.getDate()
+$('#num').textContent=d.getDate();
 }
 tick();
 setInterval(tick,15000);
 
-function showPin(){pin='';drawPin();$('#error').textContent='';$('#pin').classList.add('show')}
-function drawPin(){$('#dots').textContent=Array.from({length:4},(_,i)=>i<pin.length?'●':'○').join(' ')}
+function showPin(){
+pin='';
+drawPin();
+$('#error').textContent='';
+$('#pin').classList.add('show');
+}
+function drawPin(){
+$('#dots').textContent=Array.from({length:4},(_,i)=>i<pin.length?'●':'○').join(' ');
+}
 function home(){
 $('#pin').classList.remove('show');
 $('#lock').classList.remove('active');
 $('#app').classList.remove('active');
-$('#home').classList.add('active')
+$('#home').classList.add('active');
 }
 function lock(){
 $('#pin').classList.remove('show');
 $('#home').classList.remove('active');
 $('#app').classList.remove('active');
-$('#lock').classList.add('active')
+$('#lock').classList.add('active');
 }
 $('#unlock').onclick=showPin;
 $('#cancel').onclick=()=>$('#pin').classList.remove('show');
 
+let touchStartY=null;
+$('#lock').addEventListener('touchstart',e=>{
+touchStartY=e.touches[0].clientY;
+},{passive:true});
+$('#lock').addEventListener('touchend',e=>{
+if(touchStartY===null)return;
+const delta=touchStartY-e.changedTouches[0].clientY;
+if(delta>35)showPin();
+touchStartY=null;
+},{passive:true});
+$('#lock').addEventListener('wheel',e=>{
+if(e.deltaY<0)showPin();
+},{passive:true});
+
 for(let n=1;n<=9;n++){
-let b=document.createElement('button');
+const b=document.createElement('button');
 b.textContent=n;
-b.onclick=()=>addPin(''+n);
-$('#keys').append(b)
+b.onclick=()=>addPin(String(n));
+$('#keys').append(b);
 }
 $('#keys').append(document.createElement('span'));
-let z=document.createElement('button');
-z.textContent='0';
-z.onclick=()=>addPin('0');
-$('#keys').append(z);
-let del=document.createElement('button');
+const zero=document.createElement('button');
+zero.textContent='0';
+zero.onclick=()=>addPin('0');
+$('#keys').append(zero);
+const del=document.createElement('button');
 del.textContent='⌫';
 del.onclick=()=>{pin=pin.slice(0,-1);drawPin()};
 $('#keys').append(del);
 
 function addPin(n){
 if(pin.length>=4)return;
-pin+=n;drawPin();
+pin+=n;
+drawPin();
 if(pin.length===4){
 if(pin==='1711')setTimeout(home,160);
 else{
 $('#error').textContent='Incorrect passcode';
-setTimeout(()=>{pin='';drawPin()},650)
+setTimeout(()=>{pin='';drawPin()},650);
 }
 }
 }
 
 $$('[data-app]').forEach(b=>b.addEventListener('click',e=>{
 if(e.target.closest('[data-control]'))return;
-openApp(b.dataset.app)
+openApp(b.dataset.app);
 }));
 $('#back').onclick=home;
 $('#lockBtn').onclick=lock;
 $('#homebar').onclick=()=>$('#app').classList.contains('active')?home():showPin();
 
 $('#musicWidget').addEventListener('click',e=>{
-let control=e.target.closest('[data-control]');
+const control=e.target.closest('[data-control]');
 if(control){
 e.stopPropagation();
 if(control.dataset.control==='play'){
 playing=!playing;
-control.textContent=playing?'Ⅱ':'▶'
+control.textContent=playing?'Ⅱ':'▶';
 }else{
 control.textContent=control.dataset.control==='prev'?'◀|':'|▶';
-setTimeout(()=>control.textContent=control.dataset.control==='prev'?'◀◀':'▶▶',500)
+setTimeout(()=>control.textContent=control.dataset.control==='prev'?'◀◀':'▶▶',500);
 }
-return
+return;
 }
-if(!e.target.closest('button'))openApp('Music')
+if(!e.target.closest('button'))openApp('Music');
 });
 
-function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function esc(s){
+return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
 function openApp(n){
 appName=n;
 $('#title').textContent=n;
 $('#home').classList.remove('active');
 $('#app').classList.add('active');
-render(n)
+render(n);
 }
+
 function render(n){
-let c=$('#content');
+const c=$('#content');
 c.innerHTML='';
+
 if(n==='Weather'){
-c.innerHTML=`<div class="card" style="text-align:center;background:linear-gradient(140deg,#617d98,#263c51);color:white"><div>Bandung · Current weather</div><div style="font-size:65px;font-weight:250">61°</div>☁ Cloudy<p>H: 62° · L: 52°</p><p>Feels like 60° · Humidity 68% · Wind 8 km/h</p></div><h3>Hourly forecast</h3><div class="card">2 PM ☁ 61°　3 PM ☁ 62°　4 PM ☁ 61°</div><h3>10-day forecast</h3>${['Today · Cloudy · 62° / 52°','Friday · Partly cloudy · 63° / 51°','Saturday · Light rain · 60° / 50°'].map(x=>`<div class="item">${x}</div>`).join('')}<p class="notice">Demo weather, not live data.</p>`
+c.innerHTML=`<div class="card" style="text-align:center;background:linear-gradient(140deg,#617d98,#263c51);color:white"><div>Bandung · Current weather</div><div style="font-size:65px;font-weight:250">61°</div>☁ Cloudy<p>H:62° · L:52°</p></div><h3>Hourly forecast</h3><div class="card">2 PM ☁ 61°　3 PM ☁ 62°　4 PM ☁ 61°</div><p class="notice">Demo weather, not live data.</p>`;
 }
+
 else if(n==='WhatsApp'){
-let names=['Sal','Kinan','Opi','Daily Bugle Desk','Peter','Aunt May','MJ','Flash'];
+const names=['Sal','Kinan','Opi','Daily Bugle Desk','Peter','Aunt May','MJ','Flash'];
 c.innerHTML=`<input class="field" id="search" placeholder="Search chats"><div id="chatlist">${names.map((x,i)=>`<button class="item" data-chat="${x}"><span class="avatar">${['🌻','📚','☕','📰','📷','🏠','🎧','🕸️'][i]}</span><span><b>${x}</b><br><span class="muted">${esc((chats[x]||['Hey, are we still on for today?']).slice(-1)[0])}</span></span><span style="margin-left:auto" class="muted">10:${12+i}</span></button>`).join('')}</div>`;
 $$('[data-chat]').forEach(b=>b.onclick=()=>chat(b.dataset.chat));
-$('#search').oninput=e=>$$('[data-chat]').forEach(b=>b.classList.toggle('hide',!b.dataset.chat.toLowerCase().includes(e.target.value.toLowerCase())))
+$('#search').oninput=e=>$$('[data-chat]').forEach(b=>b.classList.toggle('hide',!b.dataset.chat.toLowerCase().includes(e.target.value.toLowerCase())));
 }
+
+else if(n==='Calendar'){
+let d=new Date(),m=new Date(d.getFullYear(),d.getMonth(),1);
+c.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:center"><button class="primary" id="prev">‹</button><h2 id="month"></h2><button class="primary" id="next">›</button></div><div class="card"><div id="calgrid" style="display:grid;grid-template-columns:repeat(7,1fr);gap:7px;text-align:center"></div></div><h3>Events</h3><div id="events"></div><input id="eventname" class="field" placeholder="Event title"><input id="eventdate" class="field" type="date" value="${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}"><button class="primary" id="addevent">Add event</button>`;
+function drawEvents(){
+$('#events').innerHTML=events.map((e,i)=>`<div class="item">${esc(e.date)} · ${esc(e.title)} <button data-del="${i}" style="margin-left:auto;color:#d33">Delete</button></div>`).join('')||'<p class="muted">No events yet.</p>';
+$$('[data-del]').forEach(b=>b.onclick=()=>{events.splice(+b.dataset.del,1);localStorage.setItem('mavin-events',JSON.stringify(events));drawEvents()});
+}
+function drawCalendar(){
+$('#month').textContent=m.toLocaleDateString('en-US',{month:'long',year:'numeric'});
+const g=$('#calgrid');
+g.innerHTML=['S','M','T','W','T','F','S'].map(x=>`<b>${x}</b>`).join('');
+const offset=m.getDay(),count=new Date(m.getFullYear(),m.getMonth()+1,0).getDate();
+for(let i=0;i<offset;i++)g.innerHTML+='<span></span>';
+for(let i=1;i<=count;i++){
+g.innerHTML+=`<button data-date="${i}" style="background:${i===d.getDate()&&m.getMonth()===d.getMonth()?'#087cff':'transparent'};color:${i===d.getDate()&&m.getMonth()===d.getMonth()?'white':'#222'};border-radius:50%;padding:7px 0">${i}</button>`;
+}
+$$('[data-date]').forEach(b=>b.onclick=()=>$('#eventdate').value=`${m.getFullYear()}-${String(m.getMonth()+1).padStart(2,'0')}-${String(+b.dataset.date).padStart(2,'0')}`);
+drawEvents();
+}
+$('#prev').onclick=()=>{m.setMonth(m.getMonth()-1);drawCalendar()};
+$('#next').onclick=()=>{m.setMonth(m.getMonth()+1);drawCalendar()};
+$('#addevent').onclick=()=>{
+if(!$('#eventname').value.trim())return;
+events.push({title:$('#eventname').value.trim(),date:$('#eventdate').value});
+localStorage.setItem('mavin-events',JSON.stringify(events));
+$('#eventname').value='';
+drawEvents();
+};
+drawCalendar();
+}
+
+else if(n==='Instagram'){
+const pics=['📷','🌆','☕','🌧️','🏙️','🌿','🚇','🌅','📚','🌃','🎞️'];
+c.innerHTML=`<div class="card"><h2>mavin</h2><p>collecting moments, not things</p><b>11</b> posts　<b>483</b> followers　<b>291</b> following</div><div class="photoGrid">${pics.map((x,i)=>`<button data-photo="${i}">${x}</button>`).join('')}</div><h3>For you</h3>${['gotham.daily','peterp','m.jane'].map((x,i)=>`<div class="card"><b>${x}</b><p style="font-size:50px;text-align:center">${['🌇','🕷️','🎧'][i]}</p><button data-like>♡ Like</button>　Comment</div>`).join('')}`;
+$$('[data-photo]').forEach(b=>b.onclick=()=>photo('Mavin photo '+(+b.dataset.photo+1),b.textContent));
+$$('[data-like]').forEach(b=>b.onclick=()=>b.textContent=b.textContent.includes('♡')?'♥ Liked':'♡ Like');
+}
+
+else if(n==='X'){
+c.innerHTML=`<div class="card"><h2>@mavin 🔒</h2><p>private account · camera in hand, deadlines in mind</p>87 Following　42 Followers</div>${['gotham.news: Gotham looks suspiciously peaceful today.','mavin: the light was good for approximately 14 seconds and i was READY','peterp: anyone seen my backpack?','mavin: daily bugle wants the photos yesterday.'].map(x=>`<div class="card"><b>${esc(x.split(':')[0])}</b><p>${esc(x.split(':').slice(1).join(':'))}</p><button data-like>♡ Like</button>　<button data-reply>Reply</button><p class="muted"></p></div>`).join('')}`;
+$$('[data-like]').forEach(b=>b.onclick=()=>b.textContent=b.textContent.includes('♡')?'♥ Liked':'♡ Like');
+$$('[data-reply]').forEach(b=>b.onclick=()=>{const v=prompt('Write a reply');if(v)b.nextElementSibling.nextElementSibling.textContent='Reply saved: '+v});
+}
+
+else if(n==='Spotify'||n==='Music'){
+c.innerHTML=`<div class="card" style="text-align:center;background:#173d2b;color:white"><div class="album" style="width:190px;height:190px;margin:0 auto 12px;font-size:55px">🎵</div><h2>everything u are</h2><p>Hindia</p><input id="range" type="range" min="0" max="244" value="113" style="width:100%"><div><span id="elapsed">1:53</span> / 4:04</div><p><button id="prevSong">◀◀</button>　<button id="play">▶</button>　<button id="nextSong">▶▶</button></p><small id="state">Interactive demo player, audio not connected</small></div><h3>Your playlists</h3>${['Liked Songs','Menari dengan Bayangan','Indie Indonesia','Late night thoughts','Giselle mix'].map(x=>`<button class="item" data-list="${x}">🎧　${x}　›</button>`).join('')}<p class="notice">Demo player, no audio connected.</p>`;
+$('#play').onclick=()=>{playing=!playing;$('#play').textContent=playing?'Ⅱ':'▶';$('#state').textContent=playing?'Playing demo':'Paused demo'};
+$('#prevSong').onclick=()=>$('#state').textContent='Previous track selected (demo)';
+$('#nextSong').onclick=()=>$('#state').textContent='Next track selected (demo)';
+$('#range').oninput=e=>$('#elapsed').textContent=Math.floor(e.target.value/60)+':'+String(e.target.value%60).padStart(2,'0');
+$$('[data-list]').forEach(b=>b.onclick=()=>$('#state').textContent='Playlist opened: '+b.dataset.list);
+}
+
+else if(n==='Photos'){
+const pics=['📷','🌆','☕','🌧️','🏙️','🌿','🚇','🌅','📚','🌃','🎞️'];
+c.innerHTML=`<h2>Library</h2><p class="muted">All Photos · 11 Items</p><div class="photoGrid">${pics.map((x,i)=>`<button data-photo="${i}">${x}</button>`).join('')}</div><h3>Albums</h3><div class="card">Recents · 11 photos</div><div class="card">Camera · 4 photos</div>`;
+$$('[data-photo]').forEach(b=>b.onclick=()=>photo('Photo '+(+b.dataset.photo+1),b.textContent));
+}
+
+else if(n==='Notes'){
+function list(){
+c.innerHTML=`<input class="field" id="notefind" placeholder="Search notes">${notes.map((x,i)=>`<button class="item" data-note="${i}">📝　<span><b>${esc(x.split(':')[0])}</b><br><span class="muted">${esc(x)}</span></span>　›</button>`).join('')}<button class="primary" id="newnote">＋ New Note</button>`;
+$$('[data-note]').forEach(b=>b.onclick=()=>edit(+b.dataset.note));
+$('#newnote').onclick=()=>edit(-1);
+$('#notefind').oninput=e=>$$('[data-note]').forEach(b=>b.classList.toggle('hide',!notes[+b.dataset.note].toLowerCase().includes(e.target.value.toLowerCase())));
+}
+function edit(i){
+const old=i<0?'':notes[i];
+c.innerHTML=`<button id="noteback" style="background:none;color:#087cff">‹ Notes</button><textarea id="notetext" class="field" rows="12">${esc(old)}</textarea><button class="primary" id="savenote">Save</button> ${i>=0?'<button id="deletenote" style="background:none;color:#d33">Delete</button>':''}`;
+$('#noteback').onclick=list;
+$('#savenote').onclick=()=>{
+if(i>=0)notes[i]=$('#notetext').value;
+else notes.unshift($('#notetext').value||'Untitled note');
+localStorage.setItem('mavin-notes',JSON.stringify(notes));
+list();
+};
+if(i>=0)$('#deletenote').onclick=()=>{notes.splice(i,1);localStorage.setItem('mavin-notes',JSON.stringify(notes));list()};
+}
+list();
+}
+
+else if(n==='YouTube'){
+c.innerHTML=`<h2>YouTube</h2><input id="ytsearch" class="field" placeholder="Search YouTube"><div class="card"><h3>aespa 에스파</h3><p>Official channel</p><button class="primary" id="channel">Open official aespa channel ↗</button></div>${['aespa Official Videos','aespa Drama','aespa Supernova'].map((x,i)=>`<button class="item" data-video="${i}">▶　${x}</button>`).join('')}<p class="notice">Videos open on YouTube.</p>`;
+$('#channel').onclick=()=>window.open('https://www.youtube.com/@aespa','_blank','noopener');
+$$('[data-video]').forEach(b=>b.onclick=()=>window.open('https://www.youtube.com/results?search_query='+encodeURIComponent('aespa '+b.textContent),'_blank','noopener'));
+$('#ytsearch').onkeydown=e=>{if(e.key==='Enter')window.open('https://www.youtube.com/results?search_query='+encodeURIComponent(e.target.value),'_blank','noopener')};
+}
+
+else if(n==='Camera'){
+c.innerHTML=`<div class="card" style="text-align:center"><video id="video" autoplay playsinline style="width:100%;min-height:240px;background:#111;border-radius:12px"></video><p id="cammsg">Tap Start Camera and allow permission.</p><button id="startcam" class="primary">Start Camera</button> <button id="capture" class="primary">Capture</button><canvas id="canvas" class="hide"></canvas><div id="result"></div></div>`;
+$('#startcam').onclick=async()=>{
+try{
+const stream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'environment'}});
+$('#video').srcObject=stream;
+$('#cammsg').textContent='Camera active.';
+}catch(e){$('#cammsg').textContent='Camera unavailable or permission denied. Allow camera access.'}
+};
+$('#capture').onclick=()=>{
+const v=$('#video'),cv=$('#canvas');
+if(!v.videoWidth){$('#cammsg').textContent='Start camera first.';return}
+cv.width=v.videoWidth;cv.height=v.videoHeight;
+cv.getContext('2d').drawImage(v,0,0);
+const u=cv.toDataURL('image/png');
+$('#result').innerHTML=`<p>Captured photo</p><img src="${u}" style="width:100%"><a download="mavin-photo.png" href="${u}">Save photo</a>`;
+};
+}
+
+else if(n==='Calculator'){
+c.innerHTML=`<div class="card" style="background:#111;color:white"><input id="display" class="calc-display" value="0" readonly><div class="calc-grid">${['AC','±','%','÷','7','8','9','×','4','5','6','−','1','2','3','+','0','.','⌫','='].map(x=>`<button data-calc="${x}" style="background:${['÷','×','−','+','='].includes(x)?'#f5a623':['AC','±','%','⌫'].includes(x)?'#aaa':'#444'};color:${['AC','±','%','⌫'].includes(x)?'#111':'white'}">${x}</button>`).join('')}</div></div>`;
+let expr='',fresh=true;
+$$('[data-calc]').forEach(b=>b.onclick=()=>{
+const x=b.dataset.calc,d=$('#display');
+if(x==='AC'){expr='';d.value='0';fresh=true;return}
+if(x==='⌫'){expr=expr.slice(0,-1);d.value=expr||'0';return}
+if(x==='±'){expr=expr.startsWith('-')?expr.slice(1):'-'+expr;d.value=expr;return}
+if(x==='%'){try{expr=String(Number(expr)/100);d.value=expr}catch{}return}
+if(x==='='){
+try{
+const q=expr.replace(/[×÷−]/g,m=>({'×':'*','÷':'/','−':'-'}[m]));
+if(!/^[0-9+*/.() -]+$/.test(q))throw Error();
+const result=Function('"use strict";return ('+q+')')();
+if(!Number.isFinite(result))throw Error();
+expr=String(result);d.value=expr;fresh=true;
+}catch{d.value='Error';expr='';fresh=true}
+return;
+}
+if(['+','−','×','÷'].includes(x)){expr+=x;fresh=false}
+else{if(fresh){expr='';fresh=false}expr+=x}
+d.value=expr||'0';
+});
+}
+
+else if(n==='Gmail'){
+c.innerHTML=`<h2>Inbox</h2><div class="card"><b>J. Jonah Jameson · Daily Bugle · 9:42 AM</b><h3>WHERE ARE THE PHOTOS, MAVIN?</h3><p>Are you still interested in working for the Daily Bugle? Because if you are, I expect those photographs on my desk immediately. I did not hire you to admire the skyline. Send the shots. Today. No more excuses.</p><p>J. Jonah Jameson<br>Editor-in-Chief, Daily Bugle</p></div>${['Assignment desk · Tomorrow’s front page','HR · Freelance paperwork','Peter Parker · You got this'].map(x=>`<div class="item">${x}</div>`).join('')}<h3>Compose</h3><input class="field" placeholder="To"><input class="field" placeholder="Subject"><textarea class="field" placeholder="Compose email"></textarea><button class="primary" id="sendmail">Send (demo)</button><p class="notice">Fictional inbox. No real email sent.</p>`;
+$('#sendmail').onclick=()=>alert('Demo only. No email sent.');
+}
+
+else if(n==='Settings'){
+c.innerHTML=`<div class="card"><h2>👤 Mavin</h2><p class="muted">Apple Account, iCloud and more</p></div><div id="settingslist">${['Airplane Mode','Wi-Fi','Bluetooth','Notifications','Display & Brightness','Wallpaper','Sounds & Haptics','Privacy & Security','iCloud · mavin@icloud.example','Lock Screen'].map((x,i)=>`<button class="settings-row" data-setting="${x}"><span class="settings-icon" style="background:${['#777','#1688ed','#1688ed','#f04c43','#777','#777','#f49b24','#1688ed','#1688ed','#777'][i]}">${['✈️','📶','ᛒ','🔔','☀️','🖼️','🔊','🔒','☁️','🔐'][i]}</span>${x}<span style="margin-left:auto;color:#999">›</span></button>`).join('')}</div><p class="notice">Fictional profile. No real Apple Account connected.</p>`;
+$$('[data-setting]').forEach(b=>b.onclick=()=>{
+const s=b.dataset.setting;
+if(s==='Lock Screen'){lock();return}
+c.innerHTML=`<button id="setback" style="background:none;color:#087cff">‹ Settings</button><h2>${esc(s)}</h2><div class="card">${s.includes('iCloud')?'Mavin’s fictional iCloud profile. No sign-in required.':esc(s)+' settings'}</div><label style="display:flex;gap:12px;align-items:center;padding:12px;background:white;border-radius:12px"><input type="checkbox" checked> Enable ${esc(s)}</label>`;
+$('#setback').onclick=()=>render('Settings');
+});
+}
+}
+
+function chat(n){
+const c=$('#content');
+const msgs=chats[n]||['Hey, are we still on for today?'];
+chats[n]=msgs;
+c.innerHTML=`<button id="chatback" style="background:none;color:#087cff">‹ Chats</button><h2>${esc(n)}</h2><div id="bubbles">${msgs.map((m,i)=>`<div class="bubble ${i%2?'me':''}">${esc(m)}</div>`).join('')}</div><form id="send" style="display:flex;gap:7px;position:sticky;bottom:0;background:#f4f4f7;padding:8px"><input id="message" class="field" style="margin:0;border-radius:20px" placeholder="Message"><button class="primary">➤</button></form>`;
+$('#chatback').onclick=()=>render('WhatsApp');
+$('#send').onsubmit=e=>{
+e.preventDefault();
+const t=$('#message').value.trim();
+if(t){chats[n].push(t);chat(n)}
+};
+}
+
+function photo(t,e){
+const c=$('#content');
+c.innerHTML=`<button id="photoback" style="background:none;color:#087cff">‹ Back</button><div style="height:55vh;display:grid;place-items:center;font-size:100px;background:linear-gradient(140deg,#d4b69a,#526270);border-radius:14px;margin-top:15px">${esc(e)}</div><h3>${esc(t)}</h3><p class="muted">Mavin's photo library · demo image</p>`;
+$('#photoback').onclick=()=>render(appName);
+}
+
+document.addEventListener('keydown',e=>{
+if(e.key==='Escape'){
+if($('#app').classList.contains('active'))home();
+else $('#pin').classList.remove('show');
+}
+});
 </script>
+</body>
+</html>
