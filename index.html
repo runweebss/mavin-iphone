@@ -1507,7 +1507,7 @@ button {
       <div class="temperature" id="weatherTemp">--°</div>
       <div class="condition">
         <strong id="weatherIcon">☁️</strong>
-        <span id="weatherCondition">Memuat cuaca...</span><br>
+        <span id="weatherCondition">Loading weather...</span><br>
         <span class="high-low" id="weatherHighLow">H:--° L:--°</span>
       </div>
     </div>
@@ -1729,22 +1729,22 @@ const BANDUNG_WEATHER_URL =
   "&forecast_days=5";
 
 function weatherDescription(code) {
-  if (code === 0) return ["Cerah", "☀️"];
-  if (code === 1) return ["Cerah berawan", "🌤️"];
-  if (code === 2) return ["Berawan sebagian", "⛅"];
-  if (code === 3) return ["Berawan", "☁️"];
-  if ([45, 48].includes(code)) return ["Berkabut", "🌫️"];
-  if ([51, 53, 55, 56, 57].includes(code)) return ["Gerimis", "🌦️"];
+  if (code === 0) return ["Clear", "☀️"];
+  if (code === 1) return ["Mainly clear", "🌤️"];
+  if (code === 2) return ["Partly cloudy", "⛅"];
+  if (code === 3) return ["Cloudy", "☁️"];
+  if ([45, 48].includes(code)) return ["Foggy", "🌫️"];
+  if ([51, 53, 55, 56, 57].includes(code)) return ["Drizzle", "🌦️"];
   if ([61, 63, 65, 66, 67, 80, 81, 82].includes(code)) {
-    return ["Hujan", "🌧️"];
+    return ["Rain", "🌧️"];
   }
   if ([71, 73, 75, 77, 85, 86].includes(code)) {
-    return ["Bersalju", "🌨️"];
+    return ["Snow", "🌨️"];
   }
-  if ([95, 96, 99].includes(code)) return ["Badai petir", "⛈️"];
-  return ["Berawan", "☁️"];
+  if ([95, 96, 99].includes(code)) return ["Thunderstorm", "⛈️"];
+  return ["Cloudy", "☁️"];
 }
-
+  
 function weatherHourLabel(dateString, index) {
   const hour = Number(dateString.slice(11, 13));
   if (index === 0) return "Now";
@@ -1822,12 +1822,9 @@ renderWeatherApp();
       forecast.appendChild(item);
     }
 
-    updated.textContent = "Weather · Bandung · Live forecast";
-  } catch (error) {
-    console.error("Weather error:", error);
-    updated.textContent = "Weather · Bandung · Gagal memuat";
-    document.getElementById("weatherCondition").textContent =
-      "Cuaca tidak tersedia";
+    updated.textContent = "Weather · Bandung · Unable to load";
+document.getElementById("weatherCondition").textContent =
+  "Weather unavailable";
   }
   }
 
@@ -2071,7 +2068,7 @@ let cameraFacing = "environment";
 
 async function openCamera() {
   if (!navigator.mediaDevices?.getUserMedia) {
-    alert("Kamera tidak didukung browser ini. Coba buka website lewat Chrome.");
+    alert("Camera is not supported by this browser. Try opening the website in Chrome.");
     return;
   }
 
@@ -2150,13 +2147,13 @@ async function openCamera() {
 
     <div class="cam-view">
       <video id="camVideo" autoplay playsinline></video>
-      <img id="camResult" class="cam-result cam-hidden" alt="Hasil foto">
+      <img id="camResult" class="cam-result cam-hidden" alt="Captured photo">
     </div>
 
     <div class="cam-bottom">
-      <button id="camRetake" class="cam-hidden">Ulangi</button>
-      <button id="camShutter" class="shutter" aria-label="Ambil foto"></button>
-      <button id="camSave" class="cam-hidden">Simpan</button>
+      <button id="camRetake" class="cam-hidden">Retake</button>
+      <button id="camShutter" class="shutter" aria-label="Take photo"></button>
+      <button id="camSave" class="cam-hidden">Save</button>
     </div>
   `;
 
@@ -2188,7 +2185,7 @@ async function openCamera() {
       video.srcObject = cameraStream;
       await video.play();
     } catch (error) {
-      alert("Kamera tidak bisa dibuka. Pastikan izin kamera diberikan ke browser.");
+      alert("Unable to open camera. Please allow camera access in your browser.");
     }
   }
 
@@ -2212,7 +2209,7 @@ async function openCamera() {
 
   shutter.onclick = () => {
     if (!video.videoWidth) {
-      alert("Tunggu sampai kamera siap dulu!");
+      alert("Please wait for the camera to be ready!");
       return;
     }
 
