@@ -1035,6 +1035,66 @@ button {
     height: 23px;
   }
 }
+
+.ios-calculator {
+  background: #000;
+  color: white;
+  min-height: 100%;
+  padding: 20px 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.ios-calculator .calc-display {
+  min-height: 150px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  padding: 20px 8px;
+  font-size: clamp(48px, 15vw, 76px);
+  font-weight: 300;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+}
+
+.ios-calculator .calc-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.ios-calculator .calc-buttons button {
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 50%;
+  background: #333333;
+  color: white;
+  font-size: 27px;
+}
+
+.ios-calculator .calc-buttons .calc-light {
+  background: #a5a5a5;
+  color: #000;
+}
+
+.ios-calculator .calc-buttons .calc-orange {
+  background: #ff9f0a;
+  color: white;
+}
+
+.ios-calculator .calc-buttons .calc-zero {
+  grid-column: span 2;
+  aspect-ratio: auto;
+  border-radius: 50px;
+  text-align: left;
+  padding-left: 28px;
+}
+
+.ios-calculator .calc-buttons button:active {
+  filter: brightness(1.3);
+}
+
 </style>
 </head>
 
@@ -1763,8 +1823,38 @@ function openApp(name) {
         <p>This is a camera interface simulation.</p>
       </div>`,
 
-    "Calculator": `
-      <div class="demo-card">
+    
+"Calculator": `
+  <div class="ios-calculator">
+    <div class="calc-display" id="calcDisplay">0</div>
+
+    <div class="calc-buttons">
+      <button class="calc-light" onclick="calcClear()">AC</button>
+      <button class="calc-light" onclick="calcSign()">+/−</button>
+      <button class="calc-light" onclick="calcPercent()">%</button>
+      <button class="calc-orange" onclick="calcOperator('/')">÷</button>
+
+      <button onclick="calcDigit('7')">7</button>
+      <button onclick="calcDigit('8')">8</button>
+      <button onclick="calcDigit('9')">9</button>
+      <button class="calc-orange" onclick="calcOperator('*')">×</button>
+
+      <button onclick="calcDigit('4')">4</button>
+      <button onclick="calcDigit('5')">5</button>
+      <button onclick="calcDigit('6')">6</button>
+      <button class="calc-orange" onclick="calcOperator('-')">−</button>
+
+      <button onclick="calcDigit('1')">1</button>
+      <button onclick="calcDigit('2')">2</button>
+      <button onclick="calcDigit('3')">3</button>
+      <button class="calc-orange" onclick="calcOperator('+')">+</button>
+
+      <button class="calc-zero" onclick="calcDigit('0')">0</button>
+      <button onclick="calcDecimal()">.</button>
+      <button class="calc-orange" onclick="calcEquals()">=</button>
+    </div>
+  </div>`,
+
         <h3>Calculator</h3>
         <input id="calcA" type="number" placeholder="First number">
         <input id="calcB" type="number" placeholder="Second number">
@@ -1966,12 +2056,99 @@ if (
   });
 }
 
-function calculate() {
-  const a = Number(document.getElementById("calcA").value);
-  const b = Number(document.getElementById("calcB").value);
 
-  document.getElementById("calcResult").textContent = "Result: " + (a + b);
+let calcValue = "0";
+let calcStored = null;
+let calcPending = null;
+let calcReset = false;
+
+function calcUpdate() {
+  const display = document.getElementById("calcDisplay");
+  if (display) display.textContent = calcValue;
 }
+
+function calcDigit(digit) {
+  if (calcReset || calcValue === "Error") {
+    calcValue = digit;
+    calcReset = false;
+  } else {
+    calcValue = calcValue === "0" ? digit : calcValue + digit;
+  }
+  calcUpdate();
+}
+
+function calcDecimal() {
+  if (calcReset || calcValue === "Error") {
+    calcValue = "0";
+    calcReset = false;
+  }
+  if (!calcValue.includes(".")) calcValue += ".";
+  calcUpdate();
+}
+
+function calcClear() {
+  calcValue = "0";
+  calcStored = null;
+  calcPending = null;
+  calcReset = false;
+  calcUpdate();
+}
+
+function calcSign() {
+  if (calcValue !== "0" && calcValue !== "Error") {
+    calcValue = String(-Number(calcValue));
+    calcUpdate();
+  }
+}
+
+function calcPercent() {
+  if (calcValue !== "Error") {
+    calcValue = String(Number(calcValue) / 100);
+    calcUpdate();
+  }
+}
+
+function calcOperator(operator) {
+  if (calcValue === "Error") return;
+
+  if (calcPending && !calcReset) calcEquals();
+
+  calcStored = Number(calcValue);
+  calcPending = operator;
+  calcReset = true;
+}
+
+function calcEquals() {
+  if (calcStored === null || !calcPending || calcValue === "Error") return;
+
+  const current = Number(calcValue);
+  let result;
+
+  switch (calcPending) {
+    case "+":
+      result = calcStored + current;
+      break;
+    case "-":
+      result = calcStored - current;
+      break;
+    case "*":
+      result = calcStored * current;
+      break;
+    case "/":
+      result = current === 0 ? NaN : calcStored / current;
+      break;
+  }
+
+  calcValue = Number.isFinite(result)
+    ? String(Number(result.toPrecision(10)))
+    : "Error";
+
+  calcStored = null;
+  calcPending = null;
+  calcReset = true;
+  calcUpdate();
+}
+
 
 function lockPhone() {
   closeApp();
