@@ -615,7 +615,29 @@ button {
 .cal-day.sunday.today {
   color: #fff;
 }
+.cal-day.has-event {
+  position: relative;
+}
 
+.cal-day.has-event::after {
+  content: "";
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  bottom: 1px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #8e8e93;
+}
+
+.cal-day.aespa-event::after {
+  background: #ff2d55;
+}
+
+.cal-day.piw-event::after {
+  background: #007aff;
+}
 .cal-days {
   row-gap: 12px;
 }
@@ -1624,6 +1646,26 @@ function renderCalendar() {
     const button = document.createElement("button");
     button.className = "cal-day";
     button.textContent = day;
+    
+const eventDateKey = [
+  year,
+  String(month + 1).padStart(2, "0"),
+  String(day).padStart(2, "0")
+].join("-");
+
+const hasCustomEvent =
+  (calendarEvents[eventDateKey] || []).length > 0;
+
+const isAespaDay = month === 10 && day === 17;
+const isPiwDay = month === 10 && day === 27;
+
+if (hasCustomEvent || isAespaDay || isPiwDay) {
+  button.classList.add("has-event");
+}
+
+if (isAespaDay) button.classList.add("aespa-event");
+if (isPiwDay) button.classList.add("piw-event");
+
 const weekday = new Date(year, month, day).getDay();
 
 if (weekday === 0) {
