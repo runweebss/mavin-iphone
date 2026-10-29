@@ -604,6 +604,18 @@ button {
   margin-bottom: 12px;
 }
 
+.cal-weekdays span:first-child {
+  color: #ff3b30;
+}
+
+.cal-day.sunday {
+  color: #ff3b30;
+}
+
+.cal-day.sunday.today {
+  color: #fff;
+}
+
 .cal-days {
   row-gap: 12px;
 }
@@ -1612,7 +1624,11 @@ function renderCalendar() {
     const button = document.createElement("button");
     button.className = "cal-day";
     button.textContent = day;
+const weekday = new Date(year, month, day).getDay();
 
+if (weekday === 0) {
+  button.classList.add("sunday");
+}
     const isToday =
       day === today.getDate() &&
       month === today.getMonth() &&
@@ -1682,7 +1698,25 @@ function renderCalendarEvents() {
   ].join("-");
 
   list.innerHTML = "";
+if (
+  calendarSelectedDate.getMonth() === 10 &&
+  calendarSelectedDate.getDate() === 17
+) {
+  const item = document.createElement("div");
+  item.className = "cal-event";
+  item.textContent = "💗 aespa's Anniversary";
+  list.appendChild(item);
+}
 
+if (
+  calendarSelectedDate.getMonth() === 10 &&
+  calendarSelectedDate.getDate() === 27
+) {
+  const item = document.createElement("div");
+  item.className = "cal-event";
+  item.textContent = "💌 piw's day";
+  list.appendChild(item);
+  }
   (calendarEvents[dateKey] || []).forEach(event => {
     const item = document.createElement("div");
     item.className = "cal-event";
