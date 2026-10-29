@@ -13,11 +13,6 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-:root {
-  --text: #fff;
-  --music-bg: rgba(39, 40, 42, .96);
-}
-
 html, body {
   margin: 0;
   width: 100%;
@@ -26,9 +21,9 @@ html, body {
 }
 
 body {
-  background: #171717;
-  color: var(--text);
   overflow: hidden;
+  background: #171717;
+  color: white;
 }
 
 button {
@@ -38,25 +33,23 @@ button {
 }
 
 .phone {
+  position: relative;
   width: 100%;
   height: 100dvh;
   min-height: 600px;
-  position: relative;
   overflow: hidden;
   isolation: isolate;
   background: #b9a98e;
 }
 
-/* WALLPAPER */
-
 .wallpaper {
   position: absolute;
   inset: 0;
-  z-index: -2;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
+  z-index: -2;
 }
 
 .shade {
@@ -66,9 +59,9 @@ button {
   pointer-events: none;
   background: linear-gradient(
     180deg,
-    rgba(0,0,0,.08),
-    transparent 35%,
-    rgba(0,0,0,.08)
+    rgba(0,0,0,.07),
+    transparent 40%,
+    rgba(0,0,0,.05)
   );
 }
 
@@ -79,11 +72,11 @@ button {
   top: 0;
   left: 0;
   width: 100%;
-  height: 48px;
-  padding: 10px 7% 0;
+  height: 45px;
+  padding: 10px 7%;
   display: flex;
-  align-items: flex-start;
   justify-content: space-between;
+  align-items: flex-start;
   font-size: 16px;
   font-weight: 650;
   text-shadow: 0 1px 4px #0005;
@@ -96,9 +89,9 @@ button {
 }
 
 .signal {
-  height: 15px;
   display: flex;
   align-items: flex-end;
+  height: 14px;
   gap: 2px;
 }
 
@@ -115,21 +108,21 @@ button {
 .signal i:nth-child(4) { height: 14px; }
 
 .battery {
+  position: relative;
   width: 23px;
   height: 12px;
+  margin-left: 3px;
   border: 1.5px solid white;
   border-radius: 3px;
-  position: relative;
-  margin-left: 3px;
 }
 
 .battery::before {
   content: "";
   position: absolute;
-  width: 2px;
-  height: 4px;
   right: -4px;
   top: 3px;
+  width: 2px;
+  height: 4px;
   background: white;
 }
 
@@ -140,24 +133,24 @@ button {
   bottom: 2px;
   left: 2px;
   width: 70%;
-  background: white;
   border-radius: 1px;
+  background: white;
 }
 
 /* WEATHER */
 
 .weather-wrap {
   position: absolute;
-  top: 12.2%;
+  top: 12.5%;
   left: 8.7%;
   width: 82.6%;
 }
 
 .weather-card {
-  height: clamp(190px, 24vh, 230px);
-  padding: 15px 17px 12px;
+  height: clamp(170px, 22vh, 205px);
+  padding: 13px 15px 10px;
   overflow: hidden;
-  border-radius: 29px;
+  border-radius: 26px;
   background: linear-gradient(
     145deg,
     rgba(77, 93, 107, .96),
@@ -167,7 +160,7 @@ button {
 }
 
 .city {
-  font-size: clamp(19px, 5vw, 25px);
+  font-size: clamp(18px, 5vw, 22px);
   font-weight: 500;
 }
 
@@ -178,17 +171,17 @@ button {
 }
 
 .temperature {
-  font-size: clamp(54px, 15vw, 72px);
-  line-height: 1.1;
+  font-size: clamp(49px, 13vw, 62px);
+  line-height: 1.08;
   font-weight: 300;
-  letter-spacing: -3px;
+  letter-spacing: -2px;
 }
 
 .condition {
   text-align: right;
-  font-size: 14px;
+  padding-top: 4px;
+  font-size: 12px;
   line-height: 1.4;
-  padding-top: 5px;
 }
 
 .condition strong {
@@ -201,7 +194,7 @@ button {
   display: grid;
   grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 2px;
-  margin-top: 12px;
+  margin-top: 8px;
   text-align: center;
 }
 
@@ -210,19 +203,19 @@ button {
   min-width: 0;
   flex-direction: column;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
 }
 
 .forecast-time {
-  font-size: clamp(10px, 3.1vw, 13px);
+  font-size: clamp(10px, 3vw, 12px);
   color: #e3e7eb;
 }
 
 .cloud {
   position: relative;
-  width: 26px;
-  height: 19px;
-  margin-top: 2px;
+  width: 25px;
+  height: 17px;
+  margin-top: 1px;
 }
 
 .cloud::before {
@@ -230,8 +223,8 @@ button {
   position: absolute;
   left: 2px;
   bottom: 2px;
-  width: 23px;
-  height: 10px;
+  width: 22px;
+  height: 9px;
   border-radius: 10px;
   background: white;
 }
@@ -240,7 +233,7 @@ button {
   content: "";
   position: absolute;
   left: 7px;
-  bottom: 6px;
+  bottom: 5px;
   width: 12px;
   height: 12px;
   border-radius: 50%;
@@ -249,34 +242,32 @@ button {
 }
 
 .forecast-temp {
-  font-size: clamp(12px, 3.5vw, 15px);
+  font-size: clamp(11px, 3.2vw, 13px);
   font-weight: 600;
 }
 
 .weather-label {
-  margin-top: 6px;
+  margin-top: 5px;
   text-align: center;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 500;
   text-shadow: 0 1px 4px #000a;
 }
 
-/* HOME SCREEN GRID */
+/* APP GRID */
 
 .home-grid {
   position: absolute;
-  top: 37%;
-  left: 5.5%;
-  right: 5.5%;
+  top: 36.5%;
+  left: 7%;
+  right: 7%;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  grid-template-rows: 94px 94px 94px;
-  column-gap: 7px;
-  row-gap: 12px;
+  grid-template-rows: 76px 76px 76px;
+  column-gap: 8px;
+  row-gap: 13px;
   align-items: start;
 }
-
-/* APP ICONS */
 
 .app {
   min-width: 0;
@@ -286,22 +277,22 @@ button {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
 }
 
 .app img {
   display: block;
-  width: 100%;
+  width: 78%;
   aspect-ratio: 1;
   object-fit: contain;
-  border-radius: 23%;
+  border-radius: 22%;
   filter: drop-shadow(0 1px 2px #0002);
 }
 
 .app-name {
   width: 145%;
   text-align: center;
-  font-size: clamp(11px, 3.8vw, 15px);
+  font-size: clamp(10px, 3.4vw, 13px);
   line-height: 1.1;
   font-weight: 450;
   white-space: nowrap;
@@ -317,25 +308,24 @@ button {
 .notes { grid-column: 3; grid-row: 3; }
 .youtube { grid-column: 4; grid-row: 3; }
 
-/* CALENDAR FALLBACK */
-
 .calendar-fallback {
-  width: 100%;
+  width: 78%;
   aspect-ratio: 1;
   border-radius: 23%;
-  background: #fff;
+  background: white;
   color: #171717;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: clamp(27px, 8vw, 38px);
+  font-size: 29px;
+  font-weight: 600;
 }
 
 .calendar-fallback small {
-  font-size: 12px;
   color: #d64545;
-  font-weight: 700;
+  font-size: 11px;
+  font-weight: 800;
 }
 
 /* MUSIC WIDGET */
@@ -349,10 +339,10 @@ button {
 
 .music-widget {
   width: 100%;
-  height: 226px;
-  padding: 12px;
-  border-radius: 27px;
-  background: var(--music-bg);
+  height: 215px;
+  padding: 11px;
+  border-radius: 24px;
+  background: rgba(38, 39, 41, .97);
   box-shadow: 0 6px 20px #0003;
   display: flex;
   flex-direction: column;
@@ -366,63 +356,61 @@ button {
   margin-bottom: 7px;
 }
 
+/* Artwork sementara, bisa diganti dengan file album asli */
 .album-art {
-  width: 44%;
+  width: 43%;
   aspect-ratio: 1;
+  flex-shrink: 0;
   border-radius: 9px;
   overflow: hidden;
   position: relative;
-  background: linear-gradient(145deg, #d2d2d2, #666 70%, #b9b9b9);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #333;
+  background: linear-gradient(145deg, #d0d0d0, #777 65%, #bcbcbc);
 }
 
 .album-art::before {
   content: "♠";
   position: absolute;
-  left: 9%;
-  bottom: 3%;
-  font-size: 31px;
-  color: #eee;
-  transform: rotate(28deg);
+  left: 5%;
+  bottom: 0;
+  color: #ededed;
+  font-size: clamp(25px, 8vw, 36px);
+  transform: rotate(25deg);
   text-shadow: 0 2px 4px #3338;
 }
 
 .album-art::after {
   content: "♠";
   position: absolute;
-  right: 12%;
-  top: 0;
-  font-size: 25px;
+  right: 10%;
+  top: 1%;
   color: #333;
+  font-size: clamp(20px, 6vw, 28px);
   transform: rotate(205deg);
 }
 
 .music-note {
-  font-size: 27px;
+  font-size: 26px;
   line-height: 1;
 }
 
 .track-title {
-  font-size: clamp(13px, 4vw, 16px);
+  font-size: clamp(12px, 3.7vw, 15px);
   line-height: 1.25;
-  font-weight: 550;
+  font-weight: 600;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .track-artist {
-  font-size: clamp(12px, 3.7vw, 14px);
+  font-size: clamp(11px, 3.5vw, 14px);
   color: #d1d1d1;
   margin-top: 2px;
 }
 
 .progress-area {
   margin-top: auto;
-  padding-top: 10px;
+  padding-top: 9px;
 }
 
 .progress-track {
@@ -450,7 +438,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-top: 9px;
+  margin-top: 8px;
 }
 
 .music-controls button {
@@ -458,22 +446,22 @@ button {
   padding: 0;
   border: 0;
   background: transparent;
-  font-size: 19px;
+  font-size: 16px;
   line-height: 1;
 }
 
 .music-controls .play-button {
-  font-size: 27px;
+  font-size: 25px;
 }
 
 .music-controls .airplay {
-  font-size: 22px;
+  font-size: 19px;
 }
 
 .music-label {
-  margin-top: 7px;
+  margin-top: 5px;
   text-align: center;
-  font-size: 14px;
+  font-size: 12px;
   text-shadow: 0 1px 4px #000c;
 }
 
@@ -504,26 +492,26 @@ button {
 
 .dock {
   position: absolute;
-  left: 5.5%;
-  right: 5.5%;
+  left: 7%;
+  right: 7%;
   bottom: 3%;
-  height: 10%;
-  min-height: 76px;
-  max-height: 100px;
-  border-radius: 38px;
-  background: rgba(190, 177, 154, .82);
+  height: 9%;
+  min-height: 68px;
+  max-height: 92px;
+  border-radius: 35px;
+  background: rgba(190, 177, 154, .84);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: center;
   justify-items: center;
-  padding: 8px 12px;
+  padding: 7px 10px;
 }
 
 .dock button {
-  width: 78%;
-  max-width: 65px;
+  width: 72%;
+  max-width: 61px;
   padding: 0;
   border: 0;
   background: transparent;
@@ -537,7 +525,7 @@ button {
   border-radius: 23%;
 }
 
-/* APP DEMO SCREEN */
+/* APP DEMO */
 
 .app-screen {
   position: absolute;
@@ -569,7 +557,6 @@ button {
   background: transparent;
   color: #087bfa;
   font-size: 16px;
-  padding: 5px 0;
 }
 
 .app-content {
@@ -606,31 +593,39 @@ button {
   color: #888;
 }
 
-/* RESPONSIVE ADJUSTMENTS */
+/* SHORT SCREENS */
 
 @media (max-height: 740px) {
-  .weather-wrap { top: 10%; }
-
-  .weather-card {
-    height: 185px;
-    padding-top: 11px;
+  .weather-wrap {
+    top: 10%;
   }
 
-  .forecast { margin-top: 7px; }
+  .weather-card {
+    height: 165px;
+    padding-top: 10px;
+  }
+
+  .forecast {
+    margin-top: 5px;
+  }
 
   .home-grid {
     top: 36%;
-    grid-template-rows: 80px 80px 80px;
-    row-gap: 9px;
+    grid-template-rows: 66px 66px 66px;
+    row-gap: 11px;
   }
 
   .music-widget {
-    height: 205px;
-    padding: 10px;
+    height: 190px;
   }
 
-  .page-dots { bottom: 14%; }
-  .dock { bottom: 2%; }
+  .page-dots {
+    bottom: 14%;
+  }
+
+  .dock {
+    bottom: 2%;
+  }
 }
 
 @media (min-width: 600px) {
@@ -667,11 +662,11 @@ button {
       <div class="city">Bandung</div>
 
       <div class="weather-main">
-        <div class="temperature">61°</div>
+        <div class="temperature">26°</div>
         <div class="condition">
           <strong>☁</strong>
           Cloudy<br>
-          H:62° L:52°
+          H:27° L:22°
         </div>
       </div>
 
@@ -679,39 +674,39 @@ button {
         <div class="forecast-item">
           <span class="forecast-time">2PM</span>
           <span class="cloud"></span>
-          <span class="forecast-temp">61°</span>
+          <span class="forecast-temp">26°</span>
         </div>
         <div class="forecast-item">
           <span class="forecast-time">3PM</span>
           <span class="cloud"></span>
-          <span class="forecast-temp">62°</span>
+          <span class="forecast-temp">27°</span>
         </div>
         <div class="forecast-item">
           <span class="forecast-time">4PM</span>
           <span class="cloud"></span>
-          <span class="forecast-temp">61°</span>
+          <span class="forecast-temp">26°</span>
         </div>
         <div class="forecast-item">
           <span class="forecast-time">5PM</span>
           <span class="cloud"></span>
-          <span class="forecast-temp">62°</span>
+          <span class="forecast-temp">27°</span>
         </div>
         <div class="forecast-item">
           <span class="forecast-time">6PM</span>
           <span class="cloud"></span>
-          <span class="forecast-temp">62°</span>
+          <span class="forecast-temp">26°</span>
         </div>
         <div class="forecast-item">
           <span class="forecast-time">7PM</span>
           <span class="cloud"></span>
-          <span class="forecast-temp">61°</span>
+          <span class="forecast-temp">25°</span>
         </div>
       </div>
     </div>
     <div class="weather-label">Weather</div>
   </section>
 
-  <!-- HOME SCREEN -->
+  <!-- HOME ICONS -->
   <section class="home-grid">
 
     <button class="app whatsapp" onclick="openApp('WhatsApp')">
@@ -723,7 +718,7 @@ button {
       <img
         src="calendar%20logo.png"
         alt="Calendar"
-        onerror="this.outerHTML='<div class=&quot;calendar-fallback&quot;><small>TUE</small>9</div>'"
+        onerror="this.outerHTML='<div class=&quot;calendar-fallback&quot;><small>TUE</small>29</div>'"
       >
       <span class="app-name">Calendar</span>
     </button>
@@ -758,11 +753,11 @@ button {
       <span class="app-name">YouTube</span>
     </button>
 
-    <!-- MUSIC -->
+    <!-- MUSIC WIDGET -->
     <div class="music-wrap">
       <section class="music-widget">
         <div class="music-top">
-          <div class="album-art" aria-label="Album artwork sementara"></div>
+          <div class="album-art" aria-label="Artwork sementara"></div>
           <span class="music-note">♫</span>
         </div>
 
@@ -781,7 +776,7 @@ button {
 
         <div class="music-controls">
           <button aria-label="Previous" onclick="openSpotify()">◀◀</button>
-          <button class="play-button" aria-label="Play on Spotify" onclick="openSpotify()">Ⅱ</button>
+          <button class="play-button" aria-label="Open Spotify" onclick="openSpotify()">Ⅱ</button>
           <button aria-label="Next" onclick="openSpotify()">▶▶</button>
           <button class="airplay" aria-label="Open Spotify" onclick="openSpotify()">◎</button>
         </div>
@@ -791,7 +786,6 @@ button {
 
   </section>
 
-  <!-- PAGE INDICATOR -->
   <div class="page-dots">
     <span></span><span></span><span></span>
   </div>
@@ -862,7 +856,7 @@ function openApp(name) {
 
     "Calendar": `
       <div class="demo-card">
-        <h2>Selasa, 9</h2>
+        <h2>Selasa, 29</h2>
         <p>Kalender Mavin</p>
         <input type="text" placeholder="Tambah acara...">
       </div>`,
@@ -940,8 +934,7 @@ function closeApp() {
 function calculate() {
   const a = Number(document.getElementById("calcA").value);
   const b = Number(document.getElementById("calcB").value);
-  document.getElementById("calcResult").textContent =
-    "Hasil: " + (a + b);
+  document.getElementById("calcResult").textContent = "Hasil: " + (a + b);
 }
 </script>
 
