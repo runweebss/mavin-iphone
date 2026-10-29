@@ -1308,7 +1308,7 @@ button {
     </header>
 
     <!-- WEATHER -->
-    <section class="weather-wrap">
+    <section class="weather-wrap" onclick="openApp('Weather')" style="cursor:pointer">
       <div class="weather-card">
         <div class="city">Bandung</div>
 
@@ -1909,7 +1909,51 @@ function openApp(name) {
       <div id="calEventList"></div>
     </div>
   </div>`,
+
     
+    "Weather": `
+      <div class="weather-app">
+        <div class="weather-location">Bandung</div>
+        <div class="weather-subtitle">My Location</div>
+
+        <div class="weather-current">
+          <div class="weather-temp">26°</div>
+          <div class="weather-condition">Cloudy</div>
+          <div class="weather-highlow">H:27°  L:22°</div>
+          <div class="weather-big-icon">☁️</div>
+        </div>
+
+        <div class="weather-card">
+          <div class="weather-card-title">HOURLY FORECAST</div>
+          <div class="weather-hours">
+            <div><span>Now</span><b>☁️</b><strong>26°</strong></div>
+            <div><span>3 PM</span><b>⛅</b><strong>27°</strong></div>
+            <div><span>4 PM</span><b>🌤️</b><strong>26°</strong></div>
+            <div><span>5 PM</span><b>☁️</b><strong>27°</strong></div>
+            <div><span>6 PM</span><b>🌙</b><strong>25°</strong></div>
+            <div><span>7 PM</span><b>☁️</b><strong>24°</strong></div>
+          </div>
+        </div>
+
+        <div class="weather-card">
+          <div class="weather-card-title">5-DAY FORECAST</div>
+          <div class="weather-day"><span>Today</span><b>☁️</b><small>22°</small><strong>27°</strong></div>
+          <div class="weather-day"><span>Wed</span><b>🌦️</b><small>21°</small><strong>28°</strong></div>
+          <div class="weather-day"><span>Thu</span><b>🌧️</b><small>21°</small><strong>27°</strong></div>
+          <div class="weather-day"><span>Fri</span><b>⛅</b><small>22°</small><strong>29°</strong></div>
+          <div class="weather-day"><span>Sat</span><b>☀️</b><small>22°</small><strong>30°</strong></div>
+        </div>
+
+        <div class="weather-details">
+          <div class="weather-detail"><small>FEELS LIKE</small><b>28°</b><span>Feels a little warmer</span></div>
+          <div class="weather-detail"><small>HUMIDITY</small><b>78%</b><span>Humid</span></div>
+          <div class="weather-detail"><small>WIND</small><b>8 km/h</b><span>Light breeze</span></div>
+          <div class="weather-detail"><small>UV INDEX</small><b>5</b><span>Moderate</span></div>
+        </div>
+
+        <div class="weather-demo-note">Illustrative demo data</div>
+      </div>`,
+
     "Instagram": `
       <div class="demo-card">
         <h3>Instagram</h3>
