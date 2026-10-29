@@ -2837,7 +2837,7 @@ function renderNotesItems(query) {
   const q = query.trim().toLowerCase();
 
   // Urutan mengikuti catatan yang terakhir diedit.
-  const filtered = [...mavinNotes].reverse().filter(note =>
+  const filtered = [...mavinNotes].filter(note =>
     `${note.title} ${note.body}`.toLowerCase().includes(q)
   );
 
