@@ -1216,7 +1216,7 @@ button {
         <span class="app-name">Notes</span>
       </button>
 
-      <button class="app youtube" onclick="openApp('YouTube')">
+      <button class="app youtube" onclick="openYouTube()">
         <img src="youtube%20logo.png" alt="YouTube">
         <span class="app-name">YouTube</span>
       </button>
@@ -1486,7 +1486,9 @@ function openSpotify() {
 }
 
 /* DEMO APPS */
-
+function openYouTube() {
+  window.open("https://www.youtube.com/@SMTOWN", "_blank");
+  }
 function openApp(name) {
   const screen = document.getElementById("appScreen");
   const title = document.getElementById("appTitle");
