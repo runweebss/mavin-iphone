@@ -1822,14 +1822,17 @@ renderWeatherApp();
       forecast.appendChild(item);
     }
 
+    
     updated.textContent = "Weather · Bandung";
   } catch (error) {
     updated.textContent = "Weather · Bandung · Unable to load";
     document.getElementById("weatherCondition").textContent =
       "Weather unavailable";
   }
+}
 
 function renderWeatherApp() {
+
   if (!bandungWeatherData) return;
 
   const data = bandungWeatherData;
