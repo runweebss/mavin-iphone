@@ -2417,7 +2417,11 @@ function openApp(name) {
   const content = document.getElementById("appContent");
 
   title.textContent = name;
-
+  if (name === "Notes") {
+    renderNotesList();
+    screen.classList.add("active");
+    return;
+  }
   const pages = {
     "WhatsApp": `
       <div class="demo-card">
