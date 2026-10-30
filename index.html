@@ -3547,6 +3547,7 @@ function calcPercent() {
   }
 }
 
+
 function calcOperator(operator) {
   if (calcValue === "Error") return;
 
@@ -3556,6 +3557,29 @@ function calcOperator(operator) {
     "*": "×",
     "/": "÷"
   };
+
+  // Kalau operator ditekan lagi sebelum angka kedua,
+  // cukup ganti operatornya, jangan hitung.
+  if (calcPending && calcReset) {
+    calcPending = operator;
+    calcExpression = `${calcStored} ${symbols[operator]}`;
+    calcUpdate();
+    return;
+  }
+
+  // Kalau angka kedua sudah dimasukkan,
+  // hitung operasi sebelumnya terlebih dahulu.
+  if (calcPending && !calcReset) {
+    calcEquals();
+  }
+
+  calcStored = Number(calcValue);
+  calcPending = operator;
+  calcExpression = `${calcStored} ${symbols[operator]}`;
+  calcReset = true;
+
+  calcUpdate();
+}
 
 if (calcPending && calcReset) {
   calcPending = operator;
