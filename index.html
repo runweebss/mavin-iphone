@@ -3454,9 +3454,34 @@ function openNoteDetail(noteId) {
   `;
 
   content.querySelector(".notes-detail-date").textContent = note.date;
-  content.querySelector(".notes-detail-title").textContent = note.title;
-  content.querySelector(".notes-detail-body").textContent = note.body;
-  content.scrollTop = 0;
+content.querySelector(".notes-detail-title").textContent = note.title;
+
+const body = content.querySelector(".notes-detail-body");
+
+if (note.image && note.imageAfter && note.body.includes(note.imageAfter)) {
+  const splitIndex =
+    note.body.indexOf(note.imageAfter) + note.imageAfter.length;
+
+  body.appendChild(
+    document.createTextNode(note.body.slice(0, splitIndex))
+  );
+
+  const img = document.createElement("img");
+  img.src = note.image;
+  img.alt = "Foto bekas gigitan laba-laba";
+  img.className = "notes-detail-image";
+  img.loading = "lazy";
+
+  body.appendChild(img);
+
+  body.appendChild(
+    document.createTextNode(note.body.slice(splitIndex))
+  );
+} else {
+  body.textContent = note.body;
+}
+
+content.scrollTop = 0;
 }
 
   
