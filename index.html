@@ -3576,24 +3576,6 @@ function calcOperator(operator) {
   calcUpdate();
 }
 
-if (calcPending && calcReset) {
-  calcPending = operator;
-  calcExpression = `${calcStored} ${symbols[operator]}`;
-  calcUpdate();
-  return;
-}
-
-if (calcPending && !calcReset) {
-  calcEquals();
-}
-
-  calcStored = Number(calcValue);
-  calcPending = operator;
-  calcExpression = `${calcValue} ${symbols[operator]}`;
-  calcReset = true;
-
-  calcUpdate();
-}
 
 function calcEquals() {
   if (calcStored === null || !calcPending || calcReset || calcValue === "Error") return;
