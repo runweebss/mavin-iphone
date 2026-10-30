@@ -2353,19 +2353,18 @@ const lockScreen = document.getElementById("lockScreen");
 lockScreen.addEventListener("touchstart", function(event) {
   if (document.getElementById("passcodeScreen").classList.contains("active")) return;
 
-  const touch = event.changedTouches[0];
-  touchStartY = touch.screenY;
-  touchStartX = touch.screenX;
+  touchStartY = event.changedTouches[0].clientY;
+  touchStartX = event.changedTouches[0].clientX;
 }, { passive: true });
 
 lockScreen.addEventListener("touchend", function(event) {
   if (document.getElementById("passcodeScreen").classList.contains("active")) return;
 
   const touch = event.changedTouches[0];
-  const deltaY = touchStartY - touch.screenY;
-  const deltaX = Math.abs(touch.screenX - touchStartX);
+  const deltaY = touchStartY - touch.clientY;
+  const deltaX = Math.abs(touch.clientX - touchStartX);
 
-  if (deltaY > 45 && deltaY > deltaX * 1.15) {
+  if (deltaY > 40 && deltaY > deltaX * 1.15) {
     showPasscode();
   }
 }, { passive: true });
@@ -2378,7 +2377,7 @@ lockScreen.addEventListener("mousedown", function(event) {
 
 lockScreen.addEventListener("mouseup", function(event) {
   if (
-    mouseStartY - event.clientY > 45 &&
+    mouseStartY - event.clientY > 40 &&
     !document.getElementById("passcodeScreen").classList.contains("active")
   ) {
     showPasscode();
