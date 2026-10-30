@@ -3492,11 +3492,15 @@ if (
 let calcValue = "0";
 let calcStored = null;
 let calcPending = null;
+let calcExpression = "";
 let calcReset = false;
 
 function calcUpdate() {
-  const display = document.getElementById("calcDisplay");
-  if (display) display.textContent = calcValue;
+  const current = document.getElementById("calcCurrent");
+  const expression = document.getElementById("calcExpression");
+
+  if (current) current.textContent = calcValue;
+  if (expression) expression.textContent = calcExpression;
 }
 
 function calcDigit(digit) {
@@ -3506,6 +3510,7 @@ function calcDigit(digit) {
   } else {
     calcValue = calcValue === "0" ? digit : calcValue + digit;
   }
+
   calcUpdate();
 }
 
@@ -3514,6 +3519,7 @@ function calcDecimal() {
     calcValue = "0";
     calcReset = false;
   }
+
   if (!calcValue.includes(".")) calcValue += ".";
   calcUpdate();
 }
@@ -3522,6 +3528,7 @@ function calcClear() {
   calcValue = "0";
   calcStored = null;
   calcPending = null;
+  calcExpression = "";
   calcReset = false;
   calcUpdate();
 }
@@ -3543,31 +3550,55 @@ function calcPercent() {
 function calcOperator(operator) {
   if (calcValue === "Error") return;
 
-  if (calcPending && !calcReset) calcEquals();
+  const symbols = {
+    "+": "+",
+    "-": "−",
+    "*": "×",
+    "/": "÷"
+  };
+
+  if (calcPending && !calcReset) {
+    calcEquals();
+  }
 
   calcStored = Number(calcValue);
   calcPending = operator;
+  calcExpression = `${calcValue} ${symbols[operator]}`;
   calcReset = true;
+
+  calcUpdate();
 }
 
 function calcEquals() {
   if (calcStored === null || !calcPending || calcValue === "Error") return;
 
-  const current = Number(calcValue);
+  const first = calcStored;
+  const second = Number(calcValue);
+
+  const symbols = {
+    "+": "+",
+    "-": "−",
+    "*": "×",
+    "/": "÷"
+  };
+
+  calcExpression =
+    `${first} ${symbols[calcPending]} ${second} =`;
+
   let result;
 
   switch (calcPending) {
     case "+":
-      result = calcStored + current;
+      result = first + second;
       break;
     case "-":
-      result = calcStored - current;
+      result = first - second;
       break;
     case "*":
-      result = calcStored * current;
+      result = first * second;
       break;
     case "/":
-      result = current === 0 ? NaN : calcStored / current;
+      result = second === 0 ? NaN : first / second;
       break;
   }
 
@@ -3578,9 +3609,9 @@ function calcEquals() {
   calcStored = null;
   calcPending = null;
   calcReset = true;
+
   calcUpdate();
 }
-
 
 function lockPhone() {
   closeApp();
