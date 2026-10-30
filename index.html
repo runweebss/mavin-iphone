@@ -2700,11 +2700,49 @@ function openApp(name) {
         <textarea placeholder="What's happening?"></textarea>
       </div>`,
 
-    "Photos": `
-      <div class="demo-card">
-        <h3>Photos</h3>
-        <p>Your demo album is empty.</p>
-      </div>`,
+    
+"Photos": `
+  <div class="photos-app">
+    <div class="photos-nav">
+      <button onclick="closeApp()">‹ Kembali</button>
+      <strong>Galeri</strong>
+      <span></span>
+    </div>
+
+    <h1 class="photos-heading">Foto</h1>
+
+    <div class="photos-tabs">
+      <button class="active" id="photosTabPhoto"
+        onclick="switchPhotosTab('photo')">Foto</button>
+      <button id="photosTabVideo"
+        onclick="switchPhotosTab('video')">Video</button>
+    </div>
+
+    <h2 class="photos-month" id="photosMonth">Oktober 2026</h2>
+    <div class="photos-grid" id="photosGrid"></div>
+  </div>
+
+  <div class="photos-detail" id="photosDetail">
+    <div class="photos-detail-top">
+      <button onclick="closePhotoDetail()">‹</button>
+      <div class="photos-detail-date">
+        <span id="photosDetailDay"></span>
+        <small id="photosDetailTime"></small>
+      </div>
+      <button>•••</button>
+    </div>
+
+    <img class="photos-main-image" id="photosMainImage" alt="Photo">
+
+    <div class="photos-thumbnails" id="photosThumbnails"></div>
+
+    <div class="photos-detail-bottom">
+      <button>↥</button>
+      <button>♡</button>
+      <button>ⓘ</button>
+      <button>▤</button>
+    </div>
+  </div>`,
 
     "Notes": `
       <div class="demo-card">
