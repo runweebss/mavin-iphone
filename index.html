@@ -3557,9 +3557,16 @@ function calcOperator(operator) {
     "/": "÷"
   };
 
-  if (calcPending && !calcReset) {
-    calcEquals();
-  }
+if (calcPending && calcReset) {
+  calcPending = operator;
+  calcExpression = `${calcStored} ${symbols[operator]}`;
+  calcUpdate();
+  return;
+}
+
+if (calcPending && !calcReset) {
+  calcEquals();
+}
 
   calcStored = Number(calcValue);
   calcPending = operator;
@@ -3570,7 +3577,7 @@ function calcOperator(operator) {
 }
 
 function calcEquals() {
-  if (calcStored === null || !calcPending || calcValue === "Error") return;
+  if (calcStored === null || !calcPending || calcReset || calcValue === "Error") return;
 
   const first = calcStored;
   const second = Number(calcValue);
