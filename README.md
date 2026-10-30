@@ -1,4 +1,4 @@
-# Mavin's iPhone starter
+# Mavin's Phone starter
 
 Mobile-first interactive iPhone-style website prototype.
 
