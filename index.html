@@ -2826,7 +2826,10 @@ function openApp(name) {
     
 "Calculator": `
   <div class="ios-calculator">
-    <div class="calc-display" id="calcDisplay">0</div>
+    <div class="calc-display" id="calcDisplay">
+  <div id="calcExpression"></div>
+  <div id="calcCurrent">0</div>
+</div>
 
     <div class="calc-buttons">
       <button class="calc-light" onclick="calcClear()">AC</button>
