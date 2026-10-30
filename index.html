@@ -1746,7 +1746,10 @@ button {
   font-size: 23px;
 }
 
-
+#appScreen:has(.photos-app) > .app-header {
+  display: none;
+  }
+  
 </style>
 </head>
 
@@ -2703,11 +2706,6 @@ function openApp(name) {
     
 "Photos": `
   <div class="photos-app">
-    <div class="photos-nav">
-      <button onclick="closeApp()">‹ Kembali</button>
-      <strong>Galeri</strong>
-      <span></span>
-    </div>
 
     <h1 class="photos-heading">Foto</h1>
 
