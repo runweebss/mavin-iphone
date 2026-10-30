@@ -3311,9 +3311,9 @@ function renderNotesItems(query) {
   const q = query.trim().toLowerCase();
 
   // Urutan mengikuti catatan yang terakhir diedit.
-  const filtered = [...mavinNotes].filter(note =>
-    `${note.title} ${note.body}`.toLowerCase().includes(q)
-  );
+  const filtered = [...mavinNotes].reverse().filter(note =>
+  `${note.title} ${note.body}`.toLowerCase().includes(q)
+);
 
   count.textContent = `${filtered.length} ${filtered.length === 1 ? "Note" : "Notes"}`;
   list.innerHTML = "";
