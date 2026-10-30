@@ -2873,16 +2873,151 @@ function openApp(name) {
   screen.classList.add("active");
   if (name === "Calendar") {
   renderCalendar();
-  }
 }
 
+if (name === "Photos") {
+  renderPhotos();
+}
+  }
 
 function closeApp() {
   document.getElementById("appScreen").classList.remove("active");
 }
 
 
-const mavinNotes = [
+  
+/* APPLE PHOTOS LOGIC */
+
+const mavinPhotos = Array.from({ length: 20 }, (_, index) => {
+  const number = 20 - index;
+
+  return {
+    id: number,
+    src: `foto${number}.jpg`,
+    day: 30 - Math.floor((number - 1) * 11 / 19),
+    time: `${String(18 - Math.floor((number - 1) / 4)).padStart(2, "0")}:${String((number * 7) % 60).padStart(2, "0")}`
+  };
+});
+
+let selectedPhoto = null;
+let photosTab = "photo";
+
+function renderPhotos() {
+  const grid = document.getElementById("photosGrid");
+  if (!grid) return;
+
+  grid.innerHTML = "";
+
+  mavinPhotos.forEach((photo, index) => {
+    const button = document.createElement("button");
+    const img = document.createElement("img");
+
+    img.src = photo.src;
+    img.alt = `Mavin photo ${photo.id}`;
+    img.loading = "lazy";
+
+    button.appendChild(img);
+    button.onclick = () => openPhotoDetail(index);
+
+    grid.appendChild(button);
+  });
+}
+
+function openPhotoDetail(index) {
+  selectedPhoto = index;
+
+  const detail = document.getElementById("photosDetail");
+  if (!detail) return;
+
+  detail.classList.add("active");
+  renderPhotoDetail();
+}
+
+function renderPhotoDetail() {
+  const photo = mavinPhotos[selectedPhoto];
+  if (!photo) return;
+
+  document.getElementById("photosMainImage").src = photo.src;
+
+  const date = new Date(2026, 9, photo.day);
+
+  document.getElementById("photosDetailDay").textContent =
+    date.toLocaleDateString("en-US", {
+      weekday: "long",
+      day: "numeric",
+      month: "long"
+    });
+
+  document.getElementById("photosDetailTime").textContent =
+    photo.time;
+
+  const thumbnails = document.getElementById("photosThumbnails");
+  thumbnails.innerHTML = "";
+
+  mavinPhotos.forEach((item, index) => {
+    const button = document.createElement("button");
+    const img = document.createElement("img");
+
+    img.src = item.src;
+    img.alt = `Photo ${item.id}`;
+
+    if (index === selectedPhoto) {
+      button.classList.add("selected");
+    }
+
+    button.appendChild(img);
+
+    button.onclick = () => {
+      selectedPhoto = index;
+      renderPhotoDetail();
+    };
+
+    thumbnails.appendChild(button);
+  });
+
+  const activeThumb = thumbnails.children[selectedPhoto];
+
+  if (activeThumb) {
+    activeThumb.scrollIntoView({
+      behavior: "smooth",
+      block: "nearest",
+      inline: "center"
+    });
+  }
+}
+
+function closePhotoDetail() {
+  document.getElementById("photosDetail")
+    .classList.remove("active");
+}
+
+function switchPhotosTab(tab) {
+  photosTab = tab;
+
+  document.getElementById("photosTabPhoto")
+    .classList.toggle("active", tab === "photo");
+
+  document.getElementById("photosTabVideo")
+    .classList.toggle("active", tab === "video");
+
+  const grid = document.getElementById("photosGrid");
+  const month = document.getElementById("photosMonth");
+
+  if (tab === "photo") {
+    month.textContent = "October 2026";
+    renderPhotos();
+  } else {
+    month.textContent = "Videos";
+
+    grid.innerHTML = `
+      <div style="grid-column:1/-1;padding:35px;text-align:center;color:#888">
+        No videos yet
+      </div>`;
+  }
+}
+
+
+  const mavinNotes = [
   {
     id: "aneh",
     title: "banyak kejadian aneh hari ini",
