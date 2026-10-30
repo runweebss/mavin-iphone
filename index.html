@@ -3474,8 +3474,10 @@ if (note.image && note.imageAfter && note.body.includes(note.imageAfter)) {
   body.appendChild(img);
 
   body.appendChild(
-    document.createTextNode(note.body.slice(splitIndex))
-  );
+  document.createTextNode(
+    note.body.slice(splitIndex).replace(/^\n+/, "\n")
+  )
+);
 } else {
   body.textContent = note.body;
 }
