@@ -3038,6 +3038,138 @@ async function openCamera() {
       #cameraOverlay .cam-hidden {
         display: none;
       }
+
+    
+/* WHATSAPP REFINEMENT */
+
+#appScreen:has(.wa-home) {
+  overflow: hidden;
+}
+
+#appContent:has(.wa-home) {
+  padding: 0;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.wa-home {
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+}
+
+.wa-top-actions {
+  height: 44px;
+  flex-shrink: 0;
+  padding: 0 20px;
+}
+
+.wa-icon-btn {
+  width: 40px;
+  height: 40px;
+  font-size: 21px;
+}
+
+.wa-add-btn {
+  font-size: 29px;
+}
+
+.wa-heading {
+  font-size: 34px;
+  margin: 8px 20px 15px;
+}
+
+.wa-search {
+  height: 42px;
+  margin: 0 20px 14px;
+}
+
+.wa-filters {
+  padding-bottom: 8px;
+}
+
+.wa-filter {
+  padding: 8px 17px;
+  font-size: 14px;
+}
+
+.wa-filter-add {
+  width: 40px;
+  padding: 0;
+}
+
+.wa-chat-list {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.wa-chat {
+  grid-template-columns: 58px minmax(0, 1fr) 45px;
+  column-gap: 13px;
+  min-height: 90px;
+  padding: 10px 16px 10px 20px;
+}
+
+.wa-avatar {
+  width: 58px;
+  height: 58px;
+}
+
+.wa-chat-name {
+  font-size: 16px;
+}
+
+.wa-chat-preview {
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.wa-chat-meta {
+  height: 58px;
+  gap: 6px;
+}
+
+.wa-chat-time {
+  font-size: 13px;
+}
+
+.wa-unread {
+  width: 21px;
+  height: 21px;
+  font-size: 12px;
+}
+
+.wa-chat-divider {
+  margin-left: 91px;
+}
+
+.wa-encryption {
+  flex-shrink: 0;
+  font-size: 10px;
+  padding: 12px 5px;
+  overflow: hidden;
+}
+
+.wa-bottom-nav {
+  position: static;
+  flex-shrink: 0;
+  height: 68px;
+  margin: 0;
+}
+
+.wa-nav-icon {
+  width: 25px;
+  height: 25px;
+}
+
+.wa-nav-item {
+  font-size: 10px;
+}
+
     </style>
 
     <div class="cam-top">
