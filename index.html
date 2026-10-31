@@ -4396,6 +4396,43 @@ function lockPhone() {
   enteredPin = "";
   updatePinDots();
 }
+
+  
+let waCurrentFilter = "All";
+
+function filterWhatsApp() {
+  const query = document.getElementById("waSearch").value.toLowerCase();
+  const chats = document.querySelectorAll(".wa-chat");
+
+  chats.forEach(chat => {
+    const name = chat.dataset.name;
+    const matchesSearch = name.includes(query);
+    const matchesFilter =
+      waCurrentFilter !== "Unread" ||
+      chat.dataset.unread === "true";
+
+    chat.style.display =
+      matchesSearch && matchesFilter ? "grid" : "none";
+
+    const divider = chat.nextElementSibling;
+    if (divider && divider.classList.contains("wa-chat-divider")) {
+      divider.style.display =
+        matchesSearch && matchesFilter ? "block" : "none";
+    }
+  });
+}
+
+function setWaFilter(filter, button) {
+  waCurrentFilter = filter;
+
+  document.querySelectorAll(".wa-filter").forEach(item => {
+    item.classList.remove("active");
+  });
+
+  button.classList.add("active");
+  filterWhatsApp();
+}
+
 </script>
 </body>
 </html>
