@@ -2170,6 +2170,21 @@ function updateClock() {
 updateClock();
 setInterval(updateClock, 30000);
 
+  function updateCalendarIcon() {
+  const now = new Date();
+
+  const day = now.toLocaleDateString("en-US", {
+    weekday: "short"
+  }).toUpperCase();
+
+  document.getElementById("calendarIconDay").textContent = day;
+  document.getElementById("calendarIconDate").textContent =
+    now.getDate();
+}
+
+updateCalendarIcon();
+setInterval(updateCalendarIcon, 60000);
+
   
 /* REAL WEATHER: BANDUNG, OPEN-METEO */
 
