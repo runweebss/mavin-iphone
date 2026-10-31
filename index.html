@@ -2441,6 +2441,36 @@ lockScreen.addEventListener("touchend", function(event) {
   }
 }, { passive: true });
 
+  /* SWIPE UP TO CLOSE APP */
+
+const appScreen = document.getElementById("appScreen");
+
+let appSwipeStartY = 0;
+let appSwipeStartX = 0;
+
+appScreen.addEventListener("touchstart", function(event) {
+  appSwipeStartY = event.changedTouches[0].clientY;
+  appSwipeStartX = event.changedTouches[0].clientX;
+}, { passive: true });
+
+appScreen.addEventListener("touchend", function(event) {
+  const touch = event.changedTouches[0];
+
+  const deltaY = appSwipeStartY - touch.clientY;
+  const deltaX = Math.abs(touch.clientX - appSwipeStartX);
+
+  const startedAtBottom =
+    appSwipeStartY > window.innerHeight - 90;
+
+  if (
+    startedAtBottom &&
+    deltaY > 50 &&
+    deltaY > deltaX * 1.15
+  ) {
+    closeApp();
+  }
+}, { passive: true });
+
 let mouseStartY = 0;
 
 lockScreen.addEventListener("mousedown", function(event) {
