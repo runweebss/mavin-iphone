@@ -2358,11 +2358,19 @@ button {
 /* SCROLLABLE CHAT LIST */
 
 .wa-chat-list {
-  flex: 1 1 auto !important;
+  display: block !important;
+  flex: 1 1 0% !important;
+  width: 100% !important;
+  height: 0 !important;
   min-height: 0 !important;
-  overflow-y: auto !important;
   overflow-x: hidden !important;
-}
+  overflow-y: scroll !important;
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-y !important;
+  overscroll-behavior-y: contain;
+  padding-bottom: 20px !important;
+  box-sizing: border-box !important;
+  }
 
 /* ENCRYPTION TEXT */
 
