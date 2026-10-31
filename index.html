@@ -2842,6 +2842,11 @@ function openApp(name) {
   const content = document.getElementById("appContent");
 
   title.textContent = name;
+  
+  screen.classList.toggle(
+  "dark-status",
+  name === "Calculator"
+);
   if (name === "Notes") {
     renderNotesList();
     screen.classList.add("active");
