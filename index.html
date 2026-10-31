@@ -3174,12 +3174,137 @@ function openApp(name) {
     return;
   }
   const pages = {
-    "WhatsApp": `
-      <div class="demo-card">
-        <h3>WhatsApp</h3>
-        <p>Chats</p>
-        <p>No conversations in this demo yet.</p>
-      </div>`,
+    
+"WhatsApp": `
+<div class="wa-home">
+
+  <div class="wa-top-actions">
+    <div class="wa-top-left">
+      <button class="wa-icon-btn">•••</button>
+    </div>
+    <div class="wa-top-right">
+      <button class="wa-icon-btn">📷</button>
+      <button class="wa-icon-btn wa-add-btn">+</button>
+    </div>
+  </div>
+
+  <h1 class="wa-heading">Chats</h1>
+
+  <div class="wa-search">
+    <span>⌕</span>
+    <input
+      id="waSearch"
+      placeholder="Ask Meta AI or Search"
+      oninput="filterWhatsApp()"
+    >
+  </div>
+
+  <div class="wa-filters">
+    <button class="wa-filter active" onclick="setWaFilter('All',this)">All</button>
+    <button class="wa-filter" onclick="setWaFilter('Unread',this)">Unread</button>
+    <button class="wa-filter" onclick="setWaFilter('Favorites',this)">Favorites</button>
+    <button class="wa-filter" onclick="setWaFilter('Groups',this)">Groups</button>
+    <button class="wa-filter wa-filter-add">+</button>
+  </div>
+
+  <div class="wa-chat-list" id="waChatList">
+
+    <div class="wa-chat" data-name="yang mulia nelsa" data-unread="true">
+      <img class="wa-avatar" src="profil-nelsa.jpg">
+      <div class="wa-chat-main">
+        <div class="wa-chat-name">yang mulia nelsa</div>
+        <div class="wa-chat-preview">hah kok baca notes? emang lo kenapa???</div>
+      </div>
+      <div class="wa-chat-meta">
+        <span class="wa-chat-time">10:32</span>
+        <span class="wa-unread">1</span>
+      </div>
+    </div>
+    <div class="wa-chat-divider"></div>
+
+    <div class="wa-chat" data-name="kathlyn faye" data-unread="true">
+      <img class="wa-avatar" src="profil-kathlyn.jpg">
+      <div class="wa-chat-main">
+        <div class="wa-chat-name">kathlyn faye</div>
+        <div class="wa-chat-preview">ada paket gue gak di depan?</div>
+      </div>
+      <div class="wa-chat-meta">
+        <span class="wa-chat-time">10:15</span>
+        <span class="wa-unread">2</span>
+      </div>
+    </div>
+    <div class="wa-chat-divider"></div>
+
+    <div class="wa-chat" data-name="kak may" data-unread="true">
+      <img class="wa-avatar" src="profil-kak-may.jpg">
+      <div class="wa-chat-main">
+        <div class="wa-chat-name">kak may</div>
+        <div class="wa-chat-preview">hey kok gak bales</div>
+      </div>
+      <div class="wa-chat-meta">
+        <span class="wa-chat-time">09:21</span>
+        <span class="wa-unread">3</span>
+      </div>
+    </div>
+    <div class="wa-chat-divider"></div>
+
+    <div class="wa-chat" data-name="kak susan daily bugle" data-unread="true">
+      <img class="wa-avatar" src="profil-kak-susan.jpg">
+      <div class="wa-chat-main">
+        <div class="wa-chat-name">kak susan (daily bugle)</div>
+        <div class="wa-chat-preview">jangan lupa kirim foto yang udah disortir ke editor sebelum jam 5</div>
+      </div>
+      <div class="wa-chat-meta">
+        <span class="wa-chat-time">8:55</span>
+        <span class="wa-unread">1</span>
+      </div>
+    </div>
+    <div class="wa-chat-divider"></div>
+
+    <div class="wa-chat" data-name="prof hans" data-unread="true">
+      <img class="wa-avatar" src="profil-prof-hans.jpg">
+      <div class="wa-chat-main">
+        <div class="wa-chat-name">prof hans</div>
+        <div class="wa-chat-preview">Vin, gimana keadaan lukanya sekarang? Mending ke dokt...</div>
+      </div>
+      <div class="wa-chat-meta">
+        <span class="wa-chat-time">07.03</span>
+        <span class="wa-unread">1</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="wa-encryption">
+    <u>Made with Meta AI</u> · Your personal messages are
+    <span>end-to-end encrypted</span>
+  </div>
+
+  <div class="wa-bottom-nav">
+    <div class="wa-nav-item">
+      <span class="wa-nav-icon">◉</span>
+      Updates
+    </div>
+    <div class="wa-nav-item">
+      <span class="wa-nav-icon">♧</span>
+      Calls
+    </div>
+    <div class="wa-nav-item">
+      <span class="wa-nav-icon">♧</span>
+      Communities
+    </div>
+    <div class="wa-nav-item selected">
+      <span class="wa-nav-icon">●</span>
+      Chats
+    </div>
+    <div class="wa-nav-item">
+      <span class="wa-nav-icon">⚙</span>
+      Settings
+    </div>
+  </div>
+
+</div>`,
+
 
     "Calendar": `
   <div class="apple-calendar">
