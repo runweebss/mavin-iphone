@@ -83,6 +83,24 @@ button {
   box-sizing: border-box;
 }
 
+  /* APP STATUS BAR BACKGROUND */
+
+.phone:has(#appScreen.active)::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 36px;
+  background: white;
+  z-index: 19;
+  pointer-events: none;
+}
+
+.phone:has(#appScreen.dark-status)::before {
+  background: #000;
+}
+
 .status-right {
   display: flex;
   align-items: center;
