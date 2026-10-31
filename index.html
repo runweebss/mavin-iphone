@@ -2312,7 +2312,7 @@ button {
   overflow: visible !important;
 }
 
-  /* WHATSAPP FIXED BOTTOM NAV */
+/* WHATSAPP LAYOUT */
 
 .app-content:has(.wa-home) {
   overflow: hidden !important;
@@ -2320,40 +2320,19 @@ button {
 }
 
 .wa-home {
-  width: 100%;
-  height: 100%;
-  min-height: 0;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-.wa-encryption {
-  flex-shrink: 0;
-}
-
-.wa-bottom-nav {
-  flex-shrink: 0 !important;
   position: relative !important;
-  bottom: auto !important;
-  z-index: 20;
-}
-
-  /* CENTER WHATSAPP FILTER TEXT */
-
-.wa-filters {
-  display: flex;
-  align-items: center !important;
-}
-
-.wa-filter {
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
   display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  text-align: center !important;
-  line-height: 1 !important;
-  box-sizing: border-box;
+  flex-direction: column !important;
+  overflow: hidden !important;
+  padding-bottom: 145px !important;
+  box-sizing: border-box !important;
 }
+
+/* FILTER BUTTONS */
+
 .wa-filters {
   display: flex !important;
   align-items: center !important;
@@ -2370,27 +2349,61 @@ button {
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
+  text-align: center !important;
   line-height: 1 !important;
   box-sizing: border-box !important;
   flex-shrink: 0 !important;
 }
-  
-/* FIX BOTTOM NAV WIDTH AND POSITION */
+
+/* SCROLLABLE CHAT LIST */
+
+.wa-chat-list {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+}
+
+/* ENCRYPTION TEXT */
+
+.wa-encryption {
+  position: absolute !important;
+  bottom: 72px !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 42px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+  padding: 0 5px !important;
+  flex-shrink: 0 !important;
+}
+
+/* FIXED BOTTOM NAVIGATION */
 
 .wa-bottom-nav {
-  width: 100% !important;
-  max-width: 100% !important;
-  margin: 0 !important;
+  position: absolute !important;
+  bottom: 0 !important;
   left: 0 !important;
   right: 0 !important;
+  width: 100% !important;
+  height: 72px !important;
+  margin: 0 !important;
   transform: none !important;
+  display: flex !important;
+  justify-content: space-around !important;
+  align-items: center !important;
+  z-index: 30 !important;
   box-sizing: border-box !important;
+  flex-shrink: 0 !important;
 }
 
 .wa-bottom-nav .wa-nav-item {
   flex: 1 1 0 !important;
   min-width: 0 !important;
 }
+
 
 
 </style>
