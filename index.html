@@ -188,6 +188,25 @@ button {
   background: white;
 }
 
+  /* DARK APP STATUS BAR */
+
+.phone:has(#appScreen.dark-status) #homeScreen .status {
+  color: white;
+}
+
+.phone:has(#appScreen.dark-status) #homeScreen .status .signal i {
+  background: white;
+}
+
+.phone:has(#appScreen.dark-status) #homeScreen .status .battery {
+  border-color: white;
+}
+
+.phone:has(#appScreen.dark-status) #homeScreen .status .battery::before,
+.phone:has(#appScreen.dark-status) #homeScreen .status .battery::after {
+  background: white;
+  }
+
 /* LOCK SCREEN */
 
 .lock-screen {
