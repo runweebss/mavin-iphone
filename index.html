@@ -2266,13 +2266,20 @@ button {
   
 /* FIX WHATSAPP BOTTOM NAV ICONS */
 
+
 .wa-bottom-nav {
   height: 72px !important;
+  min-height: 72px !important;
   display: flex !important;
   align-items: center !important;
   justify-content: space-around !important;
   overflow: hidden !important;
   flex-shrink: 0 !important;
+
+  position: sticky !important;
+  bottom: 0 !important;
+  z-index: 50 !important;
+  background: #f8f8f8 !important;
 }
 
 .wa-bottom-nav .wa-nav-item {
@@ -2301,7 +2308,6 @@ button {
 }
 
 
-  
 </style>
 </head>
 
