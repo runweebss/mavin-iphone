@@ -207,6 +207,16 @@ button {
   background: white;
   }
 
+  /* SOLID STATUS BAR WHEN APP IS OPEN */
+
+.phone:has(#appScreen.active) #homeScreen .status {
+  background: white;
+}
+
+.phone:has(#appScreen.dark-status) #homeScreen .status {
+  background: #000;
+}
+
 /* LOCK SCREEN */
 
 .lock-screen {
