@@ -2312,6 +2312,33 @@ button {
   overflow: visible !important;
 }
 
+  /* WHATSAPP FIXED BOTTOM NAV */
+
+.app-content:has(.wa-home) {
+  overflow: hidden !important;
+  padding: 0 !important;
+}
+
+.wa-home {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.wa-encryption {
+  flex-shrink: 0;
+}
+
+.wa-bottom-nav {
+  flex-shrink: 0 !important;
+  position: relative !important;
+  bottom: auto !important;
+  z-index: 20;
+}
+
 
 </style>
 </head>
