@@ -3582,14 +3582,14 @@ const hasCustomEvent =
   (calendarEvents[eventDateKey] || []).length > 0;
 
 const isAespaDay = month === 10 && day === 17;
-const isPiwDay = month === 10 && day === 27;
+const isNationalHeroesDay = month === 10 && day === 10;
 
-if (hasCustomEvent || isAespaDay || isPiwDay) {
+if (hasCustomEvent || isAespaDay || isNationalHeroesDay) {
   button.classList.add("has-event");
 }
 
 if (isAespaDay) button.classList.add("aespa-event");
-if (isPiwDay) button.classList.add("piw-event");
+if (isNationalHeroesDay) button.classList.add("nationalheroes-event");
 
 const weekday = new Date(year, month, day).getDay();
 
