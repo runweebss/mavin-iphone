@@ -1990,11 +1990,10 @@ button {
       </button>
 
       <button class="app calendar" onclick="openApp('Calendar')">
-        <img
-          src="calendar%20logo.png"
-          alt="Calendar"
-          onerror="this.outerHTML='<div class=&quot;calendar-fallback&quot;><small>THU</small>29</div>'"
-        >
+        <div class="calendar-fallback">
+  <small id="calendarIconDay">SAT</small>
+  <span id="calendarIconDate">31</span>
+        </div>
         <span class="app-name">Calendar</span>
       </button>
 
