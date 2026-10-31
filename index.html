@@ -148,6 +148,40 @@ button {
   z-index: 2;
   }
 
+  /* ADAPTIVE STATUS BAR */
+
+#homeScreen .status {
+  transition: color .2s ease;
+}
+
+#homeScreen .status .signal i {
+  transition: background .2s ease;
+}
+
+#homeScreen .status .battery,
+#homeScreen .status .battery::before,
+#homeScreen .status .battery::after {
+  transition: border-color .2s ease, background .2s ease;
+}
+
+/* Saat aplikasi terbuka dengan tema terang */
+.phone:has(#appScreen.active) #homeScreen .status {
+  color: #111;
+}
+
+.phone:has(#appScreen.active) #homeScreen .status .signal i {
+  background: #111;
+}
+
+.phone:has(#appScreen.active) #homeScreen .status .battery {
+  border-color: #111;
+}
+
+.phone:has(#appScreen.active) #homeScreen .status .battery::before,
+.phone:has(#appScreen.active) #homeScreen .status .battery::after {
+  background: #111;
+}
+
 /* LOCK SCREEN */
 
 .lock-screen {
