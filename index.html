@@ -3082,6 +3082,7 @@ function updatePinDots() {
 
 function unlockPhone() {
   document.getElementById("passcodeScreen").classList.remove("active");
+  setTimeout(showNelsaNotification, 450);
 
   const lock = document.getElementById("lockScreen");
   lock.style.opacity = "0";
@@ -3089,7 +3090,51 @@ function unlockPhone() {
 
   document.getElementById("homeScreen").classList.add("active");
 }
+  function showNelsaNotification() {
+  const phone = document.querySelector(".phone");
 
+  const oldNotification = document.querySelector(".wa-notification");
+  if (oldNotification) oldNotification.remove();
+
+  const notification = document.createElement("div");
+  notification.className = "wa-notification";
+
+  notification.innerHTML = `
+    <div class="wa-notification-icon">☎</div>
+
+    <div class="wa-notification-content">
+      <div class="wa-notification-top">
+        <span class="wa-notification-name">Yang Mulia Nelsa</span>
+        <span class="wa-notification-time">now</span>
+      </div>
+
+      <div class="wa-notification-message">
+        hah kok baca notes? emang lo kenapa???
+      </div>
+    </div>
+  `;
+
+  notification.addEventListener("click", function() {
+    notification.remove();
+    openApp("WhatsApp");
+
+    setTimeout(() => {
+      openChat("nelsa");
+    }, 300);
+  });
+
+  phone.appendChild(notification);
+
+  requestAnimationFrame(() => {
+    notification.classList.add("show");
+  });
+
+  setTimeout(() => {
+    notification.classList.remove("show");
+    setTimeout(() => notification.remove(), 350);
+  }, 4500);
+  }
+  
 /* MUSIC PLAYER VISUAL TOGGLE */
 
 function togglePlayback() {
