@@ -4223,6 +4223,24 @@ function openApp(name) {
 
   content.innerHTML = pages[name] || `
     <div class="demo-card"><h3>${name}</h3></div>`;
+  if (name === "WhatsApp") {
+  const contactKeys = {
+    "yang mulia nelsa": "nelsa",
+    "kathlyn faye": "kathlyn",
+    "kak may": "may",
+    "kak susan daily bugle": "susan",
+    "prof hans": "hans"
+  };
+
+  document.querySelectorAll("#waChatList .wa-chat").forEach(chat => {
+    const contact = contactKeys[chat.dataset.name];
+
+    if (waReadContacts.has(contact)) {
+      chat.dataset.unread = "false";
+      chat.querySelector(".wa-unread")?.remove();
+    }
+  });
+  }
 
   screen.classList.add("active");
   if (name === "Calendar") {
