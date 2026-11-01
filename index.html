@@ -4809,7 +4809,12 @@ function openWhatsAppRoom(contact) {
   if (message.from === "mavin") {
     const check = document.createElement("span");
     check.className = "wa-message-check";
-    check.textContent = "✓✓";
+    check.innerHTML = `
+  <svg viewBox="0 0 20 12" aria-hidden="true">
+    <path d="M1 6 L4.5 9.5 L12 1.5
+             M7 6 L10.5 9.5 L18 1.5"/>
+  </svg>
+`;
     meta.appendChild(check);
   }
 
