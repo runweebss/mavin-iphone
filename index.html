@@ -2421,6 +2421,77 @@ button {
   min-width: 0 !important;
 }
 
+  /* WHATSAPP NOTIFICATION */
+
+.wa-notification {
+  position: absolute;
+  top: 48px;
+  left: 12px;
+  right: 12px;
+  z-index: 100;
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+  padding: 13px 15px;
+  border-radius: 18px;
+  background: rgba(245, 245, 245, .96);
+  color: #171717;
+  box-shadow: 0 5px 22px #0003;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  opacity: 0;
+  transform: translateY(-25px);
+  transition: opacity .3s ease, transform .3s ease;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.wa-notification.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.wa-notification-icon {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #25D366;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 23px;
+}
+
+.wa-notification-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.wa-notification-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.wa-notification-name {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.wa-notification-time {
+  font-size: 11px;
+  color: #777;
+}
+
+.wa-notification-message {
+  font-size: 13px;
+  line-height: 1.35;
+}
+
 
 </style>
 </head>
