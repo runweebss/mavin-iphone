@@ -4994,31 +4994,34 @@ async function typeMavinMessage(text) {
   ];
 
   async function playNextScene() {
-    if (state.busy || state.stage >= scenes.length) return;
+  if (state.busy || state.stage >= scenes.length) return;
 
-    state.busy = true;
+  state.busy = true;
 
-    // ADEGAN PERTAMA: MAVIN MENGETIK "nel", LALU MENGHAPUSNYA
-    if (state.stage === 0) {
-      input.value = "nel";
-      await wait(900);
-      input.value = "";
-      await wait(500);
-    }
+  const scene = scenes[state.stage];
 
-    const scene = scenes[state.stage];
+  // MAVIN MENGETIK LANGSUNG DI KOLOM INPUT
+  if (scene.mavin) {
+    await typeMavinMessage(scene.mavin);
+  } else if (scene.image) {
+    input.focus();
+    await wait(700);
+    input.blur();
+  }
 
-    if (scene.mavin || scene.image) {
-      await sendMessage("mavin", scene.mavin, scene.image);
-    }
+  // PESAN MAVIN MUNCUL TANPA BUBBLE TYPING
+  if (scene.mavin || scene.image) {
+    await sendMessage("mavin", scene.mavin, scene.image);
+  }
 
-    for (const reply of scene.nelsa) {
-      await wait(700);
-      await sendMessage("nelsa", reply);
-    }
+  // NELSA MEMBALAS DENGAN INDIKATOR TYPING
+  for (const reply of scene.nelsa) {
+    await wait(700);
+    await sendMessage("nelsa", reply);
+  }
 
-    state.stage++;
-    state.busy = false;
+  state.stage++;
+  state.busy = false;
   }
 
   // KLIK AREA KETIK UNTUK MEMULAI PESAN MAVIN
