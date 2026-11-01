@@ -2522,12 +2522,16 @@ button {
   display: flex;
 }
 
-  .wa-room {
+.wa-room {
+  width: 100%;
   height: 100%;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  background: #e5ddd5;
   overflow: hidden;
+  background: #e5ddd5;
+  color: #111;
+  font-family: Arial, sans-serif;
 }
 
 .wa-room-header {
@@ -2536,8 +2540,8 @@ button {
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 0 10px;
-  background: #b8b8b8;
+  padding: 0 12px;
+  background: #d5d0c8;
   color: #111;
 }
 
@@ -2549,10 +2553,13 @@ button {
 }
 
 .wa-room-back {
-  font-size: 32px;
-  background: none;
+  width: 28px;
+  padding: 0;
   border: 0;
-  color: #111;
+  background: none;
+  color: #222;
+  font-size: 34px;
+  line-height: 1;
 }
 
 .wa-room-contact {
@@ -2560,62 +2567,98 @@ button {
   min-width: 0;
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 3px;
 }
 
 .wa-room-contact strong {
-  font-size: 17px;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .wa-room-contact span {
-  font-size: 13px;
+  font-size: 12px;
   color: #666;
 }
 
 .wa-room-header button:not(.wa-room-back) {
+  width: 34px;
+  height: 40px;
+  padding: 5px;
   border: 0;
   background: transparent;
-  font-size: 23px;
-  color: #111;
+  color: #222;
+}
+
+.wa-room-header svg,
+.wa-room-composer svg {
+  width: 23px;
+  height: 23px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .wa-room-messages {
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  background-image: url("wa-wallpaper.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .wa-room-composer {
   min-height: 62px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 8px;
   padding: 7px 10px;
-  background: #d1d1d1;
+  background: #d5d0c8;
 }
 
 .wa-room-composer button {
+  width: 30px;
+  height: 42px;
+  padding: 0;
   border: 0;
   background: transparent;
-  font-size: 25px;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .wa-room-input {
   flex: 1;
+  min-width: 0;
   height: 42px;
   border-radius: 24px;
-  background: white;
+  background: #fff;
   display: flex;
   align-items: center;
+  gap: 8px;
   padding: 0 12px;
 }
 
 .wa-room-input input {
   flex: 1;
   min-width: 0;
+  height: 100%;
   border: 0;
   outline: none;
   background: transparent;
+  font-size: 15px;
+}
+
+.wa-room-input svg {
+  width: 22px;
+  height: 22px;
+  color: #666;
+  flex-shrink: 0;
 }
 
 </style>
