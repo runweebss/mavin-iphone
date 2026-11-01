@@ -4259,7 +4259,9 @@ if (name === "Photos") {
   };
 
   const person = contacts[contact];
-  if (!person) return;
+if (!person) return;
+
+waReadContacts.add(contact);
 
   const content = document.getElementById("appContent");
 
