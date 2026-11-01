@@ -4726,11 +4726,31 @@ function openWhatsAppRoom(contact) {
   if (!window.nelsaChatState) {
     window.nelsaChatState = {
       messages: [
-        { from: "mavin", text: "nel, kalau besok pagi aku gak ke kampus, tolong ke kosan aku ya" },
-        { from: "mavin", text: "terus kalau aku gak sadarkan diri, kamu baca dulu notes yang ada di hpku" },
-        { from: "mavin", text: "pinnya 1711" },
-        { from: "nelsa", text: "hah kok baca notes? emang lo kenapa???" }
-      ],
+  {
+    from: "mavin",
+    text: "nel, kalau besok pagi aku gak ke kampus, tolong ke kosan aku ya",
+    time: "22:49"
+  },
+  {
+    from: "mavin",
+    text: "terus kalau aku gak sadarkan diri, kamu baca dulu notes yang ada di hpku",
+    time: "22:49"
+  },
+  {
+    from: "mavin",
+    text: "pinnya 1711",
+    time: "22:49"
+  },
+  {
+    type: "divider",
+    text: "Today"
+  },
+  {
+    from: "nelsa",
+    text: "hah kok baca notes? emang lo kenapa???",
+    time: "10:32"
+  }
+],
       stage: 0,
       started: false,
       busy: false
@@ -4746,40 +4766,58 @@ function openWhatsAppRoom(contact) {
   }
 
   function renderMessage(message) {
-    const wrapper = document.createElement("div");
-    wrapper.className = `wa-message ${message.from}`;
 
-    const bubble = document.createElement("div");
-    bubble.className = "wa-bubble";
+  // PEMISAH HARI
+  if (message.type === "divider") {
+    const divider = document.createElement("div");
+    divider.className = "wa-day-divider";
+    divider.textContent = message.text;
 
-    if (message.image) {
-      const img = document.createElement("img");
-      img.src = message.image;
-      img.alt = "Foto bekas gigitan serangga";
-      img.style.cssText =
-        "display:block;width:210px;max-width:100%;border-radius:7px;";
-      bubble.appendChild(img);
-    } else {
-      bubble.appendChild(document.createTextNode(message.text));
-    }
-
-    const time = document.createElement("span");
-    time.className = "wa-message-time";
-    time.textContent = message.time || "10:32";
-    bubble.appendChild(time);
-
-    if (message.from === "mavin") {
-      const check = document.createElement("span");
-      check.className = "wa-message-check";
-      check.textContent = " ✓✓";
-      bubble.appendChild(check);
-    }
-
-    wrapper.appendChild(bubble);
-    messages.appendChild(wrapper);
+    messages.appendChild(divider);
     scrollBottom();
+    return;
   }
 
+  const wrapper = document.createElement("div");
+  wrapper.className = `wa-message ${message.from}`;
+
+  const bubble = document.createElement("div");
+  bubble.className = "wa-bubble";
+
+  if (message.image) {
+    const img = document.createElement("img");
+    img.src = message.image;
+    img.alt = "Foto bekas gigitan serangga";
+    img.style.cssText =
+      "display:block;width:210px;max-width:100%;border-radius:7px;";
+    bubble.appendChild(img);
+  } else {
+    bubble.appendChild(document.createTextNode(message.text));
+  }
+
+  // WAKTU DAN CENTANG
+  const meta = document.createElement("div");
+  meta.className = "wa-message-meta";
+
+  const time = document.createElement("span");
+  time.className = "wa-message-time";
+  time.textContent = message.time || "10:32";
+
+  meta.appendChild(time);
+
+  if (message.from === "mavin") {
+    const check = document.createElement("span");
+    check.className = "wa-message-check";
+    check.textContent = "✓✓";
+    meta.appendChild(check);
+  }
+
+  bubble.appendChild(meta);
+  wrapper.appendChild(bubble);
+  messages.appendChild(wrapper);
+
+  scrollBottom();
+  }
   function showTyping() {
     const typing = document.createElement("div");
     typing.className = "wa-typing";
