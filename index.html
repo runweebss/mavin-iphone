@@ -4898,14 +4898,32 @@ function openWhatsAppRoom(contact) {
   }
 
   async function sendMessage(from, text, image = null) {
+  if (from === "nelsa") {
     showTyping();
     await wait(1100);
-
     hideTyping();
+  }
 
-    const message = { from, text, image };
-    state.messages.push(message);
-    renderMessage(message);
+  const message = { from, text, image };
+  state.messages.push(message);
+  renderMessage(message);
+}
+
+async function typeMavinMessage(text) {
+  input.focus();
+  input.value = "";
+
+  for (const char of text) {
+    input.value += char;
+
+    const delay = /[,.!?]/.test(char) ? 220 : 55;
+    await wait(delay);
+  }
+
+  await wait(450);
+
+  input.blur();
+  input.value = "";
   }
 
   // TAMPILKAN RIWAYAT YANG SUDAH ADA
