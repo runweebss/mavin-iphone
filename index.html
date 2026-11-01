@@ -3161,14 +3161,13 @@ function updatePinDots() {
 function unlockPhone() {
   document.getElementById("passcodeScreen").classList.remove("active");
   setTimeout(showNelsaNotification, 10000);
-}
 
   const lock = document.getElementById("lockScreen");
   lock.style.opacity = "0";
   lock.style.visibility = "hidden";
 
   document.getElementById("homeScreen").classList.add("active");
-}
+  }
   function showNelsaNotification() {
   const phone = document.querySelector(".phone");
 
