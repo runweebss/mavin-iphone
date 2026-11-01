@@ -3183,7 +3183,7 @@ function updatePinDots() {
 
 function unlockPhone() {
   document.getElementById("passcodeScreen").classList.remove("active");
-  setTimeout(showNelsaNotification, 3000);
+  setTimeout(showNelsaNotification, 2000);
 
   const lock = document.getElementById("lockScreen");
   lock.style.opacity = "0";
@@ -3192,7 +3192,6 @@ function unlockPhone() {
   document.getElementById("homeScreen").classList.add("active");
   }
   function showNelsaNotification() {
-    document.getElementById("whatsappBadge").classList.add("show");
   const phone = document.querySelector(".phone");
 
   const oldNotification = document.querySelector(".wa-notification");
@@ -3223,7 +3222,7 @@ function unlockPhone() {
 
     setTimeout(() => {
       openChat("yangmulianelsa");
-    }, 5000);
+    }, 350);
   });
 
   phone.appendChild(notification);
