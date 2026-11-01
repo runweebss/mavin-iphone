@@ -3199,7 +3199,7 @@ function unlockPhone() {
 
     setTimeout(() => {
       openChat("yangmulianelsa");
-    }, 300);
+    }, 5000);
   });
 
   phone.appendChild(notification);
@@ -3207,11 +3207,6 @@ function unlockPhone() {
   requestAnimationFrame(() => {
     notification.classList.add("show");
   });
-
-  setTimeout(() => {
-    notification.classList.remove("show");
-    setTimeout(() => notification.remove(), 350);
-  }, 4500);
   }
   
 /* MUSIC PLAYER VISUAL TOGGLE */
