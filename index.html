@@ -5150,6 +5150,7 @@ function lockPhone() {
 
   
 let waCurrentFilter = "All";
+let waReadContacts = new Set();
 
 function filterWhatsApp() {
   const query = document.getElementById("waSearch").value.toLowerCase();
