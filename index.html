@@ -5051,21 +5051,36 @@ async function typeMavinMessage(text) {
 
   const scene = scenes[state.stage];
 
-  // MAVIN MENGETIK LANGSUNG DI KOLOM INPUT
+  // KEYBOARD IPHONE MUNCUL
+  if (scene.mavin) {
+    showVirtualKeyboard();
+    await wait(350);
+  }
+
+  // ADEGAN PERTAMA: MAVIN MENGETIK "nel", LALU MENGHAPUSNYA
+  if (state.stage === 0) {
+    await typeMavinMessage("nel");
+    await wait(500);
+    await eraseMavinText(3);
+    await wait(400);
+  }
+
+  // MAVIN MENGETIK PESAN UTAMA
   if (scene.mavin) {
     await typeMavinMessage(scene.mavin);
-  } else if (scene.image) {
-    input.focus();
-    await wait(700);
-    input.blur();
+    await sendMessage("mavin", scene.mavin);
   }
 
-  // PESAN MAVIN MUNCUL TANPA BUBBLE TYPING
-  if (scene.mavin || scene.image) {
-    await sendMessage("mavin", scene.mavin, scene.image);
+  // FOTO DARI MAVIN
+  if (scene.image) {
+    await sendMessage("mavin", "", scene.image);
   }
 
-  // NELSA MEMBALAS DENGAN INDIKATOR TYPING
+  // KEYBOARD TURUN SEBELUM NELSA MEMBALAS
+  hideVirtualKeyboard();
+  await wait(350);
+
+  // GILIRAN NELSA
   for (const reply of scene.nelsa) {
     await wait(700);
     await sendMessage("nelsa", reply);
