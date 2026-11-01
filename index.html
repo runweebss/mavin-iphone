@@ -2661,7 +2661,7 @@ button {
   flex-shrink: 0;
 }
 
-  /* WHATSAPP ROOM FINAL SIZE */
+/* WHATSAPP ROOM SIZE ADJUSTMENT */
 
 #appScreen:has(.wa-room) {
   overflow: hidden;
@@ -2681,54 +2681,68 @@ button {
   min-height: 0;
 }
 
+/* HEADER */
 .wa-room-header {
-  height: 56px;
-  min-height: 56px;
-  padding: 0 9px;
-  gap: 8px;
+  height: 82px;
+  min-height: 82px;
+  padding: 0 16px;
+  gap: 12px;
 }
 
 .wa-room-header img {
-  width: 36px;
-  height: 36px;
+  width: 52px;
+  height: 52px;
 }
 
 .wa-room-back {
-  font-size: 29px;
+  font-size: 36px;
+  width: 30px;
 }
 
 .wa-room-contact strong {
-  font-size: 14px;
+  font-size: 19px;
 }
 
 .wa-room-contact span {
-  font-size: 11px;
+  font-size: 14px;
 }
 
 .wa-room-header button:not(.wa-room-back) {
-  width: 30px;
-  height: 36px;
+  width: 40px;
+  height: 44px;
 }
 
+.wa-room-header svg {
+  width: 27px;
+  height: 27px;
+}
+
+/* FOOTER */
 .wa-room-composer {
-  min-height: 54px;
-  padding: 5px 9px;
-  gap: 6px;
+  min-height: 82px;
+  padding: 10px 16px;
+  gap: 10px;
 }
 
 .wa-room-composer button {
+  width: 34px;
+  height: 46px;
+}
+
+.wa-room-composer svg {
   width: 27px;
-  height: 38px;
+  height: 27px;
 }
 
 .wa-room-input {
-  height: 38px;
-  padding: 0 10px;
+  height: 52px;
+  padding: 0 14px;
+  border-radius: 30px;
 }
 
 .wa-room-input svg {
-  width: 19px;
-  height: 19px;
+  width: 24px;
+  height: 24px;
 }
 
 </style>
