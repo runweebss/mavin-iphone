@@ -4961,7 +4961,6 @@ function openWhatsAppRoom(contact) {
 }
 
 async function typeMavinMessage(text) {
-  input.focus();
   input.value = "";
 
   for (const char of text) {
@@ -4973,7 +4972,6 @@ async function typeMavinMessage(text) {
 
   await wait(450);
 
-  input.blur();
   input.value = "";
   }
 
@@ -5091,9 +5089,11 @@ async function typeMavinMessage(text) {
   }
 
   // KLIK AREA KETIK UNTUK MEMULAI PESAN MAVIN
-  input.addEventListener("click", () => {
-    playNextScene();
-  });
+  const inputArea = document.querySelector(".wa-room-input");
+
+inputArea.addEventListener("click", () => {
+  playNextScene();
+});
   }
   
 function closeApp() {
