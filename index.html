@@ -3435,14 +3435,16 @@ async function openCamera() {
     
 /* WHATSAPP REFINEMENT */
 
-#appScreen:has(.wa-home) {
+#appScreen:has(.wa-room) {
   overflow: hidden;
 }
 
-#appContent:has(.wa-home) {
-  padding: 0;
-  overflow: hidden;
-  min-height: 0;
+#appContent:has(.wa-room) {
+  padding: 0 !important;
+  overflow: hidden !important;
+  min-height: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .wa-home {
