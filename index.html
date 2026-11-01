@@ -2328,7 +2328,8 @@ button {
   flex-direction: column !important;
   overflow: hidden !important;
   padding: 0 !important;
-  }
+  box-sizing: border-box !important;
+}
   
 /* FILTER BUTTONS */
 
@@ -2358,29 +2359,33 @@ button {
 
 .wa-chat-list {
   display: block !important;
-  flex: 1 1 0% !important;
+  flex: 1 1 0 !important;
+  width: 100% !important;
   min-height: 0 !important;
   height: 0 !important;
   overflow-y: auto !important;
   overflow-x: hidden !important;
   -webkit-overflow-scrolling: touch !important;
   touch-action: pan-y !important;
-  padding-bottom: 12px !important;
+  padding-bottom: 0 !important;
+  box-sizing: border-box !important;
 }
   
 /* ENCRYPTION TEXT */
 
 .wa-encryption {
   position: static !important;
-  width: 100%;
-  min-height: 55px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-sizing: border-box;
-  padding: 18px 10px;
-  flex-shrink: 0;
-  }
+  flex: 0 0 55px !important;
+  width: 100% !important;
+  height: 55px !important;
+  min-height: 55px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  padding: 0 10px !important;
+  box-sizing: border-box !important;
+}
 
 /* FIXED BOTTOM NAVIGATION */
 
