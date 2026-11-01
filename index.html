@@ -4183,6 +4183,67 @@ if (name === "Photos") {
 }
   }
 
+  function openWhatsAppRoom(contact) {
+  const contacts = {
+    nelsa: {
+      name: "yang mulia nelsa",
+      image: "profil-nelsa.jpg"
+    },
+    kathlyn: {
+      name: "kathlyn faye",
+      image: "profil-kathlyn.jpg"
+    },
+    may: {
+      name: "kak may",
+      image: "profil-kak-may.jpg"
+    },
+    susan: {
+      name: "kak susan (daily bugle)",
+      image: "profil-kak-susan.jpg"
+    },
+    hans: {
+      name: "prof hans",
+      image: "profil-prof-hans.jpg"
+    }
+  };
+
+  const person = contacts[contact];
+  if (!person) return;
+
+  const content = document.getElementById("appContent");
+
+  content.innerHTML = `
+    <div class="wa-room">
+      <div class="wa-room-header">
+        <button class="wa-room-back"
+          onclick="openApp('WhatsApp')">‹</button>
+
+        <img src="${person.image}" alt="${person.name}">
+
+        <div class="wa-room-contact">
+          <strong>${person.name}</strong>
+          <span>online</span>
+        </div>
+
+        <button>♧</button>
+        <button>▣</button>
+      </div>
+
+      <div class="wa-room-messages" id="waRoomMessages"></div>
+
+      <div class="wa-room-composer">
+        <button>＋</button>
+        <div class="wa-room-input">
+          <input type="text" placeholder="">
+          <span>▢</span>
+        </div>
+        <button>◎</button>
+        <button>♩</button>
+      </div>
+    </div>
+  `;
+  }
+
 function closeApp() {
   document.getElementById("appScreen").classList.remove("active");
 }
