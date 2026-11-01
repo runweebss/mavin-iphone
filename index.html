@@ -2385,7 +2385,14 @@ button {
   text-align: center !important;
   padding: 0 10px !important;
   box-sizing: border-box !important;
+  gap: 7px !important;
 }
+  .wa-lock {
+  width: 17px !important;
+  height: 17px !important;
+  color: #687174 !important;
+  flex-shrink: 0 !important;
+  }
 
 /* FIXED BOTTOM NAVIGATION */
 
@@ -3565,8 +3572,22 @@ function openApp(name) {
     </div>
   <div class="wa-chat-divider"></div>
 
-  <div class="wa-encryption">
-  Your personal messages are
+<div class="wa-encryption">
+  <svg class="wa-lock" viewBox="0 0 24 24" aria-hidden="true">
+    <path
+      d="M7 10V7a5 5 0 0 1 10 0v3"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2.5"
+      stroke-linecap="round"
+    />
+    <rect
+      x="4.5" y="10" width="15" height="12"
+      rx="2"
+      fill="currentColor"
+    />
+  </svg>
+  <span>Your personal messages are</span>
   <span>end-to-end encrypted</span>
 </div>
 
