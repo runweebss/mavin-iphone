@@ -2820,6 +2820,81 @@ button {
   width: 22px;
   height: 22px;
   }
+
+  /* WHATSAPP CHAT BUBBLES */
+
+.wa-room-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 14px 10px;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.wa-message {
+  display: flex;
+  width: 100%;
+}
+
+.wa-message.mavin {
+  justify-content: flex-end;
+}
+
+.wa-message.nelsa {
+  justify-content: flex-start;
+}
+
+.wa-bubble {
+  max-width: 82%;
+  padding: 8px 10px 6px;
+  border-radius: 9px;
+  font-size: 14px;
+  line-height: 1.4;
+  color: #111;
+  overflow-wrap: anywhere;
+  box-shadow: 0 1px 1px rgba(0,0,0,.12);
+}
+
+.wa-message.mavin .wa-bubble {
+  background: #d9fdd3;
+  border-top-right-radius: 2px;
+}
+
+.wa-message.nelsa .wa-bubble {
+  background: #fff;
+  border-top-left-radius: 2px;
+}
+
+.wa-message-time {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 10px;
+  color: #777;
+  white-space: nowrap;
+}
+
+.wa-message-check {
+  color: #53a8e8;
+  font-size: 11px;
+  margin-left: 2px;
+}
+
+.wa-typing {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.wa-typing-bubble {
+  background: #fff;
+  padding: 10px 13px;
+  border-radius: 9px;
+  border-top-left-radius: 2px;
+  color: #888;
+  font-size: 13px;
+  font-style: italic;
+}
   
 </style>
 </head>
