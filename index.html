@@ -4532,7 +4532,7 @@ if (name === "Photos") {
 }
   }
 
-  function openWhatsAppRoom(contact) {
+function openWhatsAppRoom(contact) {
   const contacts = {
     nelsa: {
       name: "yang mulia nelsa",
@@ -4557,15 +4557,14 @@ if (name === "Photos") {
   };
 
   const person = contacts[contact];
-if (!person) return;
+  if (!person) return;
 
-waReadContacts.add(contact);
+  waReadContacts.add(contact);
 
   const content = document.getElementById("appContent");
 
-      content.innerHTML = `
+  content.innerHTML = `
     <div class="wa-room">
-
       <div class="wa-room-header">
         <button class="wa-room-back"
           onclick="openApp('WhatsApp')">‹</button>
@@ -4605,7 +4604,6 @@ waReadContacts.add(contact);
       <div class="wa-room-messages" id="waRoomMessages"></div>
 
       <div class="wa-room-composer">
-
         <button aria-label="Add attachment">
           <svg viewBox="0 0 24 24">
             <path d="M12 5v14M5 12h14"/>
@@ -4613,8 +4611,8 @@ waReadContacts.add(contact);
         </button>
 
         <div class="wa-room-input">
-          <input type="text" placeholder="">
-
+          <input type="text" id="waMessageInput"
+            placeholder="" autocomplete="off">
           <svg viewBox="0 0 24 24">
             <rect x="3" y="3" width="18" height="18" rx="4"/>
             <circle cx="8.5" cy="9" r="1"/>
@@ -4638,10 +4636,201 @@ waReadContacts.add(contact);
             M12 18v4M8 22h8"/>
           </svg>
         </button>
-
       </div>
     </div>
   `;
+
+  if (contact !== "nelsa") return;
+
+  // SIMPAN RIWAYAT CHAT AGAR TIDAK RESET
+  if (!window.nelsaChatState) {
+    window.nelsaChatState = {
+      messages: [
+        { from: "mavin", text: "nel, kalau besok pagi aku gak ke kampus, tolong ke kosan aku ya" },
+        { from: "mavin", text: "terus kalau aku gak sadarkan diri, kamu baca dulu notes yang ada di hpku" },
+        { from: "mavin", text: "pinnya 1711" },
+        { from: "nelsa", text: "hah kok baca notes? emang lo kenapa???" }
+      ],
+      stage: 0,
+      started: false,
+      busy: false
+    };
+  }
+
+  const state = window.nelsaChatState;
+  const messages = document.getElementById("waRoomMessages");
+  const input = document.getElementById("waMessageInput");
+
+  function scrollBottom() {
+    messages.scrollTop = messages.scrollHeight;
+  }
+
+  function renderMessage(message) {
+    const wrapper = document.createElement("div");
+    wrapper.className = `wa-message ${message.from}`;
+
+    const bubble = document.createElement("div");
+    bubble.className = "wa-bubble";
+
+    if (message.image) {
+      const img = document.createElement("img");
+      img.src = message.image;
+      img.alt = "Foto bekas gigitan serangga";
+      img.style.cssText =
+        "display:block;width:210px;max-width:100%;border-radius:7px;";
+      bubble.appendChild(img);
+    } else {
+      bubble.appendChild(document.createTextNode(message.text));
+    }
+
+    const time = document.createElement("span");
+    time.className = "wa-message-time";
+    time.textContent = message.time || "10:32";
+    bubble.appendChild(time);
+
+    if (message.from === "mavin") {
+      const check = document.createElement("span");
+      check.className = "wa-message-check";
+      check.textContent = " ✓✓";
+      bubble.appendChild(check);
+    }
+
+    wrapper.appendChild(bubble);
+    messages.appendChild(wrapper);
+    scrollBottom();
+  }
+
+  function showTyping() {
+    const typing = document.createElement("div");
+    typing.className = "wa-typing";
+    typing.id = "waTyping";
+
+    typing.innerHTML = `
+      <div class="wa-typing-bubble">typing...</div>
+    `;
+
+    messages.appendChild(typing);
+    scrollBottom();
+  }
+
+  function hideTyping() {
+    document.getElementById("waTyping")?.remove();
+  }
+
+  function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  async function sendMessage(from, text, image = null) {
+    showTyping();
+    await wait(1100);
+
+    hideTyping();
+
+    const message = { from, text, image };
+    state.messages.push(message);
+    renderMessage(message);
+  }
+
+  // TAMPILKAN RIWAYAT YANG SUDAH ADA
+  state.messages.forEach(renderMessage);
+
+  // PESAN NELSA OTOMATIS SETELAH CHAT DIBUKA
+  if (!state.started) {
+    state.started = true;
+
+    (async () => {
+      await wait(900);
+      await sendMessage("nelsa", "ga usah pake teka-teki segala deh");
+
+      await wait(700);
+      await sendMessage("nelsa", "lo kebanyakan nonton conan");
+    })();
+  }
+
+  // URUTAN PESAN SELANJUTNYA
+  const scenes = [
+    {
+      mavin: "aku gak jadi mati ternyata",
+      nelsa: ["oke stop nonton conan"]
+    },
+    {
+      mavin: "serius semalem kayak mau mati",
+      nelsa: ["kenapa lo", "digigit serangganya prof hans?"]
+    },
+    {
+      mavin: "kok tau",
+      nelsa: [
+        "tau lah",
+        "kalo lo mulai ngelantur gitu udah pasti abis ketemu sama aki-aki itu"
+      ]
+    },
+    {
+      mavin: "gak sopan",
+      nelsa: ["udah gue bilang jangan bergaul sama si aki, dia tuh aneh anjir"]
+    },
+    {
+      mavin: "apa salahnya neliti serangga kocak",
+      nelsa: []
+    },
+    {
+      mavin: "tapi gigitannya beneran ngena banget sih ini",
+      nelsa: []
+    },
+    {
+      mavin: "mau liat gak bekasnya",
+      nelsa: ["yaiyalah ngena, serangga kan ada racunnya anjir", "apalagi serangga modifan si aki itu"]
+    },
+    {
+      mavin: "stop ngatain aki-aki",
+      nelsa: ["mana bekasnya"]
+    },
+    {
+      mavin: "",
+      image: "mavin-spider-bite.jpg",
+      nelsa: [
+        "HAH",
+        "ITU DIGIGIT SERANGGA APA DIGIGIT PROFESOR HANS"
+      ]
+    },
+    {
+      mavin: "SERANGGA LAH",
+      nelsa: []
+    }
+  ];
+
+  async function playNextScene() {
+    if (state.busy || state.stage >= scenes.length) return;
+
+    state.busy = true;
+
+    // ADEGAN PERTAMA: MAVIN MENGETIK "nel", LALU MENGHAPUSNYA
+    if (state.stage === 0) {
+      input.value = "nel";
+      await wait(900);
+      input.value = "";
+      await wait(500);
+    }
+
+    const scene = scenes[state.stage];
+
+    if (scene.mavin || scene.image) {
+      await sendMessage("mavin", scene.mavin, scene.image);
+    }
+
+    for (const reply of scene.nelsa) {
+      await wait(700);
+      await sendMessage("nelsa", reply);
+    }
+
+    state.stage++;
+    state.busy = false;
+  }
+
+  // KLIK AREA KETIK UNTUK MEMULAI PESAN MAVIN
+  input.addEventListener("click", () => {
+    playNextScene();
+  });
   }
   
 function closeApp() {
