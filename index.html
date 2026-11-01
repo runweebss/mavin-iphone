@@ -3314,14 +3314,10 @@ function unlockPhone() {
   `;
 
   notification.addEventListener("click", function() {
-    notification.remove();
-    openApp("WhatsApp");
-
-    setTimeout(() => {
-      openChat("yangmulianelsa");
-    }, 350);
-  });
-
+  notification.remove();
+  openApp("WhatsApp");
+  openWhatsAppRoom("nelsa");
+});
   phone.appendChild(notification);
 
   requestAnimationFrame(() => {
