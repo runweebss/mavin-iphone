@@ -2522,6 +2522,102 @@ button {
   display: flex;
 }
 
+  .wa-room {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: #e5ddd5;
+  overflow: hidden;
+}
+
+.wa-room-header {
+  height: 64px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+  background: #b8b8b8;
+  color: #111;
+}
+
+.wa-room-header img {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.wa-room-back {
+  font-size: 32px;
+  background: none;
+  border: 0;
+  color: #111;
+}
+
+.wa-room-contact {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.wa-room-contact strong {
+  font-size: 17px;
+}
+
+.wa-room-contact span {
+  font-size: 13px;
+  color: #666;
+}
+
+.wa-room-header button:not(.wa-room-back) {
+  border: 0;
+  background: transparent;
+  font-size: 23px;
+  color: #111;
+}
+
+.wa-room-messages {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.wa-room-composer {
+  min-height: 62px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 10px;
+  background: #d1d1d1;
+}
+
+.wa-room-composer button {
+  border: 0;
+  background: transparent;
+  font-size: 25px;
+}
+
+.wa-room-input {
+  flex: 1;
+  height: 42px;
+  border-radius: 24px;
+  background: white;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+}
+
+.wa-room-input input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+}
+
 </style>
 </head>
 
