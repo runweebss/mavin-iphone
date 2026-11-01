@@ -2957,11 +2957,26 @@ button {
 }
 
 .wa-message-check {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 2px;
   color: #2697df;
-  font-size: 12px;
-  letter-spacing: -4px;
-  margin-right: 3px;
-  display: inline-block;
+  flex-shrink: 0;
+}
+
+.wa-message-check svg {
+  width: 17px;
+  height: 12px;
+  display: block;
+  overflow: visible;
+}
+
+.wa-message-check svg path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .wa-day-divider {
