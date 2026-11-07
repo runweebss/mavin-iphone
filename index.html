@@ -5096,16 +5096,20 @@ virtualKeyboard.addEventListener("click", (event) => {
   scrollBottom();
   }
   function showTyping() {
-    const typing = document.createElement("div");
-    typing.className = "wa-typing";
-    typing.id = "waTyping";
+  const typing = document.createElement("div");
+  typing.className = "wa-typing";
+  typing.id = "waTyping";
 
-    typing.innerHTML = `
-      <div class="wa-typing-bubble">typing...</div>
-    `;
+  typing.innerHTML = `
+    <div class="wa-typing-bubble">
+      <span class="wa-typing-dot"></span>
+      <span class="wa-typing-dot"></span>
+      <span class="wa-typing-dot"></span>
+    </div>
+  `;
 
-    messages.appendChild(typing);
-    scrollBottom();
+  messages.appendChild(typing);
+  scrollBottom();
   }
 
   function hideTyping() {
