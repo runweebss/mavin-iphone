@@ -3808,6 +3808,11 @@ function unlockPhone() {
   function showNelsaNotification() {
   const phone = document.querySelector(".phone");
 
+  // UPDATE JUMLAH NOTIFIKASI WHATSAPP
+  const badge = document.getElementById("whatsappBadge");
+  badge.textContent = "9";
+  badge.classList.add("show");
+
   const oldNotification = document.querySelector(".wa-notification");
   if (oldNotification) oldNotification.remove();
 
@@ -5223,8 +5228,7 @@ if (!state.started) {
 
   const scene = scenes[state.stage];
 
-  // KEYBOARD HANYA MUNCUL KETIKA KOLOM PESAN DITEKAN
-
+    // KLIK AREA KETIK UNTUK MEMULAI PESAN MAVIN
 const inputArea = document.querySelector(".wa-room-input");
 
 inputArea.addEventListener("click", () => {
