@@ -2945,13 +2945,14 @@ button {
   }
 }
 
+
 /* CUSTOM KEYBOARD */
 
 .wa-virtual-keyboard {
   display: none;
   flex: 0 0 auto;
   width: 100%;
-  padding: 7px 3px 9px;
+  padding: 5px 5px 8px;
   background: #e9e1dc;
   color: #222;
   user-select: none;
@@ -2963,77 +2964,84 @@ button {
 }
 
 .wa-keyboard-suggestion {
-  height: 29px;
-  display: flex;
-  align-items: center;
-  padding: 0 5px 5px;
-  font-size: 19px;
+  height: 12px;
+  padding: 0;
+  margin: 0;
 }
 
-.wa-keyboard-row button svg {
-  width: 22px;
-  height: 22px;
-  display: block;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  flex-shrink: 0;
-}
-
-  .wa-keyboard-row {
+.wa-keyboard-row {
   display: flex;
   width: 100%;
   justify-content: center;
   align-items: stretch;
   gap: 4px;
-  margin: 3px 0;
-  }
+  margin: 4px 0;
+}
 
 .wa-keyboard-row button {
   flex: 1 1 0;
   min-width: 0;
-  height: clamp(38px, 6.2vh, 49px);
+  height: clamp(42px, 6vh, 50px);
   padding: 0;
   border: 1px solid #b8b8bd;
-  border-radius: 5px;
+  border-radius: 7px;
   background: #faf9f8;
   color: #202027;
-  box-shadow: 0 1px 0 #aaa;
+  box-shadow: 0 2px 0 #aaa;
   font: 400 21px/1 Arial, sans-serif;
   touch-action: manipulation;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.wa-keyboard-row button:active {
+.wa-keyboard-row button:active,
+.wa-keyboard-row button.key-pressed {
   background: #d4d4d8;
+  transform: translateY(1px);
 }
 
 .wa-keyboard-row .wa-keyboard-special {
   flex: 1.35 1 0;
   background: #c9c9cf;
-  font-size: 16px;
+  font-size: 17px;
 }
 
 .wa-keyboard-row .wa-keyboard-space {
   flex: 5 1 0;
-  font-size: 16px;
+  font-size: 15px;
+}
+
+.wa-keyboard-row button svg {
+  display: block;
+  width: 25px;
+  height: 25px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
 }
 
 .wa-keyboard-bottom {
-  margin-top: 5px;
+  margin-top: 6px;
+}
+
+.wa-keyboard-bottom [data-key="emoji"] {
+  flex: 1.15 1 0;
 }
 
 @media (max-height: 700px) {
   .wa-keyboard-row button {
-    height: 36px;
+    height: 38px;
   }
 
   .wa-keyboard-suggestion {
-    height: 24px;
+    height: 8px;
   }
 }
-
+  
   
 /* COMPOSER: SEBELUM DAN SESUDAH TRIGGER */
 
