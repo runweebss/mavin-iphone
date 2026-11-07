@@ -5057,14 +5057,15 @@ function openWhatsAppRoom(contact) {
   async function sendMessage(from, text, image = null) {
   if (from === "nelsa") {
     showTyping();
-    await wait(1100);
+    await wait(1700);
     hideTyping();
   }
 
   const message = { from, text, image };
+
   state.messages.push(message);
   renderMessage(message);
-}
+  }
 
 async function typeMavinMessage(text) {
   input.value = "";
