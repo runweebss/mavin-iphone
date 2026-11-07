@@ -5205,6 +5205,11 @@ const virtualKeyboard = document.getElementById("waVirtualKeyboard");
 
 function showVirtualKeyboard() {
   virtualKeyboard.classList.add("visible");
+
+  const composer = document.getElementById("waRoomComposer");
+  if (composer) {
+    composer.classList.add("is-typing");
+  }
 }
 
 function hideVirtualKeyboard() {
