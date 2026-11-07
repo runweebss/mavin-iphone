@@ -4847,44 +4847,47 @@ function openWhatsAppRoom(contact) {
 
       <div class="wa-room-messages" id="waRoomMessages"></div>
 
-      <div class="wa-room-composer">
-        <button aria-label="Add attachment">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 5v14M5 12h14"/>
-          </svg>
-        </button>
+     <div class="wa-room-composer">
 
-        <div class="wa-room-input">
-          <input type="text" id="waMessageInput"
-  placeholder="" autocomplete="off" readonly inputmode="none">
-          <svg viewBox="0 0 24 24">
-            <rect x="3" y="3" width="18" height="18" rx="4"/>
-            <circle cx="8.5" cy="9" r="1"/>
-            <path d="M4 17l5-5 4 4 3-3 4 4"/>
-          </svg>
-        </div>
+  <button class="wa-emoji-button" aria-label="Emoji">
+    <svg viewBox="0 0 24 24">
+      <circle cx="12" cy="12" r="9"/>
+      <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+      <path d="M9 9h.01M15 9h.01"/>
+    </svg>
+  </button>
 
-        <button aria-label="Camera">
-          <svg viewBox="0 0 24 24">
-            <path d="M14 5H5a2 2 0 0 0-2 2v10
-            a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9"/>
-            <path d="m14 5 2-2h4v6l-2-2"/>
-            <circle cx="12" cy="12" r="3"/>
-          </svg>
-        </button>
+  <div class="wa-room-input">
+    <textarea
+      id="waMessageInput"
+      rows="1"
+      readonly
+      placeholder=""
+      autocomplete="off"
+      inputmode="none"
+    ></textarea>
+  </div>
 
-        <button aria-label="Microphone">
-          <svg viewBox="0 0 24 24">
-            <rect x="9" y="2" width="6" height="13" rx="3"/>
-            <path d="M5 11a7 7 0 0 0 14 0
-            M12 18v4M8 22h8"/>
-          </svg>
-        </button>
-      </div>
-      <div class="wa-virtual-keyboard" id="waVirtualKeyboard">
+  <button class="wa-attachment-button" aria-label="Attachment">
+    <svg viewBox="0 0 24 24">
+      <path d="M21 11.5 12 20.5a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"/>
+    </svg>
+  </button>
+
+  <button
+    class="wa-send-button"
+    id="waSendButton"
+    aria-label="Send"
+    disabled
+  >
+    <svg viewBox="0 0 24 24">
+      <path d="M4 12h15M13 5l7 7-7 7"/>
+    </svg>
+  </button>
+
+</div>
 
   <div class="wa-keyboard-suggestion">
-    <span>😊</span>
   </div>
 
   <div class="wa-keyboard-row">
@@ -4924,12 +4927,13 @@ function openWhatsAppRoom(contact) {
     <button class="wa-keyboard-special" data-key="backspace">⌫</button>
   </div>
 
-  <div class="wa-keyboard-row wa-keyboard-bottom">
-    <button class="wa-keyboard-special" data-key="123">123</button>
-    <button data-key="emoji">😊</button>
-    <button class="wa-keyboard-space" data-key="space">English (US)</button>
-    <button class="wa-keyboard-special" data-key="return">↵</button>
-  </div>
+  <button data-key="emoji" aria-label="Emoji">
+  <svg viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="9"/>
+    <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+    <path d="M9 9h.01M15 9h.01"/>
+  </svg>
+</button>
 
 </div>
     </div>
