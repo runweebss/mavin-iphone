@@ -5086,17 +5086,25 @@ async function typeMavinMessage(text) {
   state.messages.forEach(renderMessage);
 
   // PESAN NELSA OTOMATIS SETELAH CHAT DIBUKA
-  if (!state.started) {
-    state.started = true;
+if (!state.started) {
+  state.started = true;
 
-    (async () => {
-      await wait(900);
-      await sendMessage("nelsa", "ga usah pake teka-teki segala deh");
+  (async () => {
+    await wait(2800);
 
-      await wait(700);
-      await sendMessage("nelsa", "lo kebanyakan nonton conan");
-    })();
-  }
+    await sendMessage(
+      "nelsa",
+      "ga usah pake teka-teki segala deh"
+    );
+
+    await wait(1300);
+
+    await sendMessage(
+      "nelsa",
+      "lo kebanyakan nonton conan"
+    );
+  })();
+}
 
   // URUTAN PESAN SELANJUTNYA
   const scenes = [
