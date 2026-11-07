@@ -5232,12 +5232,11 @@ if (!state.started) {
 
   // ADEGAN PERTAMA: MAVIN MENGETIK "nel", LALU MENGHAPUSNYA
   if (state.stage === 0) {
-    await typeMavinMessage("nel");
-    await wait(500);
-    await eraseMavinText(3);
-    await wait(400);
+  await typeMavinMessage("nel");
+  await wait(500);
+  await wait(400);
   }
-
+    
   // MAVIN MENGETIK PESAN UTAMA
   if (scene.mavin) {
     await typeMavinMessage(scene.mavin);
