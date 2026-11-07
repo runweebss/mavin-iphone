@@ -4968,8 +4968,19 @@ function openWhatsAppRoom(contact) {
   }
 
   const state = window.nelsaChatState;
-  const messages = document.getElementById("waRoomMessages");
-  const input = document.getElementById("waMessageInput");
+const messages = document.getElementById("waRoomMessages");
+const input = document.getElementById("waMessageInput");
+const virtualKeyboard = document.getElementById("waVirtualKeyboard");
+
+// TAMPILKAN KEYBOARD
+function showVirtualKeyboard() {
+  virtualKeyboard.classList.add("visible");
+}
+
+// SEMBUNYIKAN KEYBOARD
+function hideVirtualKeyboard() {
+  virtualKeyboard.classList.remove("visible");
+}
 
   // INTERAKSI TOMBOL KEYBOARD CUSTOM
 
