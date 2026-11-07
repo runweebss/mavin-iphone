@@ -4971,6 +4971,54 @@ function openWhatsAppRoom(contact) {
   const messages = document.getElementById("waRoomMessages");
   const input = document.getElementById("waMessageInput");
 
+  // INTERAKSI TOMBOL KEYBOARD CUSTOM
+
+let shiftActive = false;
+
+virtualKeyboard.addEventListener("click", (event) => {
+  const keyButton = event.target.closest("[data-key]");
+
+  if (!keyButton) return;
+
+  const key = keyButton.dataset.key;
+
+  if (key === "shift") {
+    shiftActive = !shiftActive;
+    return;
+  }
+
+  if (key === "backspace") {
+    input.value = input.value.slice(0, -1);
+    return;
+  }
+
+  if (key === "space") {
+    input.value += " ";
+    return;
+  }
+
+  if (key === "return") {
+    return;
+  }
+
+  if (key === "emoji") {
+    input.value += "😊";
+    return;
+  }
+
+  if (key === "123") {
+    return;
+  }
+
+  if (key.length === 1) {
+    input.value += shiftActive
+      ? key.toUpperCase()
+      : key;
+
+    shiftActive = false;
+  }
+});
+
   function scrollBottom() {
     messages.scrollTop = messages.scrollHeight;
   }
@@ -5164,11 +5212,16 @@ if (!state.started) {
 
   const scene = scenes[state.stage];
 
-  // KEYBOARD IPHONE MUNCUL
-  if (scene.mavin) {
-    showVirtualKeyboard();
-    await wait(350);
-  }
+  // KEYBOARD HANYA MUNCUL KETIKA KOLOM PESAN DITEKAN
+
+const inputArea = document.querySelector(".wa-room-input");
+
+inputArea.addEventListener("click", () => {
+  if (state.busy) return;
+
+  showVirtualKeyboard();
+  playNextScene();
+});
 
   // ADEGAN PERTAMA: MAVIN MENGETIK "nel", LALU MENGHAPUSNYA
   if (state.stage === 0) {
