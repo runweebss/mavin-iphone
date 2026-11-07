@@ -4861,9 +4861,16 @@ function openWhatsAppRoom(contact) {
 
       <div class="wa-room-messages" id="waRoomMessages"></div>
 
-     <div class="wa-room-composer">
+     
+<div class="wa-room-composer" id="waRoomComposer">
 
-  <button class="wa-emoji-button" aria-label="Emoji">
+  <button class="wa-idle-only wa-plus-button" aria-label="Add">
+    <svg viewBox="0 0 24 24">
+      <path d="M12 4v16M4 12h16"/>
+    </svg>
+  </button>
+
+  <button class="wa-active-only wa-emoji-button" aria-label="Emoji">
     <svg viewBox="0 0 24 24">
       <circle cx="12" cy="12" r="9"/>
       <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
@@ -4876,20 +4883,39 @@ function openWhatsAppRoom(contact) {
       id="waMessageInput"
       rows="1"
       readonly
-      placeholder=""
       autocomplete="off"
       inputmode="none"
     ></textarea>
+
+    <svg class="wa-idle-only wa-image-icon" viewBox="0 0 24 24">
+      <rect x="3" y="3" width="18" height="18" rx="3"/>
+      <circle cx="8.5" cy="8.5" r="1.5"/>
+      <path d="m3 17 5-5 4 4 3-3 6 6"/>
+    </svg>
   </div>
 
-  <button class="wa-attachment-button" aria-label="Attachment">
+  <button class="wa-idle-only wa-camera-button" aria-label="Camera">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 7h4l2-3h4l2 3h4v13H4z"/>
+      <circle cx="12" cy="13" r="4"/>
+    </svg>
+  </button>
+
+  <button class="wa-idle-only wa-mic-button" aria-label="Voice message">
+    <svg viewBox="0 0 24 24">
+      <rect x="9" y="2" width="6" height="13" rx="3"/>
+      <path d="M5 11a7 7 0 0 0 14 0M12 18v4M8 22h8"/>
+    </svg>
+  </button>
+
+  <button class="wa-active-only wa-attachment-button" aria-label="Attachment">
     <svg viewBox="0 0 24 24">
       <path d="M21 11.5 12 20.5a6 6 0 0 1-8.5-8.5l9.2-9.2a4 4 0 0 1 5.7 5.7l-9.2 9.2a2 2 0 0 1-2.8-2.8l8.5-8.5"/>
     </svg>
   </button>
 
   <button
-    class="wa-send-button"
+    class="wa-active-only wa-send-button"
     id="waSendButton"
     aria-label="Send"
     disabled
