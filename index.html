@@ -5230,16 +5230,6 @@ if (!state.started) {
 
   const scene = scenes[state.stage];
 
-    // TRIGGER KEYBOARD DAN ADEGAN MAVIN
-const inputArea = document.querySelector(".wa-room-input");
-
-inputArea.addEventListener("click", () => {
-  if (state.busy) return;
-
-  showVirtualKeyboard();
-  playNextScene();
-});
-
   // ADEGAN PERTAMA: MAVIN MENGETIK "nel", LALU MENGHAPUSNYA
   if (state.stage === 0) {
     await typeMavinMessage("nel");
@@ -5273,13 +5263,16 @@ inputArea.addEventListener("click", () => {
   state.busy = false;
   }
 
-  // KLIK AREA KETIK UNTUK MEMULAI PESAN MAVIN
-  const inputArea = document.querySelector(".wa-room-input");
+  // TRIGGER KEYBOARD DAN ADEGAN MAVIN
+const inputArea = document.querySelector(".wa-room-input");
 
 inputArea.addEventListener("click", () => {
+  if (state.busy) return;
+
+  showVirtualKeyboard();
   playNextScene();
 });
-  }
+}
   
 function closeApp() {
   document.getElementById("appScreen").classList.remove("active");
