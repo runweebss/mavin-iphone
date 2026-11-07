@@ -5133,7 +5133,7 @@ virtualKeyboard.addEventListener("click", (event) => {
   renderMessage(message);
   }
 
-async function typeMavinMessage(text) {
+async function typeMavinMessage(text, clearAfter = 450) {
   input.value = "";
 
   for (const char of text) {
@@ -5143,10 +5143,17 @@ async function typeMavinMessage(text) {
     await wait(delay);
   }
 
-  await wait(450);
-
+  await wait(clearAfter);
   input.value = "";
+}
+
+// HAPUS TEKS SATU HURUF DEMI SATU HURUF
+async function eraseMavinText(totalLetters, delay = 1500) {
+  for (let i = 0; i < totalLetters; i++) {
+    await wait(delay);
+    input.value = input.value.slice(0, -1);
   }
+}
 
   // TAMPILKAN RIWAYAT YANG SUDAH ADA
   state.messages.forEach(renderMessage);
@@ -5230,12 +5237,11 @@ if (!state.started) {
 
   const scene = scenes[state.stage];
 
-  // ADEGAN PERTAMA: MAVIN MENGETIK "nel", LALU MENGHAPUSNYA
-  if (state.stage === 0) {
-  await typeMavinMessage("nel");
-  await wait(500);
-  await wait(400);
-  }
+  // ADEGAN PERTAMA: MAVIN MENGETIK "nel", DIAM, LALU MENGHAPUSNYA
+if (state.stage === 0) {
+  await typeMavinMessage("nel", 2000);
+  await eraseMavinText(3, 1500);
+}
     
   // MAVIN MENGETIK PESAN UTAMA
   if (scene.mavin) {
@@ -5262,10 +5268,8 @@ if (!state.started) {
   state.busy = false;
   }
 
-  // TRIGGER KEYBOARD DAN ADEGAN MAVIN
-const inputArea = document.querySelector(".wa-room-input");
-
-inputArea.addEventListener("click", () => {
+  // SATU TRIGGER: HANYA KOLOM INPUT YANG MEMULAI ADEGAN
+input.addEventListener("click", () => {
   if (state.busy) return;
 
   showVirtualKeyboard();
