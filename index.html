@@ -3017,6 +3017,107 @@ button {
   }
 }
 
+  
+/* COMPOSER: SEBELUM DAN SESUDAH TRIGGER */
+
+.wa-room-composer .wa-active-only {
+  display: none;
+}
+
+.wa-room-composer.is-typing .wa-idle-only {
+  display: none;
+}
+
+.wa-room-composer.is-typing .wa-active-only {
+  display: flex;
+}
+
+.wa-room-composer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+}
+
+.wa-room-composer button {
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: #383838;
+  padding: 0;
+}
+
+.wa-room-composer button svg,
+.wa-room-composer .wa-image-icon {
+  width: 25px;
+  height: 25px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.wa-room-composer .wa-room-input {
+  display: flex;
+  flex: 1 1 0;
+  min-width: 0;
+  height: auto;
+  min-height: 48px;
+  align-items: center;
+  padding: 8px 13px;
+  background: #fff;
+  border-radius: 28px;
+  gap: 8px;
+}
+
+.wa-room-composer .wa-room-input textarea {
+  display: block;
+  flex: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: 24px;
+  max-height: 84px;
+  border: none;
+  outline: none;
+  resize: none;
+  overflow-y: auto;
+  background: transparent;
+  color: #111;
+  font: 16px/1.4 Arial, sans-serif;
+  overflow-wrap: anywhere;
+}
+
+.wa-room-composer .wa-image-icon {
+  flex-shrink: 0;
+  color: #666;
+}
+
+.wa-room-composer.is-typing .wa-send-button {
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  background: #00a884;
+  color: white;
+}
+
+.wa-room-composer.is-typing .wa-send-button svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2.4;
+}
+
+.wa-room-composer.is-typing .wa-send-button:disabled {
+  opacity: .65;
+}
+
+.wa-room-composer.is-typing .wa-send-button.pressing {
+  transform: scale(.9);
+}
+
+
 /* WHATSAPP MESSAGE BUBBLES */
 .wa-room-messages {
   display: flex;
