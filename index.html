@@ -5154,18 +5154,41 @@ const messages = document.getElementById("waRoomMessages");
 const input = document.getElementById("waMessageInput");
 const virtualKeyboard = document.getElementById("waVirtualKeyboard");
 
+
 function showVirtualKeyboard() {
   virtualKeyboard.classList.add("visible");
 
   const composer = document.getElementById("waRoomComposer");
-  if (composer) {
-    composer.classList.add("is-typing");
-  }
+  composer?.classList.add("is-typing");
 }
 
 function hideVirtualKeyboard() {
   virtualKeyboard.classList.remove("visible");
+
+  const composer = document.getElementById("waRoomComposer");
+  composer?.classList.remove("is-typing");
 }
+
+// SWIPE KE BAWAH UNTUK MENUTUP KEYBOARD
+let keyboardTouchStartY = null;
+
+virtualKeyboard.addEventListener("touchstart", (event) => {
+  keyboardTouchStartY = event.touches[0].clientY;
+}, { passive: true });
+
+virtualKeyboard.addEventListener("touchend", (event) => {
+  if (keyboardTouchStartY === null) return;
+
+  const endY = event.changedTouches[0].clientY;
+  const distance = endY - keyboardTouchStartY;
+
+  if (distance > 60) {
+    hideVirtualKeyboard();
+  }
+
+  keyboardTouchStartY = null;
+}, { passive: true });
+
 
   // INTERAKSI TOMBOL KEYBOARD CUSTOM
 
@@ -5315,33 +5338,56 @@ virtualKeyboard.addEventListener("click", (event) => {
   renderMessage(message);
   }
 
+async function animateKeyboardKey(key, duration = 95) {
+  const button = [...virtualKeyboard.querySelectorAll("[data-key]")]
+    .find(el => el.dataset.key === key);
 
-async function typeMavinMessage(text, clearAfter = 450, charDelay = 180) {
+  if (!button || !virtualKeyboard.classList.contains("visible")) {
+    return;
+  }
+
+  button.classList.add("key-pressed");
+  await wait(duration);
+  button.classList.remove("key-pressed");
+}
+
+async function typeMavinMessage(text, clearAfter = 450, charDelay = 105) {
   input.value = "";
 
   for (const char of text) {
+    if (/[A-Z]/.test(char)) {
+      await animateKeyboardKey("shift", 75);
+    }
+
+    const key = char === " " ? "space" : char.toLowerCase();
+
+    await animateKeyboardKey(key, 90);
+
     input.value += char;
 
-    const delay = /[,.!?]/.test(char)
-      ? charDelay * 2
-      : charDelay;
+    // Sesuaikan tinggi kolom ketika pesan memanjang
+    input.style.height = "auto";
+    input.style.height = Math.min(input.scrollHeight, 84) + "px";
 
-    await wait(delay);
+    await wait(/[,.!?]/.test(char) ? 130 : charDelay);
   }
 
   if (clearAfter !== null) {
     await wait(clearAfter);
     input.value = "";
+    input.style.height = "auto";
   }
 }
 
-// HAPUS TEKS SATU HURUF DEMI SATU HURUF
-async function eraseMavinText(totalLetters, delay = 1500) {
+async function eraseMavinText(totalLetters, delay = 170) {
   for (let i = 0; i < totalLetters; i++) {
-    await wait(delay);
+    await animateKeyboardKey("backspace", 90);
+
     input.value = input.value.slice(0, -1);
+    await wait(delay);
   }
 }
+
 
   // TAMPILKAN RIWAYAT YANG SUDAH ADA
   state.messages.forEach(renderMessage);
@@ -5418,63 +5464,85 @@ if (!state.started) {
     }
   ];
 
-  async function playNextScene() {
+  
+async function pressSendButton() {
+  const button = document.getElementById("waSendButton");
+
+  if (!button) return;
+
+  button.classList.add("pressing");
+  await wait(180);
+  button.classList.remove("pressing");
+}
+
+async function playNextScene() {
   if (state.busy || state.stage >= scenes.length) return;
 
   state.busy = true;
 
-  const scene = scenes[state.stage];
+  try {
+    while (
+      state.stage < scenes.length &&
+      virtualKeyboard.classList.contains("visible")
+    ) {
+      const scene = scenes[state.stage];
 
-  // ADEGAN PERTAMA: MAVIN MENGETIK "nel", DIAM, LALU MENGHAPUSNYA
+      // PEMBUKA: NEL DIKETIK DAN DIHAPUS
+      if (state.stage === 0) {
+        input.value = "";
+        await wait(500);
 
-if (state.stage === 0) {
-  await wait(900);
+        await typeMavinMessage("nel", null, 140);
+        await wait(650);
+        await eraseMavinText(3, 140);
+        await wait(450);
+      }
 
-  // Mavin mengetik "nel" perlahan
-  await typeMavinMessage("nel", null, 320);
+      // MAVIN MENGETIK PESAN
+      if (scene.mavin) {
+        await typeMavinMessage(scene.mavin, null, 105);
 
-  // Beri jeda sebelum menghapus
-  await wait(1200);
+        await wait(350);
+        await pressSendButton();
 
-  // Hapus satu huruf demi satu huruf
-  await eraseMavinText(3, 450);
+        input.value = "";
+        input.style.height = "auto";
 
-  await wait(600);
+        await sendMessage("mavin", scene.mavin);
+      }
+
+      // MAVIN MENGIRIM FOTO
+      if (scene.image) {
+        await wait(500);
+        await pressSendButton();
+        await sendMessage("mavin", "", scene.image);
+      }
+
+      // KEYBOARD TETAP MUNCUL SAAT NELSA MEMBALAS
+      for (const reply of scene.nelsa) {
+        await wait(700);
+        await sendMessage("nelsa", reply);
+      }
+
+      state.stage++;
+
+      // JEDA SEBELUM PESAN MAVIN BERIKUTNYA
+      await wait(850);
+    }
+  } finally {
+    state.busy = false;
+  }
 }
-    
-  // MAVIN MENGETIK PESAN UTAMA
-  if (scene.mavin) {
-    await typeMavinMessage(scene.mavin);
-    await sendMessage("mavin", scene.mavin);
-  }
 
-  // FOTO DARI MAVIN
-  if (scene.image) {
-    await sendMessage("mavin", "", scene.image);
-  }
-
-  // KEYBOARD TURUN SEBELUM NELSA MEMBALAS
-  hideVirtualKeyboard();
-  await wait(350);
-
-  // GILIRAN NELSA
-  for (const reply of scene.nelsa) {
-    await wait(700);
-    await sendMessage("nelsa", reply);
-  }
-
-  state.stage++;
-  state.busy = false;
-  }
-
-  // SATU TRIGGER: HANYA KOLOM INPUT YANG MEMULAI ADEGAN
+// TRIGGER PERTAMA DAN MELANJUTKAN SETELAH SWIPE
 input.addEventListener("click", () => {
-  if (state.busy) return;
-
   showVirtualKeyboard();
-  playNextScene();
+
+  if (!state.busy) {
+    playNextScene();
+  }
 });
-}
+
   
 function closeApp() {
   document.getElementById("appScreen").classList.remove("active");
