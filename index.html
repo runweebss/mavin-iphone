@@ -5625,7 +5625,7 @@ const mavinPhotos = Array.from({ length: 20 }, (_, index) => {
 
   return {
     id: number,
-    src: `foto${number}.jpg`,
+    src: `mavin${String(number).padStart(2, "0")}.jpg`,
     day: 30 - Math.floor((number - 1) * 11 / 19),
     time: `${String(18 - Math.floor((number - 1) / 4)).padStart(2, "0")}:${String((number * 7) % 60).padStart(2, "0")}`
   };
