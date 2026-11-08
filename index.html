@@ -5182,42 +5182,55 @@ function hideVirtualKeyboard() {
 }
 
 // SWIPE DOWN UNTUK MENUTUP KEYBOARD
-let keyboardPointerStartY = null;
-let keyboardPointerStartX = null;
-let keyboardPointerId = null;
+let keyboardTouchStartY = null;
+let keyboardTouchStartX = null;
 
-virtualKeyboard.addEventListener("pointerdown", (event) => {
-  if (event.pointerType !== "touch") return;
+virtualKeyboard.addEventListener("touchstart", (event) => {
+  if (event.touches.length !== 1) return;
 
-  keyboardPointerStartY = event.clientY;
-  keyboardPointerStartX = event.clientX;
-  keyboardPointerId = event.pointerId;
+  const touch = event.touches[0];
 
-  virtualKeyboard.setPointerCapture(event.pointerId);
-});
+  keyboardTouchStartY = touch.clientY;
+  keyboardTouchStartX = touch.clientX;
+}, { passive: true, capture: true });
 
-virtualKeyboard.addEventListener("pointerup", (event) => {
-  if (event.pointerId !== keyboardPointerId) return;
+virtualKeyboard.addEventListener("touchmove", (event) => {
+  if (keyboardTouchStartY === null) return;
 
-  const distanceY = event.clientY - keyboardPointerStartY;
+  const touch = event.touches[0];
+
+  const distanceY = touch.clientY - keyboardTouchStartY;
   const distanceX = Math.abs(
-    event.clientX - keyboardPointerStartX
+    touch.clientX - keyboardTouchStartX
   );
 
-  if (distanceY > 40 && distanceY > distanceX) {
+  if (distanceY > 5 && distanceY > distanceX) {
+    event.preventDefault();
+  }
+}, { passive: false, capture: true });
+
+virtualKeyboard.addEventListener("touchend", (event) => {
+  if (keyboardTouchStartY === null) return;
+
+  const touch = event.changedTouches[0];
+
+  const distanceY = touch.clientY - keyboardTouchStartY;
+  const distanceX = Math.abs(
+    touch.clientX - keyboardTouchStartX
+  );
+
+  if (distanceY > 35 && distanceY > distanceX) {
     hideVirtualKeyboard();
   }
 
-  keyboardPointerStartY = null;
-  keyboardPointerStartX = null;
-  keyboardPointerId = null;
-});
+  keyboardTouchStartY = null;
+  keyboardTouchStartX = null;
+}, { passive: true, capture: true });
 
-virtualKeyboard.addEventListener("pointercancel", () => {
-  keyboardPointerStartY = null;
-  keyboardPointerStartX = null;
-  keyboardPointerId = null;
-});
+virtualKeyboard.addEventListener("touchcancel", () => {
+  keyboardTouchStartY = null;
+  keyboardTouchStartX = null;
+}, { capture: true });
   
   
   // INTERAKSI TOMBOL KEYBOARD CUSTOM
