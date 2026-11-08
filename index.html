@@ -2965,23 +2965,6 @@ overscroll-behavior: contain;
   display: block;
 }
 
-  .wa-keyboard-dismiss-handle {
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  touch-action: none;
-  cursor: grab;
-}
-
-.wa-keyboard-dismiss-handle span {
-  display: block;
-  width: 38px;
-  height: 4px;
-  border-radius: 10px;
-  background: #b8b1ab;
-}
-
 .wa-keyboard-suggestion {
   height: 12px;
   padding: 0;
@@ -5074,10 +5057,6 @@ function openWhatsAppRoom(contact) {
 
 <div class="wa-virtual-keyboard" id="waVirtualKeyboard">
 
-<div class="wa-keyboard-dismiss-handle" id="waKeyboardDismissHandle">
-  <span></span>
-</div>
-
   <div class="wa-keyboard-suggestion"></div>
 
   <div class="wa-keyboard-row">
@@ -5193,7 +5172,7 @@ function hideVirtualKeyboard() {
   composer?.classList.remove("is-typing");
 }
 
-// SWIPE KEYBOARD TANPA KELUAR DARI ROOM CHAT
+// SWIPE DOWN UNTUK MENYEMBUNYIKAN KEYBOARD
 let keyboardTouchStartY = null;
 let keyboardTouchStartX = null;
 
@@ -5205,6 +5184,18 @@ virtualKeyboard.addEventListener("touchstart", (event) => {
   keyboardTouchStartY = touch.clientY;
   keyboardTouchStartX = touch.clientX;
 }, { passive: true });
+
+virtualKeyboard.addEventListener("touchmove", (event) => {
+  if (keyboardTouchStartY === null || state.mavinTyping) return;
+
+  const touch = event.touches[0];
+  const distanceY = touch.clientY - keyboardTouchStartY;
+  const distanceX = Math.abs(touch.clientX - keyboardTouchStartX);
+
+  if (distanceY > 8 && distanceY > distanceX) {
+    event.preventDefault();
+  }
+}, { passive: false });
 
 virtualKeyboard.addEventListener("touchend", (event) => {
   if (keyboardTouchStartY === null) return;
@@ -5224,6 +5215,11 @@ virtualKeyboard.addEventListener("touchend", (event) => {
   keyboardTouchStartY = null;
   keyboardTouchStartX = null;
 }, { passive: true });
+
+virtualKeyboard.addEventListener("touchcancel", () => {
+  keyboardTouchStartY = null;
+  keyboardTouchStartX = null;
+});
 
   
   // INTERAKSI TOMBOL KEYBOARD CUSTOM
