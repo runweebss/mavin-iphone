@@ -2965,6 +2965,23 @@ overscroll-behavior: contain;
   display: block;
 }
 
+  .wa-keyboard-dismiss-handle {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+  cursor: grab;
+}
+
+.wa-keyboard-dismiss-handle span {
+  display: block;
+  width: 38px;
+  height: 4px;
+  border-radius: 10px;
+  background: #b8b1ab;
+}
+
 .wa-keyboard-suggestion {
   height: 12px;
   padding: 0;
@@ -5175,44 +5192,33 @@ function hideVirtualKeyboard() {
   composer?.classList.remove("is-typing");
 }
 
-// SWIPE KE BAWAH UNTUK MENYEMBUNYIKAN KEYBOARD
-let keyboardTouchStartY = null;
-let keyboardTouchStartX = null;
+// SWIPE PEGANGAN UNTUK MENUTUP KEYBOARD
+const dismissHandle = document.getElementById("waKeyboardDismissHandle");
 
-virtualKeyboard.addEventListener("touchstart", (event) => {
-  const touch = event.touches[0];
+let swipeStartY = null;
 
-  keyboardTouchStartY = touch.clientY;
-  keyboardTouchStartX = touch.clientX;
-}, { passive: true });
+dismissHandle.addEventListener("pointerdown", (event) => {
+  swipeStartY = event.clientY;
+  dismissHandle.setPointerCapture(event.pointerId);
+});
 
-virtualKeyboard.addEventListener("touchmove", (event) => {
-  if (keyboardTouchStartY === null) return;
+dismissHandle.addEventListener("pointerup", (event) => {
+  if (swipeStartY === null) return;
 
-  const touch = event.touches[0];
-  const diffY = touch.clientY - keyboardTouchStartY;
-  const diffX = Math.abs(touch.clientX - keyboardTouchStartX);
+  const distance = event.clientY - swipeStartY;
 
-  if (diffY > 12 && diffY > diffX) {
-    event.preventDefault();
-  }
-}, { passive: false });
-
-virtualKeyboard.addEventListener("touchend", (event) => {
-  if (keyboardTouchStartY === null) return;
-
-  const touch = event.changedTouches[0];
-  const distance = touch.clientY - keyboardTouchStartY;
-  const horizontal = Math.abs(touch.clientX - keyboardTouchStartX);
-
-  if (distance > 55 && distance > horizontal) {
+  if (distance > 30) {
     hideVirtualKeyboard();
   }
 
-  keyboardTouchStartY = null;
-  keyboardTouchStartX = null;
-}, { passive: true });
+  swipeStartY = null;
+});
 
+dismissHandle.addEventListener("pointercancel", () => {
+  swipeStartY = null;
+});
+
+  
   // INTERAKSI TOMBOL KEYBOARD CUSTOM
 
 let shiftActive = false;
