@@ -5426,9 +5426,20 @@ if (!state.started) {
   const scene = scenes[state.stage];
 
   // ADEGAN PERTAMA: MAVIN MENGETIK "nel", DIAM, LALU MENGHAPUSNYA
+
 if (state.stage === 0) {
-  await typeMavinMessage("nel", 2000);
-  await eraseMavinText(3, 1500);
+  await wait(900);
+
+  // Mavin mengetik "nel" perlahan
+  await typeMavinMessage("nel", null, 320);
+
+  // Beri jeda sebelum menghapus
+  await wait(1200);
+
+  // Hapus satu huruf demi satu huruf
+  await eraseMavinText(3, 450);
+
+  await wait(600);
 }
     
   // MAVIN MENGETIK PESAN UTAMA
