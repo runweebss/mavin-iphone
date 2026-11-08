@@ -5159,6 +5159,9 @@ mavinTyping: false
   }
 
   const state = window.nelsaChatState;
+state.roomToken++;
+const roomToken = state.roomToken;
+
 const messages = document.getElementById("waRoomMessages");
 const input = document.getElementById("waMessageInput");
 const virtualKeyboard = document.getElementById("waVirtualKeyboard");
