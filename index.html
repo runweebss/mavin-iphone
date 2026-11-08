@@ -3985,8 +3985,17 @@ function unlockPhone() {
   phone.appendChild(notification);
 
   requestAnimationFrame(() => {
-    notification.classList.add("show");
-  });
+  notification.classList.add("show");
+});
+
+// NOTIFIKASI HILANG OTOMATIS SETELAH 5 DETIK
+setTimeout(() => {
+  notification.classList.remove("show");
+
+  setTimeout(() => {
+    notification.remove();
+  }, 300);
+}, 5000);
   }
   
 /* MUSIC PLAYER VISUAL TOGGLE */
