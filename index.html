@@ -5577,10 +5577,21 @@ async function playNextScene() {
 }
 
 // TRIGGER PERTAMA DAN MELANJUTKAN SETELAH SWIPE
-input.addEventListener("click", () => {
+input.addEventListener("click", async () => {
   showVirtualKeyboard();
 
-  if (!state.busy) {
+  // Tunggu proses roomchat sebelumnya selesai
+  while (
+    state.busy &&
+    state.busyToken !== roomToken
+  ) {
+    await wait(100);
+  }
+
+  if (
+    !state.busy &&
+    state.stage < scenes.length
+  ) {
     playNextScene();
   }
 });
