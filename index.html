@@ -5175,34 +5175,39 @@ function hideVirtualKeyboard() {
 // SWIPE DOWN UNTUK MENUTUP KEYBOARD
 let keyboardPointerStartY = null;
 let keyboardPointerStartX = null;
+let keyboardPointerId = null;
 
 virtualKeyboard.addEventListener("pointerdown", (event) => {
+  if (event.pointerType !== "touch") return;
+
   keyboardPointerStartY = event.clientY;
   keyboardPointerStartX = event.clientX;
+  keyboardPointerId = event.pointerId;
+
+  virtualKeyboard.setPointerCapture(event.pointerId);
 });
 
 virtualKeyboard.addEventListener("pointerup", (event) => {
-  if (keyboardPointerStartY === null) return;
+  if (event.pointerId !== keyboardPointerId) return;
 
   const distanceY = event.clientY - keyboardPointerStartY;
   const distanceX = Math.abs(
     event.clientX - keyboardPointerStartX
   );
 
-  if (
-    distanceY > 45 &&
-    distanceY > distanceX
-  ) {
+  if (distanceY > 40 && distanceY > distanceX) {
     hideVirtualKeyboard();
   }
 
   keyboardPointerStartY = null;
   keyboardPointerStartX = null;
+  keyboardPointerId = null;
 });
 
 virtualKeyboard.addEventListener("pointercancel", () => {
   keyboardPointerStartY = null;
   keyboardPointerStartX = null;
+  keyboardPointerId = null;
 });
   
   
