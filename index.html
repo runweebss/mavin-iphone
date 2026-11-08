@@ -5502,30 +5502,40 @@ async function pressSendButton() {
 }
 
 async function playNextScene() {
-  if (state.busy || state.stage >= scenes.length) return;
+  const runToken = roomToken;
+
+  if (
+    state.busy &&
+    state.busyToken === runToken
+  ) return;
+
+  if (state.stage >= scenes.length) return;
 
   state.busy = true;
+  state.busyToken = runToken;
 
   try {
     while (
       state.stage < scenes.length &&
+      state.roomToken === runToken &&
+      content.contains(virtualKeyboard) &&
       virtualKeyboard.classList.contains("visible")
     ) {
       const scene = scenes[state.stage];
 
       // PEMBUKA: NEL DIKETIK DAN DIHAPUS
       if (state.stage === 0) {
-  state.mavinTyping = true;
+        state.mavinTyping = true;
 
-  input.value = "";
-  await wait(500);
+        input.value = "";
+        await wait(500);
 
-  await typeMavinMessage("nel", null, 140);
-  await wait(650);
-  await eraseMavinText(3, 140);
-  await wait(450);
+        await typeMavinMessage("nel", null, 140);
+        await wait(650);
+        await eraseMavinText(3, 140);
+        await wait(450);
 
-  state.mavinTyping = false;
+        state.mavinTyping = false;
       }
 
       // MAVIN MENGETIK PESAN
@@ -5548,7 +5558,7 @@ async function playNextScene() {
         await sendMessage("mavin", "", scene.image);
       }
 
-      // KEYBOARD TETAP MUNCUL SAAT NELSA MEMBALAS
+      // NELSA MEMBALAS
       for (const reply of scene.nelsa) {
         await wait(700);
         await sendMessage("nelsa", reply);
@@ -5556,11 +5566,13 @@ async function playNextScene() {
 
       state.stage++;
 
-      // JEDA SEBELUM PESAN MAVIN BERIKUTNYA
       await wait(850);
     }
   } finally {
-    state.busy = false;
+    if (state.busyToken === runToken) {
+      state.busy = false;
+      state.busyToken = null;
+    }
   }
 }
 
