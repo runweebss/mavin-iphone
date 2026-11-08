@@ -5409,10 +5409,9 @@ async function typeMavinMessage(text, clearAfter = 450, charDelay = 45) {
     input.style.height = "auto";
     input.style.height = Math.min(input.scrollHeight, 84) + "px";
 
-    animateKeyboardKey(key, 45);
+    animateKeyboardKey(key, 25);
 
-    await wait(/[,.!?]/.test(char) ? 100 : charDelay);
-  }
+    await wait(/[,.!?]/.test(char) ? 65 : charDelay);
 
   if (clearAfter !== null) {
     await wait(clearAfter);
@@ -5556,8 +5555,7 @@ async function playNextScene() {
 
       // MAVIN MENGETIK PESAN
       if (scene.mavin) {
-        await typeMavinMessage(scene.mavin, null, 105);
-
+        await typeMavinMessage(scene.mavin, null, 55);
         await wait(350);
         await pressSendButton();
 
