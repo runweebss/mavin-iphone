@@ -5315,18 +5315,24 @@ virtualKeyboard.addEventListener("click", (event) => {
   renderMessage(message);
   }
 
-async function typeMavinMessage(text, clearAfter = 450) {
+
+async function typeMavinMessage(text, clearAfter = 450, charDelay = 180) {
   input.value = "";
 
   for (const char of text) {
     input.value += char;
 
-    const delay = /[,.!?]/.test(char) ? 220 : 55;
+    const delay = /[,.!?]/.test(char)
+      ? charDelay * 2
+      : charDelay;
+
     await wait(delay);
   }
 
-  await wait(clearAfter);
-  input.value = "";
+  if (clearAfter !== null) {
+    await wait(clearAfter);
+    input.value = "";
+  }
 }
 
 // HAPUS TEKS SATU HURUF DEMI SATU HURUF
