@@ -5516,11 +5516,11 @@ async function playNextScene() {
 
   try {
     while (
-      state.stage < scenes.length &&
-      state.roomToken === runToken &&
-      content.contains(virtualKeyboard) &&
-      virtualKeyboard.classList.contains("visible")
-    ) {
+  state.stage < scenes.length &&
+  state.roomToken === runToken &&
+  document.getElementById("waRoomMessages") === messages &&
+  virtualKeyboard.classList.contains("visible")
+) {
       const scene = scenes[state.stage];
 
       // PEMBUKA: NEL DIKETIK DAN DIHAPUS
