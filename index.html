@@ -2957,6 +2957,8 @@ button {
   color: #222;
   user-select: none;
   -webkit-user-select: none;
+  touch-action: none;
+overscroll-behavior: contain;
 }
 
 .wa-virtual-keyboard.visible {
@@ -5169,26 +5171,43 @@ function hideVirtualKeyboard() {
   composer?.classList.remove("is-typing");
 }
 
-// SWIPE KE BAWAH UNTUK MENUTUP KEYBOARD
+// SWIPE KE BAWAH UNTUK MENYEMBUNYIKAN KEYBOARD
 let keyboardTouchStartY = null;
+let keyboardTouchStartX = null;
 
 virtualKeyboard.addEventListener("touchstart", (event) => {
-  keyboardTouchStartY = event.touches[0].clientY;
+  const touch = event.touches[0];
+
+  keyboardTouchStartY = touch.clientY;
+  keyboardTouchStartX = touch.clientX;
 }, { passive: true });
+
+virtualKeyboard.addEventListener("touchmove", (event) => {
+  if (keyboardTouchStartY === null) return;
+
+  const touch = event.touches[0];
+  const diffY = touch.clientY - keyboardTouchStartY;
+  const diffX = Math.abs(touch.clientX - keyboardTouchStartX);
+
+  if (diffY > 12 && diffY > diffX) {
+    event.preventDefault();
+  }
+}, { passive: false });
 
 virtualKeyboard.addEventListener("touchend", (event) => {
   if (keyboardTouchStartY === null) return;
 
-  const endY = event.changedTouches[0].clientY;
-  const distance = endY - keyboardTouchStartY;
+  const touch = event.changedTouches[0];
+  const distance = touch.clientY - keyboardTouchStartY;
+  const horizontal = Math.abs(touch.clientX - keyboardTouchStartX);
 
-  if (distance > 60) {
+  if (distance > 55 && distance > horizontal) {
     hideVirtualKeyboard();
   }
 
   keyboardTouchStartY = null;
+  keyboardTouchStartX = null;
 }, { passive: true });
-
 
   // INTERAKSI TOMBOL KEYBOARD CUSTOM
 
