@@ -5172,7 +5172,7 @@ function hideVirtualKeyboard() {
   composer?.classList.remove("is-typing");
 }
 
-// SWIPE DOWN UNTUK MENYEMBUNYIKAN KEYBOARD
+// SWIPE DOWN UNTUK MENUTUP KEYBOARD
 let keyboardTouchStartY = null;
 let keyboardTouchStartX = null;
 
@@ -5206,7 +5206,7 @@ virtualKeyboard.addEventListener("touchend", (event) => {
 
   if (
     !state.mavinTyping &&
-    distanceY > 55 &&
+    distanceY > 45 &&
     distanceY > distanceX
   ) {
     hideVirtualKeyboard();
@@ -5220,7 +5220,7 @@ virtualKeyboard.addEventListener("touchcancel", () => {
   keyboardTouchStartY = null;
   keyboardTouchStartX = null;
 });
-
+  
   
   // INTERAKSI TOMBOL KEYBOARD CUSTOM
 
