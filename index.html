@@ -5193,31 +5193,37 @@ function hideVirtualKeyboard() {
   composer?.classList.remove("is-typing");
 }
 
-// SWIPE PEGANGAN UNTUK MENUTUP KEYBOARD
-const dismissHandle = document.getElementById("waKeyboardDismissHandle");
+// SWIPE KEYBOARD TANPA KELUAR DARI ROOM CHAT
+let keyboardTouchStartY = null;
+let keyboardTouchStartX = null;
 
-let swipeStartY = null;
+virtualKeyboard.addEventListener("touchstart", (event) => {
+  if (state.mavinTyping) return;
 
-dismissHandle.addEventListener("pointerdown", (event) => {
-  swipeStartY = event.clientY;
-  dismissHandle.setPointerCapture(event.pointerId);
-});
+  const touch = event.touches[0];
 
-dismissHandle.addEventListener("pointerup", (event) => {
-  if (swipeStartY === null) return;
+  keyboardTouchStartY = touch.clientY;
+  keyboardTouchStartX = touch.clientX;
+}, { passive: true });
 
-  const distance = event.clientY - swipeStartY;
+virtualKeyboard.addEventListener("touchend", (event) => {
+  if (keyboardTouchStartY === null) return;
 
-  if (distance > 30) {
+  const touch = event.changedTouches[0];
+  const distanceY = touch.clientY - keyboardTouchStartY;
+  const distanceX = Math.abs(touch.clientX - keyboardTouchStartX);
+
+  if (
+    !state.mavinTyping &&
+    distanceY > 55 &&
+    distanceY > distanceX
+  ) {
     hideVirtualKeyboard();
   }
 
-  swipeStartY = null;
-});
-
-dismissHandle.addEventListener("pointercancel", () => {
-  swipeStartY = null;
-});
+  keyboardTouchStartY = null;
+  keyboardTouchStartX = null;
+}, { passive: true });
 
   
   // INTERAKSI TOMBOL KEYBOARD CUSTOM
