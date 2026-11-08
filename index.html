@@ -5524,13 +5524,17 @@ async function playNextScene() {
 
       // PEMBUKA: NEL DIKETIK DAN DIHAPUS
       if (state.stage === 0) {
-        input.value = "";
-        await wait(500);
+  state.mavinTyping = true;
 
-        await typeMavinMessage("nel", null, 140);
-        await wait(650);
-        await eraseMavinText(3, 140);
-        await wait(450);
+  input.value = "";
+  await wait(500);
+
+  await typeMavinMessage("nel", null, 140);
+  await wait(650);
+  await eraseMavinText(3, 140);
+  await wait(450);
+
+  state.mavinTyping = false;
       }
 
       // MAVIN MENGETIK PESAN
