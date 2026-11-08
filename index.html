@@ -5173,52 +5173,36 @@ function hideVirtualKeyboard() {
 }
 
 // SWIPE DOWN UNTUK MENUTUP KEYBOARD
-let keyboardTouchStartY = null;
-let keyboardTouchStartX = null;
+let keyboardPointerStartY = null;
+let keyboardPointerStartX = null;
 
-virtualKeyboard.addEventListener("touchstart", (event) => {
-  if (state.mavinTyping) return;
+virtualKeyboard.addEventListener("pointerdown", (event) => {
+  keyboardPointerStartY = event.clientY;
+  keyboardPointerStartX = event.clientX;
+});
 
-  const touch = event.touches[0];
+virtualKeyboard.addEventListener("pointerup", (event) => {
+  if (keyboardPointerStartY === null) return;
 
-  keyboardTouchStartY = touch.clientY;
-  keyboardTouchStartX = touch.clientX;
-}, { passive: true });
-
-virtualKeyboard.addEventListener("touchmove", (event) => {
-  if (keyboardTouchStartY === null || state.mavinTyping) return;
-
-  const touch = event.touches[0];
-  const distanceY = touch.clientY - keyboardTouchStartY;
-  const distanceX = Math.abs(touch.clientX - keyboardTouchStartX);
-
-  if (distanceY > 8 && distanceY > distanceX) {
-    event.preventDefault();
-  }
-}, { passive: false });
-
-virtualKeyboard.addEventListener("touchend", (event) => {
-  if (keyboardTouchStartY === null) return;
-
-  const touch = event.changedTouches[0];
-  const distanceY = touch.clientY - keyboardTouchStartY;
-  const distanceX = Math.abs(touch.clientX - keyboardTouchStartX);
+  const distanceY = event.clientY - keyboardPointerStartY;
+  const distanceX = Math.abs(
+    event.clientX - keyboardPointerStartX
+  );
 
   if (
-    !state.mavinTyping &&
     distanceY > 45 &&
     distanceY > distanceX
   ) {
     hideVirtualKeyboard();
   }
 
-  keyboardTouchStartY = null;
-  keyboardTouchStartX = null;
-}, { passive: true });
+  keyboardPointerStartY = null;
+  keyboardPointerStartX = null;
+});
 
-virtualKeyboard.addEventListener("touchcancel", () => {
-  keyboardTouchStartY = null;
-  keyboardTouchStartX = null;
+virtualKeyboard.addEventListener("pointercancel", () => {
+  keyboardPointerStartY = null;
+  keyboardPointerStartX = null;
 });
   
   
