@@ -5351,25 +5351,24 @@ async function animateKeyboardKey(key, duration = 95) {
   button.classList.remove("key-pressed");
 }
 
-async function typeMavinMessage(text, clearAfter = 450, charDelay = 105) {
+async function typeMavinMessage(text, clearAfter = 450, charDelay = 45) {
   input.value = "";
 
   for (const char of text) {
     if (/[A-Z]/.test(char)) {
-      await animateKeyboardKey("shift", 75);
+      await animateKeyboardKey("shift", 40);
     }
 
     const key = char === " " ? "space" : char.toLowerCase();
 
-    await animateKeyboardKey(key, 90);
-
     input.value += char;
 
-    // Sesuaikan tinggi kolom ketika pesan memanjang
     input.style.height = "auto";
     input.style.height = Math.min(input.scrollHeight, 84) + "px";
 
-    await wait(/[,.!?]/.test(char) ? 130 : charDelay);
+    animateKeyboardKey(key, 45);
+
+    await wait(/[,.!?]/.test(char) ? 100 : charDelay);
   }
 
   if (clearAfter !== null) {
@@ -5377,8 +5376,8 @@ async function typeMavinMessage(text, clearAfter = 450, charDelay = 105) {
     input.value = "";
     input.style.height = "auto";
   }
-}
-
+  }
+  
 async function eraseMavinText(totalLetters, delay = 170) {
   for (let i = 0; i < totalLetters; i++) {
     await animateKeyboardKey("backspace", 90);
