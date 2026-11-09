@@ -5631,6 +5631,99 @@ if (!state.started) {
     }
   ];
 
+  async function simulatePhotoSelection(imageSrc) {
+  const room = document.querySelector(".wa-room");
+  const attachment = document.querySelector(".wa-attachment-button");
+
+  if (!room) return;
+
+  // MAVIN MENEKAN TOMBOL LAMPIRAN
+  if (attachment) {
+    attachment.classList.add("pressing");
+    await wait(180);
+    attachment.classList.remove("pressing");
+  }
+
+  await wait(350);
+
+  // MEMBUKA PANEL GALERI
+  const picker = document.createElement("div");
+  picker.className = "wa-photo-picker";
+
+  picker.innerHTML = `
+    <div class="wa-picker-sheet">
+      <div class="wa-picker-title">
+        <span>Recent Photos</span>
+        <span>Cancel</span>
+      </div>
+
+      <div class="wa-picker-grid">
+        <button class="wa-picker-photo">
+          <img src="${imageSrc}" alt="Foto Mavin">
+        </button>
+      </div>
+    </div>
+  `;
+
+  room.appendChild(picker);
+
+  requestAnimationFrame(() => {
+    picker.classList.add("show");
+  });
+
+  await wait(800);
+
+  // MAVIN MEMILIH FOTO
+  const photo = picker.querySelector(".wa-picker-photo");
+  photo.classList.add("selected");
+
+  photo.innerHTML += `
+    <span class="wa-picker-check">✓</span>
+  `;
+
+  await wait(600);
+
+  // PREVIEW FOTO SEBELUM DIKIRIM
+  const sheet = picker.querySelector(".wa-picker-sheet");
+
+  sheet.innerHTML = `
+    <div class="wa-picker-title">
+      <span>Preview</span>
+      <span>1 photo selected</span>
+    </div>
+
+    <div style="
+      display:flex;
+      justify-content:center;
+      padding:8px 0 18px;
+    ">
+      <img
+        src="${imageSrc}"
+        style="
+          width:190px;
+          height:190px;
+          object-fit:cover;
+          border-radius:12px;
+        "
+      >
+    </div>
+
+    <div class="wa-picker-preview">
+      <span>Photo</span>
+      <button id="waPickerSend">Send</button>
+    </div>
+  `;
+
+  await wait(800);
+
+  // MAVIN MENEKAN SEND
+  const send = picker.querySelector("#waPickerSend");
+
+  send.classList.add("pressing");
+  await wait(200);
+
+  picker.remove();
+  }
   
 async function pressSendButton() {
   const button = document.getElementById("waSendButton");
