@@ -3276,6 +3276,122 @@ overscroll-behavior: contain;
 .wa-room-messages {
   gap: 3px;
 }
+
+  /* WHATSAPP PHOTO PICKER ANIMATION */
+
+.wa-room {
+  position: relative;
+}
+
+.wa-photo-picker {
+  position: absolute;
+  inset: 64px 0 0;
+  z-index: 40;
+  display: flex;
+  align-items: flex-end;
+  background: rgba(0,0,0,.25);
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+
+.wa-photo-picker.show {
+  opacity: 1;
+}
+
+.wa-picker-sheet {
+  width: 100%;
+  max-height: 75%;
+  padding: 16px;
+  border-radius: 20px 20px 0 0;
+  background: #f5f5f7;
+  color: #171717;
+  transform: translateY(30px);
+  transition: transform .25s ease;
+}
+
+.wa-photo-picker.show .wa-picker-sheet {
+  transform: translateY(0);
+}
+
+.wa-picker-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.wa-picker-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+}
+
+.wa-picker-photo {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 0;
+  padding: 0;
+  background: #ddd;
+}
+
+.wa-picker-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.wa-picker-photo.selected {
+  outline: 3px solid #087bfa;
+  outline-offset: -3px;
+}
+
+.wa-picker-check {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #087bfa;
+  color: white;
+  font-size: 13px;
+}
+
+.wa-picker-preview {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 15px;
+  padding-top: 12px;
+  border-top: 1px solid #ddd;
+}
+
+.wa-picker-preview img {
+  width: 54px;
+  height: 54px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.wa-picker-preview button {
+  margin-left: auto;
+  border: 0;
+  border-radius: 20px;
+  padding: 9px 20px;
+  background: #087bfa;
+  color: white;
+  font-weight: 650;
+}
+
+.wa-picker-preview button.pressing {
+  transform: scale(.92);
+  opacity: .7;
+}
   
 </style>
 </head>
