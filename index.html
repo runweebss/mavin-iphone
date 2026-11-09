@@ -5784,13 +5784,14 @@ async function playNextScene() {
         await sendMessage("mavin", scene.mavin);
       }
 
-      // MAVIN MENGIRIM FOTO
-      if (scene.image) {
-        await wait(500);
-        await pressSendButton();
-        await sendMessage("mavin", "", scene.image);
-      }
+      // MAVIN MEMILIH DAN MENGIRIM FOTO
+if (scene.image) {
+  await simulatePhotoSelection(scene.image);
 
+  await wait(200);
+  await sendMessage("mavin", "", scene.image);
+  }
+      
       // NELSA MEMBALAS
       for (const reply of scene.nelsa) {
         await wait(700);
