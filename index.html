@@ -5800,8 +5800,13 @@ if (scene.image) {
 
       state.stage++;
 
-      await wait(850);
-    }
+await wait(850);
+
+// Berhenti setelah Nelsa selesai membalas.
+// Kalau Nelsa belum membalas, lanjutkan bubble Mavin.
+if (scene.nelsa.length > 0) {
+  break;
+}
   } finally {
     if (state.busyToken === runToken) {
       state.busy = false;
