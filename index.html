@@ -5430,14 +5430,14 @@ virtualKeyboard.addEventListener("click", (event) => {
   bubble.className = "wa-bubble";
 
   if (message.image) {
-    const img = document.createElement("img");
-    img.src = message.image;
-    img.alt = "Foto bekas gigitan serangga";
-    img.style.cssText =
-      "display:block;width:210px;max-width:100%;border-radius:7px;";
-    bubble.appendChild(img);
-  } else {
-    bubble.appendChild(document.createTextNode(message.text));
+  bubble.classList.add("wa-image-bubble");
+
+  const img = document.createElement("img");
+  img.src = message.image;
+  img.alt = "Foto bekas gigitan serangga";
+  img.style.cssText =
+    "display:block;width:100%;height:auto;border-radius:7px;";
+  bubble.appendChild(img);
   }
 
   // WAKTU DAN CENTANG
