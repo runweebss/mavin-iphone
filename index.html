@@ -5263,8 +5263,6 @@ function openWhatsAppRoom(contact) {
 </div>
   `;
 
-  if (contact !== "nelsa") return;
-
   
   // SIMPAN RIWAYAT CHAT UNTUK SEMUA ROOM
   if (!window.waChatStates) {
@@ -5322,11 +5320,7 @@ function openWhatsAppRoom(contact) {
 
   // SEMENTARA, SKENARIO OTOMATIS NELSA SAJA
   if (contact !== "nelsa") return;
-
-const input = document.getElementById("waMessageInput");
-const virtualKeyboard = document.getElementById("waVirtualKeyboard");
-
-
+  
 function showVirtualKeyboard() {
   virtualKeyboard.classList.add("visible");
 
