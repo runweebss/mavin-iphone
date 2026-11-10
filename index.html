@@ -5258,49 +5258,64 @@ function openWhatsAppRoom(contact) {
 
   if (contact !== "nelsa") return;
 
-  // SIMPAN RIWAYAT CHAT AGAR TIDAK RESET
-  if (!window.nelsaChatState) {
-    window.nelsaChatState = {
-      messages: [
-  {
-    from: "mavin",
-    text: "nel, kalau besok pagi aku gak ke kampus, tolong ke kosan aku ya",
-    time: "22:49"
-  },
-  {
-    from: "mavin",
-    text: "terus kalau aku gak sadarkan diri, kamu baca dulu notes yang ada di hpku",
-    time: "22:49"
-  },
-  {
-    from: "mavin",
-    text: "pinnya 1711",
-    time: "22:49"
-  },
-  {
-    type: "divider",
-    text: "Today"
-  },
-  {
-    from: "nelsa",
-    text: "hah kok baca notes? emang lo kenapa???",
-    time: "10:32"
+  
+  // SIMPAN RIWAYAT CHAT UNTUK SEMUA ROOM
+  if (!window.waChatStates) {
+    window.waChatStates = {};
   }
-],
+
+  if (!window.waChatStates[contact]) {
+    window.waChatStates[contact] = {
+      messages: contact === "nelsa" ? [
+        {
+          from: "mavin",
+          text: "nel, kalau besok pagi aku gak ke kampus, tolong ke kosan aku ya",
+          time: "22:49"
+        },
+        {
+          from: "mavin",
+          text: "terus kalau aku gak sadarkan diri, kamu baca dulu notes yang ada di hpku",
+          time: "22:49"
+        },
+        {
+          from: "mavin",
+          text: "pinnya 1711",
+          time: "22:49"
+        },
+        {
+          type: "divider",
+          text: "Today"
+        },
+        {
+          from: "nelsa",
+          text: "hah kok baca notes? emang lo kenapa???",
+          time: "10:32"
+        }
+      ] : [],
+
       stage: 0,
-started: false,
-busy: false,
-busyToken: null,
-roomToken: 0,
-mavinTyping: false
+      started: false,
+      busy: false,
+      busyToken: null,
+      roomToken: 0,
+      mavinTyping: false
     };
   }
 
-  const state = window.nelsaChatState;
-state.roomToken++;
-const roomToken = state.roomToken;
+  const state = window.waChatStates[contact];
 
-const messages = document.getElementById("waRoomMessages");
+  state.roomToken++;
+  const roomToken = state.roomToken;
+
+  window.waActiveChatContact = contact;
+
+  const messages = document.getElementById("waRoomMessages");
+  const input = document.getElementById("waMessageInput");
+  const virtualKeyboard = document.getElementById("waVirtualKeyboard");
+
+  // SEMENTARA, SKENARIO OTOMATIS NELSA SAJA
+  if (contact !== "nelsa") return;
+
 const input = document.getElementById("waMessageInput");
 const virtualKeyboard = document.getElementById("waVirtualKeyboard");
 
