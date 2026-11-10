@@ -5450,7 +5450,9 @@ virtualKeyboard.addEventListener("click", (event) => {
   img.alt = "Foto bekas gigitan serangga";
   img.style.cssText =
     "display:block;width:100%;height:auto;border-radius:7px;";
-  bubble.appendChild(img);
+    bubble.appendChild(img);
+  } else {
+    bubble.appendChild(document.createTextNode(message.text));
   }
 
   // WAKTU DAN CENTANG
