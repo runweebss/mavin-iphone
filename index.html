@@ -4558,9 +4558,16 @@ async function openCamera() {
 
 
 function openApp(name) {
-    if (name === "WhatsApp" && window.nelsaChatState) {
-    window.nelsaChatState.roomToken++;
+  if (name === "WhatsApp") {
+    const activeContact = window.waActiveChatContact;
+    const activeState = window.waChatStates?.[activeContact];
+
+    if (activeState) {
+      activeState.roomToken++;
     }
+
+    window.waActiveChatContact = null;
+  }
   
   if (name === "WhatsApp") {
   document.getElementById("whatsappBadge").classList.remove("show");
