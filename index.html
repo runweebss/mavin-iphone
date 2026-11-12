@@ -5857,37 +5857,39 @@ async function playNextScene() {
       }
 
       // MAVIN MENGETIK PESAN
-      if (scene.mavin) {
-        await typeMavinMessage(scene.mavin, null, 70);
-        await wait(350);
-        await pressSendButton();
+if (scene.mavin) {
+  await typeMavinMessage(scene.mavin, null, 70);
+  await wait(350);
+  await pressSendButton();
 
-        input.value = "";
-        input.style.height = "auto";
+  input.value = "";
+  input.style.height = "auto";
 
-        await sendMessage("mavin", scene.mavin);
+  await sendMessage("mavin", scene.mavin);
 
-// NOTIFIKASI CHAT DARI KATHLYN
-if (state.stage === scenes.length - 1) {
-  await wait(1000);
-  showKathlynNotification();
-}
+  // NOTIFIKASI CHAT DARI KATHLYN
+  if (state.stage === scenes.length - 1) {
+    await wait(1000);
+    showKathlynNotification();
+  }
 
-      // MAVIN MEMILIH DAN MENGIRIM FOTO
+} // ← TAMBAHKAN KURUNG INI DI SINI
+
+// MAVIN MEMILIH DAN MENGIRIM FOTO
 if (scene.image) {
   await simulatePhotoSelection(scene.image);
 
   await wait(200);
   await sendMessage("mavin", "", scene.image);
-  }
-      
-      // NELSA MEMBALAS
-      for (const reply of scene.nelsa) {
-        await wait(700);
-        await sendMessage("nelsa", reply);
-      }
+}
 
-      state.stage++;
+// NELSA MEMBALAS
+for (const reply of scene.nelsa) {
+  await wait(700);
+  await sendMessage("nelsa", reply);
+}
+
+state.stage++;
 
 await wait(850);
 
