@@ -5349,7 +5349,27 @@ function openWhatsAppRoom(contact) {
           text: "hah kok baca notes? emang lo kenapa???",
           time: "10:32"
         }
-      ] : [],
+      ] : contact === "kathlyn" ? [
+  {
+    type: "divider",
+    text: "Today"
+  },
+  {
+    from: "kathlyn",
+    text: "vin",
+    time: "10:15"
+  },
+  {
+    from: "kathlyn",
+    text: "ada paket gue gak di depan?",
+    time: "10:15"
+  },
+  {
+    from: "kathlyn",
+    text: "woy kacamata",
+    time: "10:30"
+  }
+] : [],
 
       stage: 0,
       started: false,
