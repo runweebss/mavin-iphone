@@ -5678,6 +5678,7 @@ async function eraseMavinText(totalLetters, delay = 170) {
 
   
 
+
 // SKENARIO CHAT KATHLYN
 if (contact === "kathlyn") {
 
@@ -5693,7 +5694,7 @@ if (contact === "kathlyn") {
     { from: "kathlyn", text: "sekarang udah baikan?" },
     { from: "kathlyn", text: "mau dianter ke dokter gak?" },
 
-    { from: "mavin", text: "ngga, udah enakan kok" },
+    { from: "mavin", text: "nggak, udah enakan kok" },
 
     { from: "kathlyn", text: "ok" },
     { from: "kathlyn", text: "paket gue dong tolong liatin" },
@@ -5725,24 +5726,32 @@ if (contact === "kathlyn") {
     state.kathlynBusy = true;
 
     try {
-      // KIRIM SATU PESAN MAVIN SETIAP KLIK
-      const message = conversation[state.kathlynIndex];
 
-      if (message.from === "mavin") {
+      // MAVIN MENGIRIM SEMUA BUBBLE DALAM SATU BAGIAN
+      while (
+        state.kathlynIndex < conversation.length &&
+        conversation[state.kathlynIndex].from === "mavin"
+      ) {
+        const message = conversation[state.kathlynIndex];
 
-        // PESAN TERAKHIR: MENGETIK, MENGHAPUS,
-        // LALU MENGETIK ULANG
+        // PESAN TERAKHIR: KETIK, HAPUS KATA SAYANG,
+        // LALU TAMBAHKAN EMOJI
         if (message.text === "sama-sama👍🏻") {
-          await typeMavinMessage("sama-sama sayang", null, 115);
+
+          await typeMavinMessage("sama-sama sayang", null, 150);
+
           await wait(600);
 
-          await eraseMavinText("sama-sama sayang".length, 100);
+          await eraseMavinText(" sayang".length, 120);
 
           await wait(300);
-          await typeMavinMessage("sama-sama👍🏻", null, 115);
+
+          input.value += "👍🏻";
+
+          await wait(600);
 
         } else {
-          await typeMavinMessage(message.text, null, 115);
+          await typeMavinMessage(message.text, null, 150);
         }
 
         await wait(350);
@@ -5758,8 +5767,7 @@ if (contact === "kathlyn") {
         await wait(500);
       }
 
-      // KATHLYN MEMBALAS OTOMATIS SAMPAI
-      // GILIRAN MAVIN BERIKUTNYA
+      // KATHLYN MEMBALAS OTOMATIS
       while (
         state.kathlynIndex < conversation.length &&
         conversation[state.kathlynIndex].from === "kathlyn"
@@ -5780,7 +5788,7 @@ if (contact === "kathlyn") {
     }
   }
 
-  // TRIGGER SETIAP KALI MAVIN AKAN MEMBALAS
+  // TRIGGER SETIAP BAGIAN BALASAN MAVIN
   input.addEventListener("click", () => {
     showVirtualKeyboard();
     playKathlynChat();
