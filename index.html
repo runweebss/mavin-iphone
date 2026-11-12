@@ -4126,6 +4126,59 @@ setTimeout(() => {
   }, 300);
 }, 5000);
   }
+
+  
+function showKathlynNotification() {
+  const phone = document.querySelector(".phone");
+
+  // UPDATE JUMLAH NOTIFIKASI WHATSAPP
+  const badge = document.getElementById("whatsappBadge");
+  badge.textContent = "10";
+  badge.classList.add("show");
+
+  const oldNotification = document.querySelector(".wa-notification");
+  if (oldNotification) oldNotification.remove();
+
+  const notification = document.createElement("div");
+  notification.className = "wa-notification";
+
+  notification.innerHTML = `
+    <div class="wa-notification-icon">
+      <img src="https://raw.githubusercontent.com/runweebss/mavin-iphone/b967a64e999208da150c237490bfdf76f9b72c94/whatsapp%20logo.png" alt="WhatsApp">
+    </div>
+    <div class="wa-notification-content">
+      <div class="wa-notification-top">
+        <span class="wa-notification-name">kathlyn faye</span>
+        <span class="wa-notification-time">now</span>
+      </div>
+      <div class="wa-notification-message">
+        woy kacamata
+      </div>
+    </div>
+  `;
+
+  notification.addEventListener("click", function() {
+    notification.remove();
+    openApp("WhatsApp");
+    openWhatsAppRoom("kathlyn");
+  });
+
+  phone.appendChild(notification);
+
+  requestAnimationFrame(() => {
+    notification.classList.add("show");
+  });
+
+  // NOTIFIKASI HILANG OTOMATIS SETELAH 5 DETIK
+  setTimeout(() => {
+    notification.classList.remove("show");
+
+    setTimeout(() => {
+      notification.remove();
+    }, 300);
+  }, 5000);
+}
+
   
 /* MUSIC PLAYER VISUAL TOGGLE */
 
@@ -5813,7 +5866,12 @@ async function playNextScene() {
         input.style.height = "auto";
 
         await sendMessage("mavin", scene.mavin);
-      }
+
+// NOTIFIKASI CHAT DARI KATHLYN
+if (state.stage === scenes.length - 1) {
+  await wait(1000);
+  showKathlynNotification();
+}
 
       // MAVIN MEMILIH DAN MENGIRIM FOTO
 if (scene.image) {
