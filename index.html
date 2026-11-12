@@ -5404,12 +5404,6 @@ function openWhatsAppRoom(contact) {
   const input = document.getElementById("waMessageInput");
   const virtualKeyboard = document.getElementById("waVirtualKeyboard");
 
-  // ROOM KATHLYN: TAMPILKAN RIWAYAT CHAT SAJA
-if (contact === "kathlyn") {
-  state.messages.forEach(renderMessage);
-  return;
-}
-
 // SKENARIO NELSA DAN KATHLYN
 if (contact !== "nelsa" && contact !== "kathlyn") return;
   
