@@ -5677,45 +5677,74 @@ async function eraseMavinText(totalLetters, delay = 170) {
   state.messages.forEach(renderMessage);
 
   
-// SKENARIO CHAT OTOMATIS KATHLYN
+
+// SKENARIO CHAT KATHLYN
 if (contact === "kathlyn") {
 
+  const conversation = [
+    { from: "mavin", text: "aku belum ke depan kath" },
+    { from: "mavin", text: "bangunnya kesiangan" },
+
+    { from: "kathlyn", text: "tumben" },
+    { from: "kathlyn", text: "lo sakit?" },
+
+    { from: "mavin", text: "iya, agak demam semalam" },
+
+    { from: "kathlyn", text: "sekarang udah baikan?" },
+    { from: "kathlyn", text: "mau dianter ke dokter gak?" },
+
+    { from: "mavin", text: "ngga, udah enakan kok" },
+
+    { from: "kathlyn", text: "ok" },
+    { from: "kathlyn", text: "paket gue dong tolong liatin" },
+    { from: "kathlyn", text: "kalo ada nitip dulu ya" },
+
+    { from: "mavin", text: "oke" },
+
+    { from: "kathlyn", text: "btw gue pulang agak malem, gerbangnya jangan dikunci dulu" },
+
+    { from: "mavin", text: "iya" },
+
+    { from: "kathlyn", text: "makacih cayang😘" },
+
+    { from: "mavin", text: "sama-sama👍🏻" }
+  ];
+
+  if (state.kathlynIndex === undefined) {
+    state.kathlynIndex = 0;
+  }
+
+  if (state.kathlynBusy === undefined) {
+    state.kathlynBusy = false;
+  }
+
   async function playKathlynChat() {
-    if (state.started) return;
-    state.started = true;
+    if (state.kathlynBusy) return;
+    if (state.kathlynIndex >= conversation.length) return;
 
-    const conversation = [
-      { from: "mavin", text: "aku belum ke depan kath" },
-      { from: "mavin", text: "bangunnya kesiangan" },
+    state.kathlynBusy = true;
 
-      { from: "kathlyn", text: "tumben" },
-      { from: "kathlyn", text: "lo sakit?" },
+    try {
+      // KIRIM SATU PESAN MAVIN SETIAP KLIK
+      const message = conversation[state.kathlynIndex];
 
-      { from: "mavin", text: "iya, agak demam semalam" },
-
-      { from: "kathlyn", text: "sekarang udah baikan?" },
-      { from: "kathlyn", text: "mau dianter ke dokter gak?" },
-
-      { from: "mavin", text: "ngga, udah enakan kok" },
-
-      { from: "kathlyn", text: "ok" },
-      { from: "kathlyn", text: "paket gue dong tolong liatin" },
-      { from: "kathlyn", text: "kalo ada nitip dulu ya" },
-
-      { from: "mavin", text: "oke" },
-
-      { from: "kathlyn", text: "btw gue pulang agak malem, gerbangnya jangan dikunci dulu" },
-
-      { from: "mavin", text: "iya" },
-
-      { from: "kathlyn", text: "makacih cayang😘" },
-
-      { from: "mavin", text: "sama-sama👍🏻" }
-    ];
-
-    for (const message of conversation) {
       if (message.from === "mavin") {
-        await typeMavinMessage(message.text, null, 70);
+
+        // PESAN TERAKHIR: MENGETIK, MENGHAPUS,
+        // LALU MENGETIK ULANG
+        if (message.text === "sama-sama👍🏻") {
+          await typeMavinMessage("sama-sama sayang", null, 115);
+          await wait(600);
+
+          await eraseMavinText("sama-sama sayang".length, 100);
+
+          await wait(300);
+          await typeMavinMessage("sama-sama👍🏻", null, 115);
+
+        } else {
+          await typeMavinMessage(message.text, null, 115);
+        }
+
         await wait(350);
         await pressSendButton();
 
@@ -5724,16 +5753,34 @@ if (contact === "kathlyn") {
 
         await sendMessage("mavin", message.text);
 
-        await wait(650);
-      } else {
-        await wait(500);
-        await sendMessage("kathlyn", message.text);
+        state.kathlynIndex++;
+
         await wait(500);
       }
+
+      // KATHLYN MEMBALAS OTOMATIS SAMPAI
+      // GILIRAN MAVIN BERIKUTNYA
+      while (
+        state.kathlynIndex < conversation.length &&
+        conversation[state.kathlynIndex].from === "kathlyn"
+      ) {
+        await wait(500);
+
+        const reply = conversation[state.kathlynIndex];
+
+        await sendMessage("kathlyn", reply.text);
+
+        state.kathlynIndex++;
+
+        await wait(500);
+      }
+
+    } finally {
+      state.kathlynBusy = false;
     }
   }
 
-  // MULAI SAAT INPUT CHAT DITEKAN
+  // TRIGGER SETIAP KALI MAVIN AKAN MEMBALAS
   input.addEventListener("click", () => {
     showVirtualKeyboard();
     playKathlynChat();
