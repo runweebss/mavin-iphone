@@ -5391,8 +5391,14 @@ function openWhatsAppRoom(contact) {
   const input = document.getElementById("waMessageInput");
   const virtualKeyboard = document.getElementById("waVirtualKeyboard");
 
-  // SEMENTARA, SKENARIO OTOMATIS NELSA SAJA
-  if (contact !== "nelsa") return;
+  // ROOM KATHLYN: TAMPILKAN RIWAYAT CHAT SAJA
+if (contact === "kathlyn") {
+  state.messages.forEach(renderMessage);
+  return;
+}
+
+// SEMENTARA, SKENARIO OTOMATIS NELSA SAJA
+if (contact !== "nelsa") return;
   
 function showVirtualKeyboard() {
   virtualKeyboard.classList.add("visible");
