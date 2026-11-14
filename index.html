@@ -5861,6 +5861,40 @@ if (contact === "kathlyn") {
   return;
 }
 
+  // KELANJUTAN CHAT NELSA SETELAH NOTIFIKASI DOKTER
+if (
+  contact === "nelsa" &&
+  state.startDoctorFollowup &&
+  !state.doctorFollowupStarted
+) {
+  state.startDoctorFollowup = false;
+  state.doctorFollowupStarted = true;
+
+  (async () => {
+    // PESAN PERTAMA MUNCUL LANGSUNG
+    const firstMessage = {
+      from: "nelsa",
+      text: "tapi lo udah ke dokter gak?"
+    };
+
+    state.messages.push(firstMessage);
+    renderMessage(firstMessage);
+
+    // JEDA SEBELUM NELSA MENGETIK LAGI
+    await wait(1300);
+
+    // PESAN KEDUA, DENGAN INDIKATOR TYPING
+    await sendMessage(
+      "nelsa",
+      "mending ke dokter aja deh kalo sebengkak itu, takutnya kenapa-napa"
+    );
+
+    state.doctorFollowupReadyForMavin = true;
+  })();
+
+  return;
+  }
+
 
   // PESAN NELSA OTOMATIS SETELAH CHAT DIBUKA
 if (!state.started) {
