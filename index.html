@@ -5508,7 +5508,11 @@ function openWhatsAppRoom(contact) {
   const virtualKeyboard = document.getElementById("waVirtualKeyboard");
 
 // SKENARIO NELSA DAN KATHLYN
-if (contact !== "nelsa" && contact !== "kathlyn") return;
+if (
+  contact !== "nelsa" &&
+  contact !== "kathlyn" &&
+  contact !== "hans"
+) return;
   
 function showVirtualKeyboard() {
   virtualKeyboard.classList.add("visible");
