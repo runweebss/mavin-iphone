@@ -6116,7 +6116,110 @@ input.addEventListener("click", () => {
 }
 
   
-// KELANJUTAN CHAT NELSA SETELAH NOTIFIKASI DOKTER
+
+// KELANJUTAN CHAT NELSA SETELAH NOTIFIKASI SPIDER
+if (
+  contact === "nelsa" &&
+  (state.startSpiderFollowup || state.spiderFollowupStarted)
+) {
+  state.startSpiderFollowup = false;
+  state.spiderFollowupStarted = true;
+
+  const spiderConversation = [
+    { from: "nelsa", text: "what the FUCK" },
+    { from: "nelsa", text: "teori gue bener ga sih??? lo punya kemampuan laba-laba" },
+    { from: "nelsa", text: "THAT'S SPIDER'S FUCKING WEB" },
+    { from: "nelsa", text: "OH MY GOD" },
+    { from: "nelsa", text: "KELUAR DARI TANGAN LO GITU AJA?" },
+
+    { from: "mavin", text: "iya..." },
+
+    { from: "nelsa", text: "anjir..." },
+    { from: "nelsa", text: "bentar, buat perekatnya itu sekarang udah ngga?" },
+
+    { from: "mavin", text: "nggak" },
+    { from: "mavin", text: "tapi aku mulai kepikiran sesuatu" },
+
+    { from: "nelsa", text: "apa tuh?" },
+
+    {
+      from: "mavin",
+      text: "aku kan udah lama jadi asisten penelitiannya prof hans, jadi aku tau sedikit tentang anatomi beberapa serangga, termasuk laba-laba"
+    },
+    {
+      from: "mavin",
+      text: "kalau teori kamu bener bahwa aku menyerap kemampuan laba-laba itu, kayaknya aku punya struktur perekat yang disebut scopulae. ini berupa kumpulan rambut-rambut mikroskopis (setae) yang ada di bagian bawah kaki beberapa jenis laba-laba"
+    },
+    {
+      from: "mavin",
+      text: "ujung rambutnya punya struktur kecil berbentuk pipih yang disebut spatulae. ini yang membantu laba-laba menempel di permukaan"
+    },
+    {
+      from: "mavin",
+      text: "tokek juga punya sistem perekat yang prinsipnya mirip, tapi struktur anatominya berbeda. nanti aku cek lagi detailnya"
+    },
+
+    { from: "nelsa", text: "GA PERLU BAHAS TOKEK YA TOLONG" },
+    { from: "nelsa", text: "lo ada kaca pembesar atau apalah itu kan di kamar? coba deh cek" },
+
+    { from: "mavin", text: "sebentar" }
+  ];
+
+  if (state.spiderFollowupIndex === undefined) {
+    state.spiderFollowupIndex = 0;
+  }
+
+  if (state.spiderFollowupBusy === undefined) {
+    state.spiderFollowupBusy = false;
+  }
+
+  async function playSpiderFollowup() {
+    if (state.spiderFollowupBusy) return;
+    if (state.spiderFollowupIndex >= spiderConversation.length) return;
+
+    state.spiderFollowupBusy = true;
+
+    try {
+      while (state.spiderFollowupIndex < spiderConversation.length) {
+        const message = spiderConversation[state.spiderFollowupIndex];
+
+        if (message.from === "mavin") {
+          await typeMavinMessage(message.text, null, 70);
+          await wait(350);
+          await pressSendButton();
+
+          input.value = "";
+          input.style.height = "auto";
+
+          await sendMessage("mavin", message.text);
+        } else {
+          await wait(600);
+          await sendMessage("nelsa", message.text);
+        }
+
+        state.spiderFollowupIndex++;
+        await wait(450);
+      }
+    } finally {
+      state.spiderFollowupBusy = false;
+    }
+  }
+
+  input.addEventListener("click", () => {
+    const keyboardWasHidden =
+      !virtualKeyboard.classList.contains("visible");
+
+    showVirtualKeyboard();
+
+    if (keyboardWasHidden) return;
+
+    playSpiderFollowup();
+  });
+
+  return;
+}
+
+  // KELANJUTAN CHAT NELSA SETELAH NOTIFIKASI DOKTER
 if (
   contact === "nelsa" &&
   (state.startDoctorFollowup || state.doctorFollowupStarted)
