@@ -6114,12 +6114,23 @@ async function playDoctorFollowup() {
         await sendMessage("nelsa", reply);
       }
 
-      state.doctorFollowupIndex++;
+            state.doctorFollowupIndex++;
       state.doctorFollowupReadyForMavin = true;
+
+      // NOTIFIKASI PROF HANS SETELAH CHAT NELSA SELESAI
+      if (
+        state.doctorFollowupIndex >= state.doctorFollowupSteps.length &&
+        !state.hansNotificationShown
+      ) {
+        state.hansNotificationShown = true;
+
+        await wait(1000);
+        showHansNotification();
+      }
 
     } finally {
       state.doctorFollowupBusy = false;
-    }
+  }
   }
 
   // PEMBUKA HANYA DIKIRIM SATU KALI
