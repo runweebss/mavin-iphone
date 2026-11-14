@@ -4246,6 +4246,55 @@ function showKathlynNotification() {
   }, 5000);
   }
 
+  function showHansNotification() {
+  const phone = document.querySelector(".phone");
+
+  const badge = document.getElementById("whatsappBadge");
+  badge.textContent = "12";
+  badge.classList.add("show");
+
+  const oldNotification = document.querySelector(".wa-notification");
+  if (oldNotification) oldNotification.remove();
+
+  const notification = document.createElement("div");
+  notification.className = "wa-notification";
+
+  notification.innerHTML = `
+    <div class="wa-notification-icon">
+      <img src="https://raw.githubusercontent.com/runweebss/mavin-iphone/b967a64e999208da150c237490bfdf76f9b72c94/whatsapp%20logo.png" alt="WhatsApp">
+    </div>
+    <div class="wa-notification-content">
+      <div class="wa-notification-top">
+        <span class="wa-notification-name">prof hans</span>
+        <span class="wa-notification-time">now</span>
+      </div>
+      <div class="wa-notification-message">
+        Vin, kamu baik-baik saja kan?
+      </div>
+    </div>
+  `;
+
+  notification.addEventListener("click", function() {
+    notification.remove();
+    openApp("WhatsApp");
+    openWhatsAppRoom("hans");
+  });
+
+  phone.appendChild(notification);
+
+  requestAnimationFrame(() => {
+    notification.classList.add("show");
+  });
+
+  setTimeout(() => {
+    notification.classList.remove("show");
+
+    setTimeout(() => {
+      notification.remove();
+    }, 300);
+  }, 5000);
+  }
+
   
 /* MUSIC PLAYER VISUAL TOGGLE */
 
