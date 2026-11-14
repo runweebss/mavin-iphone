@@ -6229,19 +6229,27 @@ const spiderConversation = [
       while (state.spiderFollowupIndex < spiderConversation.length) {
         const message = spiderConversation[state.spiderFollowupIndex];
 
-        if (message.from === "mavin") {
-          await typeMavinMessage(message.text, null, 70);
-          await wait(350);
-          await pressSendButton();
+        
+if (message.image) {
+  await simulatePhotoSelection(message.image);
+  await wait(200);
+  await sendMessage("mavin", "", message.image);
 
-          input.value = "";
-          input.style.height = "auto";
+} else if (message.from === "mavin") {
+  await typeMavinMessage(message.text, null, 70);
+  await wait(350);
+  await pressSendButton();
 
-          await sendMessage("mavin", message.text);
-        } else {
-          await wait(600);
-          await sendMessage("nelsa", message.text);
-        }
+  input.value = "";
+  input.style.height = "auto";
+
+  await sendMessage("mavin", message.text);
+
+} else {
+  await wait(600);
+  await sendMessage("nelsa", message.text);
+}
+
 
         state.spiderFollowupIndex++;
         await wait(450);
