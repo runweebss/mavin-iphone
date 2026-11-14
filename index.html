@@ -6581,7 +6581,12 @@ if (scene.nelsa.length > 0) {
 
 // TRIGGER PERTAMA DAN MELANJUTKAN SETELAH SWIPE
 input.addEventListener("click", async () => {
+  const keyboardWasHidden =
+    !virtualKeyboard.classList.contains("visible");
+
   showVirtualKeyboard();
+
+  if (keyboardWasHidden) return;
 
   // Tunggu proses roomchat sebelumnya selesai
   while (
