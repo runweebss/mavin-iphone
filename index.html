@@ -6554,55 +6554,58 @@ if (!state.started) {
 }
 
   // URUTAN PESAN SELANJUTNYA
-  const scenes = [
-    {
-      mavin: "aku gak jadi mati ternyata",
-      nelsa: ["oke stop nonton conan"]
-    },
-    {
-      mavin: "serius semalem kayak mau mati",
-      nelsa: ["kenapa lo", "digigit serangganya prof hans?"]
-    },
-    {
-      mavin: "kok tau",
-      nelsa: [
-        "tau lah",
-        "kalo lo mulai ngelantur gitu udah pasti abis ketemu sama aki-aki itu"
-      ]
-    },
-    {
-      mavin: "gak sopan",
-      nelsa: ["udah gue bilang jangan bergaul sama si aki, dia tuh aneh anjir"]
-    },
-    {
-      mavin: "apa salahnya neliti serangga kocak",
-      nelsa: []
-    },
-    {
-      mavin: "tapi gigitannya beneran ngena banget sih ini",
-      nelsa: []
-    },
-    {
-      mavin: "mau liat gak bekasnya",
-      nelsa: ["yaiyalah ngena, serangga kan ada racunnya anjir", "apalagi serangga modifan si aki itu"]
-    },
-    {
-      mavin: "stop ngatain aki-aki",
-      nelsa: ["mana bekasnya"]
-    },
-    {
-      mavin: "",
-      image: "mavin-spider-bite.jpg",
-      nelsa: [
-        "HAH",
-        "ITU DIGIGIT SERANGGA APA DIGIGIT PROFESOR HANS"
-      ]
-    },
-    {
-      mavin: "SERANGGA LAH",
-      nelsa: []
-    }
-  ];
+const scenes = [
+{
+mavin: "aku gak jadi mati ternyata",
+nelsa: ["oke stop nonton conan"]
+},
+{
+mavin: "serius semalem kayak mau mati",
+nelsa: ["kenapa lo", "digigit serangganya prof hans?"]
+},
+{
+mavin: "kok tau",
+nelsa: [
+"tau lah",
+"kalo lo mulai ngelantur gitu udah pasti abis ketemu sama aki-aki itu"
+]
+},
+{
+mavin: "gak sopan",
+nelsa: ["udah gue bilang jangan bergaul sama si aki, dia tuh aneh anjir"]
+},
+{
+mavin: "apa salahnya neliti serangga kocak",
+nelsa: []
+},
+{
+mavin: "tapi gigitannya beneran ngena banget sih ini",
+nelsa: []
+},
+{
+nelsa: ["yaiyalah ngena, serangga kan ada racunnya anjir", "apalagi serangga modifan si aki itu"]
+},
+{
+mavin: "stop ngatain aki-aki",
+nelsa: []
+},
+{
+mavin: "mau liat gak bekasnya",
+nelsa: ["mana"]
+},
+{
+mavin: "",
+image: "mavin-spider-bite.jpg",
+nelsa: [
+"HAH",
+"ITU DIGIGIT SERANGGA APA DIGIGIT PROFESOR HANS"
+]
+},
+{
+mavin: "SERANGGA LAH",
+nelsa: []
+}
+];
 
   async function simulatePhotoSelection(imageSrc) {
   const room = document.querySelector(".wa-room");
