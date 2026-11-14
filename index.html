@@ -5892,9 +5892,9 @@ if (contact === "hans") {
 
           if (message.drafts) {
             for (const draft of message.drafts) {
-              await typeMavinMessage(draft, null, 130);
+              await typeMavinMessage(draft, null, 70);
               await wait(500);
-              await eraseMavinText(draft.length, 130);
+              await eraseMavinText(draft.length, 90);
               await wait(350);
             }
           }
@@ -6256,7 +6256,7 @@ async function playDoctorFollowup() {
       // MAVIN MENGETIK DAN MENGIRIM PESAN
       if (step.mavin) {
         for (const message of step.mavin) {
-          await typeMavinMessage(message, null, 150);
+          await typeMavinMessage(message, null, 70);
           await wait(350);
           await pressSendButton();
 
