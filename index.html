@@ -5799,6 +5799,120 @@ async function eraseMavinText(totalLetters, delay = 170) {
   state.messages.forEach(renderMessage);
 
   
+// SKENARIO CHAT PROF HANS
+if (contact === "hans") {
+
+  const conversation = [
+    { from: "mavin", text: "pagi prof, maaf saya telat balasnya" },
+    { from: "mavin", text: "lukanya aman kok prof, badan saya juga tidak kenapa-napa. semalam memang sempat demam cukup tinggi, tapi paginya sudah membaik" },
+
+    { from: "hans", text: "Tidak ada yang aneh dengan tubuh kamu?" },
+
+    { from: "mavin", text: "tidak ada prof. memangnya kenapa ya? apakah racun dari laba-laba kemarin berbahaya bagi manusia?", drafts: ["ada", "tidak", "sebetulnya"] },
+
+    { from: "hans", text: "Iya, sangat berbahaya. Bahkan paparannya berpotensi menyebabkan kematian." },
+    { from: "hans", text: "Dosis yang saya gunakan pada spesimen kemarin memiliki tingkat toksisitas yang sangat tinggi." },
+    { from: "hans", text: "Berdasarkan hasil pengujian sebelumnya, paparan terhadap zat tersebut berpotensi menyebabkan kerusakan sistem saraf yang serius." },
+    { from: "hans", text: "Ada kemungkinan lain sebetulnya. Jika tidak menyebabkan kematian, kerusakan yang ditimbulkan bisa saja memengaruhi sistem saraf secara permanen." },
+    { from: "hans", text: "Termasuk kehilangan fungsi motorik, alias lumpuh total." },
+
+    { from: "mavin", text: "wah... mungkin saya sebentar lagi prof" },
+
+    { from: "hans", text: "Bisa jadi, tapi jangan ya" },
+    { from: "hans", text: "Kamu mahasiswi kebanggaan saya" },
+
+    { from: "mavin", text: "haha, terima kasih loh prof🥲" },
+    { from: "mavin", text: "tapi saya beneran gak kenapa-napa kok prof." },
+    { from: "mavin", text: "nanti sore saya mau coba ke dokter juga" },
+
+    { from: "hans", text: "Baik kalau begitu" },
+    { from: "hans", text: "Kabari saya kalau ada apa-apa" },
+
+    { from: "mavin", text: "prof tidak mau coba neliti badan saya?" },
+
+    { from: "hans", text: "Kamu pikir saya mad scientist atau apa?" },
+    { from: "hans", text: "Keselamatan kamu jauh lebih penting daripada penelitian saya" },
+
+    { from: "mavin", text: "maaf prof🙇🏻‍♀️" },
+    { from: "mavin", text: "tapi saya boleh tanya sesuatu tidak prof?" },
+
+    { from: "hans", text: "Tanya saja" },
+
+    { from: "mavin", text: "sebetulnya tujuan dari eksperimen prof hans itu apa? kenapa bisa kepikiran untuk menyatukan banyak genetik ke dalam satu spesimen?" },
+
+    { from: "hans", text: "Untuk melihat sejauh mana kemampuan suatu organisme dapat berubah melalui rekayasa genetik." },
+    { from: "hans", text: "Saya hanya ingin memahami potensi biologis makhluk hidup dan sejauh mana perubahan genetik dapat memengaruhi kemampuan mereka. Tidak lebih." },
+
+    { from: "mavin", text: "tapi racikannya berpotensi menyebabkan kematian jika diaplikasikan kepada manusia. kenapa bisa disimpulkan seperti itu" },
+
+    { from: "hans", text: "Saya juga belum bisa memastikan sepenuhnya. Saya pernah melakukan pengujian pada tikus, tetapi spesimen tersebut mati sekitar dua belas jam setelah paparan." },
+    { from: "hans", text: "Saya belum berhasil mengetahui penyebab pastinya. Dan gigitan laba-laba yang kamu alami kemarin benar-benar di luar perkiraan saya." },
+    { from: "hans", text: "Saya minta maaf, Vin. Kalau sesuatu terjadi kepada kamu, kamu berhak menuntut saya." },
+
+    { from: "mavin", text: "tidak, prof. tubuh saya aman sejauh ini" },
+    { from: "mavin", text: "saya kabari secara berkala kalau ada sesuatu yang aneh" },
+
+    { from: "hans", text: "Baik, saya tunggu." }
+  ];
+
+  if (state.hansIndex === undefined) {
+    state.hansIndex = 0;
+  }
+
+  if (state.hansBusy === undefined) {
+    state.hansBusy = false;
+  }
+
+  async function playHansChat() {
+    if (state.hansBusy) return;
+    if (state.hansIndex >= conversation.length) return;
+
+    state.hansBusy = true;
+
+    try {
+      while (state.hansIndex < conversation.length) {
+        const message = conversation[state.hansIndex];
+
+        if (message.from === "mavin") {
+
+          if (message.drafts) {
+            for (const draft of message.drafts) {
+              await typeMavinMessage(draft, null, 130);
+              await wait(500);
+              await eraseMavinText(draft.length, 130);
+              await wait(350);
+            }
+          }
+
+          await typeMavinMessage(message.text, null, 65);
+          await wait(350);
+          await pressSendButton();
+          input.value = "";
+          input.style.height = "auto";
+
+          await sendMessage("mavin", message.text);
+
+        } else {
+          await sendMessage("hans", message.text);
+        }
+
+        state.hansIndex++;
+        await wait(450);
+      }
+
+    } finally {
+      state.hansBusy = false;
+    }
+  }
+
+  input.addEventListener("click", () => {
+    showVirtualKeyboard();
+    playHansChat();
+  });
+
+  return;
+}
+
 
 
 // SKENARIO CHAT KATHLYN
