@@ -5743,7 +5743,13 @@ virtualKeyboard.addEventListener("click", (event) => {
   async function sendMessage(from, text, image = null) {
   if (from !== "mavin") {
     showTyping();
-    await wait(1700);
+
+    const typingDuration = Math.min(
+      2200,
+      Math.max(450, 300 + text.length * 28)
+    );
+
+    await wait(typingDuration);
     hideTyping();
   }
 
@@ -6570,9 +6576,8 @@ if (scene.image) {
 
 // NELSA MEMBALAS
 for (const reply of scene.nelsa) {
-  await wait(700);
   await sendMessage("nelsa", reply);
-}
+  }
 
 state.stage++;
 
