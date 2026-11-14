@@ -5914,9 +5914,15 @@ if (contact === "hans") {
   }
 
   input.addEventListener("click", () => {
-    showVirtualKeyboard();
-    playHansChat();
-  });
+  const keyboardWasHidden =
+    !virtualKeyboard.classList.contains("visible");
+
+  showVirtualKeyboard();
+
+  if (keyboardWasHidden) return;
+
+  playHansChat();
+});
 
   return;
 }
