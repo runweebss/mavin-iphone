@@ -6305,10 +6305,16 @@ async function playDoctorFollowup() {
   }
 
   // TRIGGER GILIRAN MAVIN
-  input.addEventListener("click", () => {
-    showVirtualKeyboard();
-    playDoctorFollowup();
-  });
+input.addEventListener("click", () => {
+  const keyboardWasHidden =
+    !virtualKeyboard.classList.contains("visible");
+
+  showVirtualKeyboard();
+
+  if (keyboardWasHidden) return;
+
+  playDoctorFollowup();
+});
 
   return;
 }
