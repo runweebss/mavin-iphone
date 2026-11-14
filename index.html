@@ -6296,15 +6296,23 @@ async function playSpiderFollowup() {
 
 
   input.addEventListener("click", () => {
-    const keyboardWasHidden =
-      !virtualKeyboard.classList.contains("visible");
+  const keyboardWasHidden =
+    !virtualKeyboard.classList.contains("visible");
 
-    showVirtualKeyboard();
+  showVirtualKeyboard();
 
-    if (keyboardWasHidden) return;
+  // KLIK PERTAMA: TAMPILKAN KEYBOARD
+  if (keyboardWasHidden) return;
 
-    playSpiderFollowup();
-  });
+  // KLIK PERTAMA SETELAH NELSA MEMBALAS
+  if (state.spiderNeedsTrigger) {
+    state.spiderNeedsTrigger = false;
+    return;
+  }
+
+  // KLIK KEDUA: JALANKAN GILIRAN MAVIN
+  playSpiderFollowup();
+});
 
   return;
 }
