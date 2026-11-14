@@ -6237,7 +6237,7 @@ async function playDoctorFollowup() {
       // MAVIN MENGETIK DAN MENGIRIM PESAN
       if (step.mavin) {
         for (const message of step.mavin) {
-          await typeMavinMessage(message, null, 90);
+          await typeMavinMessage(message, null, 150);
           await wait(350);
           await pressSendButton();
 
