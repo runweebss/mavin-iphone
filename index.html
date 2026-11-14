@@ -4097,7 +4097,7 @@ function unlockPhone() {
 
   document.getElementById("homeScreen").classList.add("active");
   }
-  function showNelsaNotification() {
+  function showNelsaNotification(messageText = "hah kok baca notes? emang lo kenapa???") {
   const phone = document.querySelector(".phone");
 
   // UPDATE JUMLAH NOTIFIKASI WHATSAPP
@@ -4122,8 +4122,8 @@ function unlockPhone() {
       </div>
 
       <div class="wa-notification-message">
-        hah kok baca notes? emang lo kenapa???
-      </div>
+  ${messageText}
+</div>
     </div>
   `;
 
@@ -5926,9 +5926,38 @@ if (contact === "hans") {
         await wait(500);
       }
 
-    } finally {
-      state.hansBusy = false;
+      } finally {
+    state.hansBusy = false;
+  }
+
+  // EFEK BARANG JATUH SETELAH CHAT PROF HANS SELESAI
+  if (
+    state.hansIndex >= conversation.length &&
+    !state.hansEndingTriggered
+  ) {
+    state.hansEndingTriggered = true;
+
+    await wait(2500);
+
+    const fallingSound = new Audio(
+      "https://raw.githubusercontent.com/runweebss/mavin-iphone/b8300a9ff83f132267f080887d89debe40a0b39d/mavins_barang_jatuh_sound_effect.mp3"
+    );
+
+    fallingSound.preload = "auto";
+
+    try {
+      await fallingSound.play();
+
+      await new Promise(resolve => {
+        fallingSound.addEventListener("ended", resolve, { once: true });
+      });
+    } catch (error) {
+      console.warn("Suara barang jatuh tidak dapat diputar:", error);
     }
+
+    await wait(2000);
+    showNelsaNotification("btw lo ngampus ga");
+  }
   }
 
   input.addEventListener("click", () => {
