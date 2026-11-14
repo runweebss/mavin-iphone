@@ -4192,6 +4192,60 @@ function showKathlynNotification() {
   }, 5000);
 }
 
+  function showNelsaDoctorNotification() {
+  const phone = document.querySelector(".phone");
+
+  const badge = document.getElementById("whatsappBadge");
+  badge.textContent = "11";
+  badge.classList.add("show");
+
+  const oldNotification = document.querySelector(".wa-notification");
+  if (oldNotification) oldNotification.remove();
+
+  const notification = document.createElement("div");
+  notification.className = "wa-notification";
+
+  notification.innerHTML = `
+    <div class="wa-notification-icon">
+      <img src="https://raw.githubusercontent.com/runweebss/mavin-iphone/b967a64e999208da150c237490bfdf76f9b72c94/whatsapp%20logo.png" alt="WhatsApp">
+    </div>
+    <div class="wa-notification-content">
+      <div class="wa-notification-top">
+        <span class="wa-notification-name">yang mulia nelsa</span>
+        <span class="wa-notification-time">now</span>
+      </div>
+      <div class="wa-notification-message">
+        tapi lo udah ke dokter gak?
+      </div>
+    </div>
+  `;
+
+  notification.addEventListener("click", function() {
+    notification.remove();
+
+    if (window.waChatStates?.nelsa) {
+      window.waChatStates.nelsa.startDoctorFollowup = true;
+    }
+
+    openApp("WhatsApp");
+    openWhatsAppRoom("nelsa");
+  });
+
+  phone.appendChild(notification);
+
+  requestAnimationFrame(() => {
+    notification.classList.add("show");
+  });
+
+  setTimeout(() => {
+    notification.classList.remove("show");
+
+    setTimeout(() => {
+      notification.remove();
+    }, 300);
+  }, 5000);
+  }
+
   
 /* MUSIC PLAYER VISUAL TOGGLE */
 
@@ -5783,9 +5837,19 @@ if (contact === "kathlyn") {
         await wait(500);
       }
 
-    } finally {
+        } finally {
       state.kathlynBusy = false;
-    }
+
+      if (
+        state.kathlynIndex >= conversation.length &&
+        !state.nelsaFollowupNotificationShown
+      ) {
+        state.nelsaFollowupNotificationShown = true;
+
+        await wait(1000);
+        showNelsaDoctorNotification();
+      }
+  }
   }
 
   // TRIGGER SETIAP BAGIAN BALASAN MAVIN
