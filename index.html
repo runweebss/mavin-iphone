@@ -5899,7 +5899,7 @@ if (contact === "hans") {
             }
           }
 
-          await typeMavinMessage(message, null, 150);
+          await typeMavinMessage(message.text, null, 70);
           await wait(350);
           await pressSendButton();
           input.value = "";
@@ -5995,11 +5995,11 @@ if (contact === "kathlyn") {
         // LALU TAMBAHKAN EMOJI
         if (message.text === "sama-sama👍🏻") {
 
-          await typeMavinMessage("sama-sama sayang", null, 150);
+          await typeMavinMessage("sama-sama sayang", null, 90);
 
           await wait(600);
 
-          await eraseMavinText(" sayang".length, 120);
+          await eraseMavinText(" sayang".length, 70);
 
           await wait(300);
 
@@ -6008,7 +6008,7 @@ if (contact === "kathlyn") {
           await wait(600);
 
         } else {
-          await typeMavinMessage(message.text, null, 150);
+          await typeMavinMessage(message.text, null, 70);
         }
 
         await wait(350);
