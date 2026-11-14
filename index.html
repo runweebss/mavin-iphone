@@ -5892,14 +5892,14 @@ if (contact === "hans") {
 
           if (message.drafts) {
             for (const draft of message.drafts) {
-              await typeMavinMessage(draft, null, 70);
+              await typeMavinMessage(draft, null, 80);
               await wait(500);
-              await eraseMavinText(draft.length, 90);
+              await eraseMavinText(draft.length, 1000);
               await wait(350);
             }
           }
 
-          await typeMavinMessage(message.text, null, 70);
+          await typeMavinMessage(message.text, null, 80);
           await wait(350);
           await pressSendButton();
           input.value = "";
@@ -6002,7 +6002,7 @@ if (contact === "kathlyn") {
 
           await wait(600);
 
-          await eraseMavinText(" sayang".length, 70);
+          await eraseMavinText(" sayang".length, 80);
 
           await wait(300);
 
@@ -6011,7 +6011,7 @@ if (contact === "kathlyn") {
           await wait(600);
 
         } else {
-          await typeMavinMessage(message.text, null, 70);
+          await typeMavinMessage(message.text, null, 80);
         }
 
         await wait(350);
