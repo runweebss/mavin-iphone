@@ -6305,17 +6305,10 @@ async function playSpiderFollowup() {
 
   showVirtualKeyboard();
 
-  // KLIK PERTAMA: TAMPILKAN KEYBOARD
+  // Keyboard baru dimunculkan, tunggu klik berikutnya
   if (keyboardWasHidden) return;
 
-  // KLIK PERTAMA SETELAH NELSA MEMBALAS
-  if (state.spiderNeedsTrigger) {
-    state.spiderNeedsTrigger = false;
-    return;
-  }
-    
-
-  // KLIK KEDUA: JALANKAN GILIRAN MAVIN
+  // Keyboard sudah terlihat, langsung jalankan Mavin
   playSpiderFollowup();
 });
 
