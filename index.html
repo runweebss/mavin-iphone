@@ -5861,39 +5861,163 @@ if (contact === "kathlyn") {
   return;
 }
 
-  // KELANJUTAN CHAT NELSA SETELAH NOTIFIKASI DOKTER
+  
+// KELANJUTAN CHAT NELSA SETELAH NOTIFIKASI DOKTER
 if (
   contact === "nelsa" &&
-  state.startDoctorFollowup &&
-  !state.doctorFollowupStarted
+  (state.startDoctorFollowup || state.doctorFollowupStarted)
 ) {
   state.startDoctorFollowup = false;
   state.doctorFollowupStarted = true;
 
-  (async () => {
-    // PESAN PERTAMA MUNCUL LANGSUNG
-    const firstMessage = {
-      from: "nelsa",
-      text: "tapi lo udah ke dokter gak?"
-    };
+  if (state.doctorFollowupIndex === undefined) {
+    state.doctorFollowupIndex = 0;
+  }
 
-    state.messages.push(firstMessage);
-    renderMessage(firstMessage);
+  if (!state.doctorFollowupSteps) {
+    state.doctorFollowupSteps = [
+      {
+        mavin: [
+          "itu foto semalem sih",
+          "aku juga udah mikir yang nggak-nggak loh nel, kirain bakal mati",
+          "tapi pas bangun malah ngerasa lebih sehat"
+        ],
+        nelsa: [
+          "halah",
+          "mana pap muka lo",
+          "kalo kusut gue paksa ke dokter y"
+        ]
+      },
+      {
+        image: "mavin-selca.jpg",
+        nelsa: ["?"]
+      },
+      {
+        mavin: ["?", "apa?"],
+        nelsa: ["ada yang kurang"]
+      },
+      {
+        mavin: ["apa yang kurang"],
+        nelsa: ["tumben ga pake kacamata?"]
+      },
+      {
+        mavin: [
+          "loh",
+          "iya loh",
+          "dari tadi",
+          "kok gak burem ya"
+        ],
+        nelsa: ["sembuh kah"]
+      },
+      {
+        mavin: [
+          "mana mungkin rabun setebel itu sembuh gitu aja"
+        ],
+        nelsa: ["coba pake dulu kacamatanya"]
+      },
+      {
+        delayBeforeMavin: 180000,
+        mavin: ["...."],
+        nelsa: ["gimana?"]
+      },
+      {
+        mavin: ["burem"],
+        nelsa: ["nah kan"]
+      }
+    ];
+  }
 
-    // JEDA SEBELUM NELSA MENGETIK LAGI
-    await wait(1300);
+  async function playDoctorFollowup() {
+    if (
+      state.doctorFollowupBusy ||
+      !state.doctorFollowupReadyForMavin
+    ) return;
 
-    // PESAN KEDUA, DENGAN INDIKATOR TYPING
-    await sendMessage(
-      "nelsa",
-      "mending ke dokter aja deh kalo sebengkak itu, takutnya kenapa-napa"
-    );
+    if (
+      state.doctorFollowupIndex >=
+      state.doctorFollowupSteps.length
+    ) return;
 
-    state.doctorFollowupReadyForMavin = true;
-  })();
+    state.doctorFollowupBusy = true;
+
+    try {
+      const step =
+        state.doctorFollowupSteps[state.doctorFollowupIndex];
+
+      // JEDA BEBERAPA MENIT SEBELUM MAVIN MENGIRIM ....
+      if (step.delayBeforeMavin) {
+        await wait(step.delayBeforeMavin);
+      }
+
+      // MAVIN MENGIRIM FOTO
+      if (step.image) {
+        await simulatePhotoSelection(step.image);
+        await wait(200);
+        await sendMessage("mavin", "", step.image);
+      }
+
+      // MAVIN MENGETIK DAN MENGIRIM PESAN
+      if (step.mavin) {
+        for (const message of step.mavin) {
+          await typeMavinMessage(message, null, 90);
+          await wait(350);
+          await pressSendButton();
+
+          input.value = "";
+          input.style.height = "auto";
+
+          await sendMessage("mavin", message);
+          await wait(400);
+        }
+      }
+
+      // NELSA MEMBALAS OTOMATIS
+      for (const reply of step.nelsa) {
+        await wait(600);
+        await sendMessage("nelsa", reply);
+      }
+
+      state.doctorFollowupIndex++;
+      state.doctorFollowupReadyForMavin = true;
+
+    } finally {
+      state.doctorFollowupBusy = false;
+    }
+  }
+
+  // PEMBUKA HANYA DIKIRIM SATU KALI
+  if (!state.doctorFollowupOpeningStarted) {
+    state.doctorFollowupOpeningStarted = true;
+
+    (async () => {
+      const firstMessage = {
+        from: "nelsa",
+        text: "tapi lo udah ke dokter gak?"
+      };
+
+      state.messages.push(firstMessage);
+      renderMessage(firstMessage);
+
+      await wait(1300);
+
+      await sendMessage(
+        "nelsa",
+        "mending ke dokter aja deh kalo sebengkak itu, takutnya kenapa-napa"
+      );
+
+      state.doctorFollowupReadyForMavin = true;
+    })();
+  }
+
+  // TRIGGER GILIRAN MAVIN
+  input.addEventListener("click", () => {
+    showVirtualKeyboard();
+    playDoctorFollowup();
+  });
 
   return;
-  }
+}
+
 
 
   // PESAN NELSA OTOMATIS SETELAH CHAT DIBUKA
