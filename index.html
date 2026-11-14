@@ -6287,14 +6287,6 @@ async function playSpiderFollowup() {
 
   } finally {
     state.spiderFollowupBusy = false;
-
-    // RESET TRIGGER UNTUK GILIRAN MAVIN BERIKUTNYA
-    if (
-      state.spiderFollowupIndex < spiderConversation.length &&
-      spiderConversation[state.spiderFollowupIndex].from === "mavin"
-    ) {
-      state.spiderNeedsTrigger = true;
-    }
   }
 }
 
