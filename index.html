@@ -4129,6 +4129,13 @@ function unlockPhone() {
 
   notification.addEventListener("click", function() {
   notification.remove();
+
+  if (messageText === "btw lo ngampus ga") {
+    if (window.waChatStates?.nelsa) {
+      window.waChatStates.nelsa.startSpiderFollowup = true;
+    }
+  }
+
   openApp("WhatsApp");
   openWhatsAppRoom("nelsa");
 });
