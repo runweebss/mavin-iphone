@@ -6231,45 +6231,69 @@ const spiderConversation = [
     state.spiderFollowupBusy = false;
   }
 
-  async function playSpiderFollowup() {
-    if (state.spiderFollowupBusy) return;
-    if (state.spiderFollowupIndex >= spiderConversation.length) return;
+  
+async function playSpiderFollowup() {
+  if (state.spiderFollowupBusy) return;
+  if (state.spiderFollowupIndex >= spiderConversation.length) return;
 
-    state.spiderFollowupBusy = true;
+  state.spiderFollowupBusy = true;
 
-    try {
-      while (state.spiderFollowupIndex < spiderConversation.length) {
-        const message = spiderConversation[state.spiderFollowupIndex];
+  try {
 
-        
-if (message.image) {
-  await simulatePhotoSelection(message.image);
-  await wait(200);
-  await sendMessage("mavin", "", message.image);
+    // GILIRAN MAVIN
+    while (
+      state.spiderFollowupIndex < spiderConversation.length &&
+      spiderConversation[state.spiderFollowupIndex].from === "mavin"
+    ) {
+      const message = spiderConversation[state.spiderFollowupIndex];
 
-} else if (message.from === "mavin") {
-  await typeMavinMessage(message.text, null, 70);
-  await wait(350);
-  await pressSendButton();
+      if (message.image) {
+        await simulatePhotoSelection(message.image);
+        await wait(200);
+        await sendMessage("mavin", "", message.image);
 
-  input.value = "";
-  input.style.height = "auto";
+      } else {
+        await typeMavinMessage(message.text, null, 70);
+        await wait(350);
+        await pressSendButton();
 
-  await sendMessage("mavin", message.text);
+        input.value = "";
+        input.style.height = "auto";
 
-} else {
-  await wait(600);
-  await sendMessage("nelsa", message.text);
-}
-
-
-        state.spiderFollowupIndex++;
-        await wait(450);
+        await sendMessage("mavin", message.text);
       }
-    } finally {
-      state.spiderFollowupBusy = false;
+
+      state.spiderFollowupIndex++;
+      await wait(450);
+    }
+
+    // GILIRAN NELSA: BALAS OTOMATIS
+    while (
+      state.spiderFollowupIndex < spiderConversation.length &&
+      spiderConversation[state.spiderFollowupIndex].from === "nelsa"
+    ) {
+      const message = spiderConversation[state.spiderFollowupIndex];
+
+      await wait(600);
+      await sendMessage("nelsa", message.text);
+
+      state.spiderFollowupIndex++;
+      await wait(450);
+    }
+
+  } finally {
+    state.spiderFollowupBusy = false;
+
+    // RESET TRIGGER UNTUK GILIRAN MAVIN BERIKUTNYA
+    if (
+      state.spiderFollowupIndex < spiderConversation.length &&
+      spiderConversation[state.spiderFollowupIndex].from === "mavin"
+    ) {
+      state.spiderNeedsTrigger = true;
     }
   }
+}
+
 
   input.addEventListener("click", () => {
     const keyboardWasHidden =
