@@ -6231,6 +6231,10 @@ const spiderConversation = [
     state.spiderFollowupBusy = false;
   }
 
+  if (state.spiderNeedsTrigger === undefined) {
+  state.spiderNeedsTrigger = false;
+}
+
   
 async function playSpiderFollowup() {
   if (state.spiderFollowupBusy) return;
@@ -6309,6 +6313,7 @@ async function playSpiderFollowup() {
     state.spiderNeedsTrigger = false;
     return;
   }
+    
 
   // KLIK KEDUA: JALANKAN GILIRAN MAVIN
   playSpiderFollowup();
