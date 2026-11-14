@@ -6043,10 +6043,16 @@ if (contact === "kathlyn") {
   }
 
   // TRIGGER SETIAP BAGIAN BALASAN MAVIN
-  input.addEventListener("click", () => {
-    showVirtualKeyboard();
-    playKathlynChat();
-  });
+input.addEventListener("click", () => {
+  const keyboardWasHidden =
+    !virtualKeyboard.classList.contains("visible");
+
+  showVirtualKeyboard();
+
+  if (keyboardWasHidden) return;
+
+  playKathlynChat();
+});
 
   return;
 }
