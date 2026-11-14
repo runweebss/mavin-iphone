@@ -4127,12 +4127,28 @@ function unlockPhone() {
     </div>
   `;
 
-  notification.addEventListener("click", function() {
+notification.addEventListener("click", function() {
   notification.remove();
 
   if (messageText === "btw lo ngampus ga") {
-    if (window.waChatStates?.nelsa) {
-      window.waChatStates.nelsa.startSpiderFollowup = true;
+    const nelsaState = window.waChatStates?.nelsa;
+
+    if (nelsaState) {
+      const alreadyAdded = nelsaState.messages.some(
+        message =>
+          message.from === "nelsa" &&
+          message.text === "btw lo ngampus ga"
+      );
+
+      if (!alreadyAdded) {
+        nelsaState.messages.push({
+          from: "nelsa",
+          text: "btw lo ngampus ga",
+          time: "10:32"
+        });
+      }
+
+      nelsaState.startSpiderFollowup = true;
     }
   }
 
@@ -6127,8 +6143,6 @@ if (
 
   
 const spiderConversation = [
-  { from: "nelsa", text: "btw lo ngampus ga" },
-
   { from: "mavin", text: "nel" },
   { from: "mavin", text: "hp aku nempel di tangan" },
 
