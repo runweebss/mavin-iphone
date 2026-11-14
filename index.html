@@ -6338,15 +6338,13 @@ input.addEventListener("click", () => {
 if (!state.started) {
   state.started = true;
 
-  (async () => {
-    await wait(2800);
-
+    (async () => {
     await sendMessage(
       "nelsa",
       "ga usah pake teka-teki segala deh"
     );
 
-    await wait(1300);
+    await wait(400);
 
     await sendMessage(
       "nelsa",
@@ -6575,8 +6573,9 @@ if (scene.image) {
 }
 
 // NELSA MEMBALAS
-for (const reply of scene.nelsa) {
-  await sendMessage("nelsa", reply);
+for (let i = 0; i < scene.nelsa.length; i++) {
+  await wait(i === 0 ? 3000 : 400);
+  await sendMessage("nelsa", scene.nelsa[i]);
   }
 
 state.stage++;
