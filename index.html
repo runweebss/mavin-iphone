@@ -7794,6 +7794,8 @@ function lockPhone() {
   document.getElementById("homeScreen").classList.remove("active");
 
   const lock = document.getElementById("lockScreen");
+  const lockIcon = document.getElementById("lockIcon");
+lockIcon.classList.remove("is-unlocked");
   lock.style.visibility = "visible";
   lock.style.opacity = "1";
 
