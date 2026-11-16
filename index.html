@@ -3398,12 +3398,23 @@ overscroll-behavior: contain;
 
   <div class="lock-shade"></div>
 
-  <header class="status">
-    <span id="lockStatusTime">10:24</span>
-    <div class="status-right">
-      <div class="signal"><i></i><i></i><i></i><i></i></div>
-      <div class="battery"></div>
+  <header class="status lock-status">
+  <span class="lock-carrier">Telkomsel</span>
+
+  <div class="status-right">
+    <div class="signal">
+      <i></i><i></i><i></i><i></i>
     </div>
+
+    <svg class="wifi-icon" viewBox="0 0 24 24">
+      <path d="M2 8.5a15 15 0 0 1 20 0"/>
+      <path d="M5 12a10.5 10.5 0 0 1 14 0"/>
+      <path d="M8.5 15.5a5.5 5.5 0 0 1 7 0"/>
+      <circle cx="12" cy="19" r="1" fill="currentColor" stroke="none"/>
+    </svg>
+
+    <div class="battery"></div>
+  </div>
   </header>
 
   <div class="lock-icon" id="lockIcon">
