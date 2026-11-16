@@ -115,39 +115,42 @@ button {
   color: white;
 }
 
-  .status-svg-wifi {
+.lock-status .status-right {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: white;
+}
+
+.lock-status .signal {
+  display: flex;
+  align-items: flex-end;
+}
+
+.lock-status .status-svg-wifi {
+  display: block;
   width: 21px;
   height: 20px;
+  background: transparent;
   fill: none;
-  stroke: currentColor;
+  stroke: white;
   stroke-width: 2.4;
   stroke-linecap: round;
 }
 
-.status-svg-battery {
+.lock-status .status-svg-battery {
+  display: block;
   width: 34px;
   height: 18px;
+  background: transparent;
   fill: none;
-  stroke: currentColor;
+  stroke: white;
   stroke-width: 1.5;
 }
 
-.status-svg-battery .battery-fill {
-  fill: currentColor;
+.lock-status .status-svg-battery .battery-fill {
+  fill: white;
   stroke: none;
-}
-
-.lock-status .status-right {
-  color: white;
-}
-
-.wifi-icon {
-  width: 20px;
-  height: 20px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 2.2;
-  stroke-linecap: round;
 }
 
 /* LOCK SCREEN */
