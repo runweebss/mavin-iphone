@@ -298,7 +298,7 @@ button {
   font-size: 28px;
 }
 
-..lock-bottom {
+.lock-bottom {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -309,7 +309,7 @@ button {
 
 .lock-hint {
   position: absolute;
-  bottom: 8%;
+  bottom: 5%;
   left: 0;
   width: 100%;
   font-size: 14px;
@@ -3581,50 +3581,56 @@ overscroll-behavior: contain;
   </button>
 
     <button class="lock-action" id="cameraButton" aria-label="Camera">
-      <<svg viewBox="0 0 64 64" aria-hidden="true">
+  <svg viewBox="0 0 64 64" aria-hidden="true">
 
-  <!-- Badan kamera -->
-  <path
-    d="
-      M10 16
-      H19
-      L24 10
-      H40
-      L45 16
-      H54
-      C57.5 16 60 18.5 60 22
-      V47
-      C60 51 57.5 54 54 54
-      H10
-      C6.5 54 4 51 4 47
-      V22
-      C4 18.5 6.5 16 10 16
-      Z
-    "
-    fill="white"
-  />
+    <!-- Camera body -->
+    <path
+      d="
+        M10 15
+        H20
+        L24 9
+        Q25 8 27 8
+        H37
+        Q39 8 40 10
+        L44 15
+        H54
+        Q60 15 60 21
+        V47
+        Q60 54 53 54
+        H11
+        Q4 54 4 47
+        V22
+        Q4 15 10 15
+        Z
+      "
+      fill="white"
+    />
 
-  <!-- Lensa -->
-  <circle
-    cx="32" cy="34"
-    r="13"
-    fill="#171717"
-  />
+    <!-- Camera lens outer ring -->
+    <circle
+      cx="32"
+      cy="34"
+      r="13"
+      fill="#171717"
+    />
 
-  <circle
-    cx="32" cy="34"
-    r="9.5"
-    fill="white"
-  />
+    <!-- Camera lens inner -->
+    <circle
+      cx="32"
+      cy="34"
+      r="9.5"
+      fill="white"
+    />
 
-  <!-- Flash kamera -->
-  <circle
-    cx="49" cy="23"
-    r="2.5"
-    fill="#171717"
-  />
+    <!-- Flash dot -->
+    <circle
+      cx="49"
+      cy="23"
+      r="2.5"
+      fill="#171717"
+    />
 
-      </svg>
+  </svg>
     </button>
   </div>
 
