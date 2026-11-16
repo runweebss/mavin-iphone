@@ -3312,31 +3312,54 @@ overscroll-behavior: contain;
 
   <!-- LOCK SCREEN -->
   <section class="lock-screen" id="lockScreen">
-    <img
-      class="lock-wallpaper"
-      src="alohomora-lockscreen.jpg"
-      alt="Lock screen wallpaper"
-      onerror="this.style.display='none';document.getElementById('lockScreen').style.backgroundImage='linear-gradient(135deg,#665d50,#080808)'"
-    >
-    <div class="lock-shade"></div>
+  <img
+    class="lock-wallpaper"
+    src="alohomora-lockscreen.jpg"
+    alt="Lock screen wallpaper"
+    onerror="this.style.display='none';document.getElementById('lockScreen').style.backgroundImage='linear-gradient(135deg,#665d50,#080808)'"
+  >
 
-    <header class="status">
-  <span id="lockStatusTime">10:24</span>
-  <div class="status-right">
-    <div class="signal"><i></i><i></i><i></i><i></i></div>
-    <div class="battery"></div>
+  <div class="lock-shade"></div>
+
+  <header class="status">
+    <span id="lockStatusTime">10:24</span>
+    <div class="status-right">
+      <div class="signal"><i></i><i></i><i></i><i></i></div>
+      <div class="battery"></div>
+    </div>
+  </header>
+
+  <div class="lock-icon" id="lockIcon">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="4" y="10" width="16" height="12" rx="2"/>
+      <path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+    </svg>
   </div>
-    </header>
 
-    <div class="lock-clock">
-      <div class="lock-date" id="lockDate">Thursday, October 29</div>
-      <div class="lock-time" id="lockTime">10:24</div>
-    </div>
+  <div class="lock-clock">
+    <div class="lock-time" id="lockTime">10:24</div>
+    <div class="lock-date" id="lockDate">Thursday, October 29</div>
+  </div>
 
-    <div class="lock-bottom">
-      <div class="lock-hint">Swipe up to open</div>
-      <div class="swipe-indicator" aria-hidden="true"></div>
-    </div>
+  <div class="lock-phone-title">Mavin's Phone</div>
+
+  <div class="lock-actions">
+    <button class="lock-action" id="flashButton" aria-label="Flashlight">
+      <span>◉</span>
+    </button>
+
+    <button class="lock-action" id="cameraButton" aria-label="Camera">
+      <svg viewBox="0 0 24 24">
+        <path d="M3 7h4l2-3h6l2 3h4v13H3z"/>
+        <circle cx="12" cy="13" r="4"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="lock-bottom">
+    <div class="lock-hint">Swipe up to unlock</div>
+    <div class="swipe-indicator" aria-hidden="true"></div>
+  </div>
   </section>
 
   <!-- PASSCODE -->
