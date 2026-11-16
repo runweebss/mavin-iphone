@@ -4634,7 +4634,37 @@ async function openCamera() {
 }
 
 
-function openApp(name) {
+const APP_STATUS_THEMES = {
+  "WhatsApp":   { bg: "#d6d1c8", color: "#171717" },
+  "Calendar":   { bg: "#ffffff", color: "#171717" },
+  "Weather":    { bg: "#397fbd", color: "#ffffff" },
+  "Instagram":  { bg: "#101010", color: "#ffffff" },
+  "X":          { bg: "#000000", color: "#ffffff" },
+  "Photos":     { bg: "#f9f9fb", color: "#171717" },
+  "Notes":      { bg: "#f2f2f7", color: "#171717" },
+  "YouTube":    { bg: "#ffffff", color: "#171717" },
+  "Camera":     { bg: "#000000", color: "#ffffff" },
+  "Calculator": { bg: "#000000", color: "#ffffff" },
+  "Gmail":      { bg: "#ffffff", color: "#171717" },
+  "Settings":   { bg: "#f2f2f7", color: "#171717" }
+};
+
+function setAppStatusTheme(name) {
+  const phone = document.querySelector(".phone");
+  const theme = APP_STATUS_THEMES[name];
+
+  if (!phone) return;
+
+  if (!theme) {
+    phone.style.removeProperty("--app-status-bg");
+    phone.style.removeProperty("--app-status-color");
+    return;
+  }
+
+  phone.style.setProperty("--app-status-bg", theme.bg);
+  phone.style.setProperty("--app-status-color", theme.color);
+}
+  function openApp(name) {
   if (name === "WhatsApp") {
     const activeContact = window.waActiveChatContact;
     const activeState = window.waChatStates?.[activeContact];
