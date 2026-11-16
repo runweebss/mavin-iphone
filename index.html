@@ -129,8 +129,8 @@ button {
 
 .lock-status .status-svg-wifi {
   display: block;
-  width: 24px;
-  height: 17px;
+  width: 28px;
+  height: 21px;
   background: transparent;
   fill: white;
   stroke: none;
@@ -3469,33 +3469,45 @@ overscroll-behavior: contain;
   </div>
 
   <!-- WIFI -->
-  <svg class="status-svg-wifi" viewBox="0 0 24 20">
+  <svg class="status-svg-wifi" viewBox="0 0 64 48"
+     xmlns="http://www.w3.org/2000/svg">
 
-    <path d="
-      M1 5.5
-      C7 -0.5 17 -0.5 23 5.5
-      L20 9
-      C15.5 4.5 8.5 4.5 4 9
+  <!-- Lengkungan paling luar -->
+  <path
+    d="
+      M4 13
+      C20 -1 44 -1 60 13
+      L52 21
+      C40 11 24 11 12 21
       Z
-    "/>
+    "
+    fill="white"
+  />
 
-    <path d="
-      M5 11
-      C9 7 15 7 19 11
-      L16 14.5
-      C13.5 12 10.5 12 8 14.5
+  <!-- Lengkungan tengah -->
+  <path
+    d="
+      M14 29
+      C24 20 40 20 50 29
+      L42 37
+      C36 32 28 32 22 37
       Z
-    "/>
+    "
+    fill="white"
+  />
 
-    <path d="
-      M9 16
-      C10.8 14.5 13.2 14.5 15 16
-      L12 20
+  <!-- Ujung bawah -->
+  <path
+    d="
+      M25 42
+      C29 38 35 38 39 42
+      L32 48
       Z
-    "/>
+    "
+    fill="white"
+  />
 
   </svg>
-
   <!-- BATTERY -->
   <svg class="status-svg-battery" viewBox="0 0 36 18">
 
