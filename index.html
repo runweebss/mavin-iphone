@@ -3506,10 +3506,21 @@ overscroll-behavior: contain;
     <div class="lock-date" id="lockDate">Thursday, October 29</div>
   </div>
 
-  <div class="lock-actions">
-    <button class="lock-action" id="flashButton" aria-label="Flashlight">
-      <span>◉</span>
-    </button>
+  <button class="lock-action" id="flashButton">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path
+      d="M8 3h8v3l-1.5 3.5V20a1 1 0 0 1-1 1h-3a1 1 0 0 1-1-1V9.5L8 6V3Z"
+      fill="currentColor"
+    />
+    <path
+      d="M8 6h8"
+      stroke="#171717"
+      stroke-width="1.5"
+    />
+    <rect x="10.5" y="11" width="3" height="4" rx="1.5" fill="#171717"/>
+    <circle cx="12" cy="13.5" r=".7" fill="white"/>
+  </svg>
+  </button>
 
     <button class="lock-action" id="cameraButton" aria-label="Camera">
       <svg viewBox="0 0 24 24">
