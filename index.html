@@ -4681,10 +4681,12 @@ function setAppStatusTheme(name) {
   }
   
   const screen = document.getElementById("appScreen");
-  const title = document.getElementById("appTitle");
-  const content = document.getElementById("appContent");
+const title = document.getElementById("appTitle");
+const content = document.getElementById("appContent");
 
-  title.textContent = name;
+setAppStatusTheme(name);
+
+title.textContent = name;
   
   screen.classList.toggle(
   "dark-status",
