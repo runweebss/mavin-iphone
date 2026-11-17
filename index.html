@@ -4453,7 +4453,6 @@ lockScreen.addEventListener("mouseup", function(event) {
 });
 
 
-
 /* PASSCODE */
 
 let lockIconOriginalParent = null;
@@ -4546,6 +4545,9 @@ function unlockPhone() {
 
   setTimeout(showNelsaNotification, 2000);
 }
+
+function showNelsaNotification(messageText = "hah kok baca notes? emang lo kenapa???") {
+  const phone = document.querySelector(".phone");
 
   // UPDATE JUMLAH NOTIFIKASI WHATSAPP
   const badge = document.getElementById("whatsappBadge");
