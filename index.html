@@ -4493,6 +4493,7 @@ function hidePasscode() {
   }
 }
 
+
 function enterPin(number) {
   if (enteredPin.length >= 4) return;
 
@@ -4502,10 +4503,12 @@ function enterPin(number) {
   document.getElementById("pinError").textContent = "";
 
   if (enteredPin.length === 4) {
-    confirmPin();
+    setTimeout(() => {
+      confirmPin();
+    }, 250);
   }
 }
-
+  
 function confirmPin() {
   if (enteredPin.length !== 4) return;
 
