@@ -3714,9 +3714,9 @@ overscroll-behavior: contain;
       <button class="pin-key" onclick="enterPin('7')">7<small>PQRS</small></button>
       <button class="pin-key" onclick="enterPin('8')">8<small>TUV</small></button>
       <button class="pin-key" onclick="enterPin('9')">9<small>WXYZ</small></button>
-      <button class="pin-key" style="visibility:hidden"></button>
+      <button class="pin-key" onclick="deletePin()" style="font-size:24px">×</button>
       <button class="pin-key" onclick="enterPin('0')">0<small>&nbsp;</small></button>
-      <button class="pin-key" onclick="deletePin()" style="font-size:14px">Delete</button>
+      <button class="pin-key" onclick="confirmPin()" style="font-size:14px">OK</button>
     </div>
 
     <div class="pin-bottom">
@@ -4284,20 +4284,24 @@ function enterPin(number) {
 
   enteredPin += number;
   updatePinDots();
+  document.getElementById("pinError").textContent = "";
+}
 
-  if (enteredPin.length === 4) {
-    if (enteredPin === CORRECT_PIN) {
-      setTimeout(unlockPhone, 180);
-    } else {
-      document.getElementById("pinError").textContent =
-        "Incorrect passcode. Try again.";
+function confirmPin() {
+  if (enteredPin.length !== 4) return;
 
-      setTimeout(() => {
-        enteredPin = "";
-        updatePinDots();
-        document.getElementById("pinError").textContent = "";
-      }, 650);
-    }
+  if (enteredPin === CORRECT_PIN) {
+    unlockPhone();
+  } else {
+    document.getElementById("pinError").textContent =
+      "Incorrect passcode. Try again.";
+
+    setTimeout(() => {
+      enteredPin = "";
+      updatePinDots();
+      document.getElementById("pinError").textContent = "";
+    }, 650);
+  }
   }
 }
 
