@@ -2187,7 +2187,6 @@ button {
   color: #222;
 }
 
-
 /* FILTER BUTTONS */
 
 .wa-filters {
@@ -2199,22 +2198,31 @@ button {
   box-sizing: border-box !important;
   width: 100% !important;
   min-height: 42px !important;
-  overflow-x: hidden !important;
+  overflow: hidden !important;
 }
 
 .wa-filter {
   height: 34px !important;
-  padding: 0 12px !important;
+  padding: 0 8px !important;
   display: flex !important;
+  flex: 1 1 0 !important;
+  min-width: 0 !important;
   align-items: center !important;
   justify-content: center !important;
-  text-align: center !important;
-  line-height: 1 !important;
-  font-size: 13px !important;
-  box-sizing: border-box !important;
-  flex: 0 1 auto !important;
-  min-width: 0 !important;
   white-space: nowrap !important;
+  font-size: 13px !important;
+  line-height: 1 !important;
+  box-sizing: border-box !important;
+  border: 1px solid #dedede !important;
+  border-radius: 30px !important;
+  background: white !important;
+  color: #555 !important;
+}
+
+.wa-filter.active {
+  background: #d9f8dc !important;
+  border-color: #a8d9b0 !important;
+  color: #176b3b !important;
 }
 
 .wa-filter-add {
@@ -2225,7 +2233,6 @@ button {
   padding: 0 !important;
   font-size: 21px !important;
 }
-
 .wa-chat-list {
   flex: 1 1 auto !important;
   min-height: 0 !important;
