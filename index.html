@@ -96,6 +96,43 @@ button {
   color: inherit;
 }
 
+#homeScreen .status .status-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
+  width: fit-content;
+  flex: 0 0 auto;
+  margin-left: auto;
+  color: inherit;
+}
+
+#homeScreen .status .status-svg-wifi {
+  display: block;
+  width: 19px;
+  height: 15px;
+  background: transparent;
+  fill: currentColor;
+  stroke: none;
+  flex-shrink: 0;
+}
+
+#homeScreen .status .status-svg-battery {
+  display: block;
+  width: 25px;
+  height: 13px;
+  background: transparent;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  flex-shrink: 0;
+}
+
+#homeScreen .status .status-svg-battery .battery-fill {
+  fill: currentColor;
+  stroke: none;
+}
+
 #homeScreen .status .signal i {
   background: currentColor;
   transition: background-color .22s ease;
@@ -3735,11 +3772,69 @@ overscroll-behavior: contain;
     <div class="shade"></div>
 
     <header class="status">
-      <span id="homeStatusTime">10:24</span>
-      <div class="status-right">
-        <div class="signal"><i></i><i></i><i></i><i></i></div>
-        <div class="battery"></div>
-      </div>
+  <span id="homeStatusTime">10:24</span>
+
+  <div class="status-right">
+
+    <!-- WIFI -->
+    <svg class="status-svg-wifi" viewBox="0 0 64 48">
+      <path d="
+        M3 15
+        C19 -0.5 45 -0.5 61 15
+        C62.3 16.3 62.3 18.4 61 19.7
+        L56.2 24.4
+        C43 11.7 21 11.7 7.8 24.4
+        L3 19.7
+        C1.7 18.4 1.7 16.3 3 15
+        Z
+      "/>
+
+      <path d="
+        M13 27
+        C23.5 17.8 40.5 17.8 51 27
+        C52.2 28.1 52.2 30 51 31.2
+        L46.1 36
+        C38.2 28.7 25.8 28.7 17.9 36
+        L13 31.2
+        C11.8 30 11.8 28.1 13 27
+        Z
+      "/>
+
+      <path d="
+        M24.5 40
+        C28.5 36.2 35.5 36.2 39.5 40
+        L32 48
+        Z
+      "/>
+    </svg>
+
+    <!-- BATTERY -->
+    <svg class="status-svg-battery" viewBox="0 0 36 18">
+      <rect
+        x="1" y="1"
+        width="30" height="16"
+        rx="4"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+      />
+
+      <rect
+        class="battery-fill"
+        x="3" y="3"
+        width="8" height="12"
+        rx="2"
+      />
+
+      <rect
+        class="battery-fill"
+        x="33" y="5.5"
+        width="2.5" height="7"
+        rx="1.2"
+      />
+    </svg>
+
+  </div>
     </header>
 
     
