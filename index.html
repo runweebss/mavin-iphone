@@ -1088,26 +1088,15 @@ button {
 .home-indicator {
   position: absolute;
   z-index: 16;
-  bottom: 10px;
+  bottom: 2px;
   left: 50%;
   transform: translateX(-50%);
-  width: 36px;
-  height: 4px;
+  width: 150px;
+  height: 6px;
   border-radius: 10px;
   background: white;
-  animation: indicatorFloat 2s ease-in-out infinite;
   pointer-events: none;
 }
-
-@keyframes indicatorFloat {
-  0%, 100% {
-    transform: translate(-50%, 0);
-  }
-  50% {
-    transform: translate(-50%, -3px);
-  }
-}
-
 .app-screen.active {
   display: flex;
 }
