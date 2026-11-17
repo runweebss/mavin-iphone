@@ -3721,31 +3721,18 @@ body * {
   margin-right: 12px !important;
 }
 
-/* PLUS BUTTON: CENTER ALIGNMENT */
-.wa-top-right .wa-add-btn {
-  display: grid !important;
-  place-items: center !important;
+/* PLUS ICON POSITION ADJUSTMENT */
+.wa-top-right .wa-add-btn,
+.wa-filters .wa-filter-add {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 
-  width: 30px !important;
-  height: 30px !important;
-  min-width: 30px !important;
-  flex: 0 0 30px !important;
-
-  padding: 0 !important;
-  margin-right: -2px !important;
-
-  border: none !important;
-  border-radius: 50% !important;
-  background: #00AE59 !important;
-
-  color: #fff !important;
-  font-size: 25px !important;
-  font-weight: 300 !important;
+  padding: 0 0 4px !important;
   line-height: 1 !important;
-  text-align: center !important;
-
-  transform: none !important;
-}
+  box-sizing: border-box !important;
+  }
+  
 /* Chat rows */
 .wa-chat {
   grid-template-columns: 54px minmax(0, 1fr) 45px !important;
