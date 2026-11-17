@@ -2187,42 +2187,44 @@ button {
   color: #222;
 }
 
-.wa-filters {
-  display: flex;
-  gap: 9px;
-  padding: 0 20px 12px;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
 
-.wa-filters::-webkit-scrollbar {
-  display: none;
+/* FILTER BUTTONS */
+
+.wa-filters {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 7px !important;
+  padding: 0 12px !important;
+  box-sizing: border-box !important;
+  width: 100% !important;
+  min-height: 42px !important;
+  overflow-x: hidden !important;
 }
 
 .wa-filter {
-  flex: 0 0 auto;
-  padding: 9px 19px;
-  border: 1px solid #dedede;
-  border-radius: 25px;
-  background: white;
-  color: #666;
-  font-size: 15px;
-  font-weight: 600;
-}
-
-.wa-filter.active {
-  background: #dcf8d9;
-  border-color: #a8d5a5;
-  color: #315e36;
+  height: 34px !important;
+  padding: 0 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
+  line-height: 1 !important;
+  font-size: 13px !important;
+  box-sizing: border-box !important;
+  flex: 0 1 auto !important;
+  min-width: 0 !important;
+  white-space: nowrap !important;
 }
 
 .wa-filter-add {
-  width: 43px;
-  padding: 0;
-  font-size: 23px;
-  color: #111;
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  flex: 0 0 34px !important;
+  padding: 0 !important;
+  font-size: 21px !important;
 }
-
 
 .wa-chat-list {
   flex: 1 1 auto !important;
