@@ -229,13 +229,12 @@ button {
 
 .lock-icon {
   position: absolute;
-  top: 10%;
+  top: 8%;
   left: 50%;
   transform: translateX(-50%);
-  width: 34px;
-  height: 40px;
+  width: 28px;
+  height: 34px;
   z-index: 3;
-  transition: transform .3s ease;
 }
 
 .lock-icon svg {
@@ -258,10 +257,6 @@ button {
   transform-box: view-box;
   transform-origin: 48px 32px;
   transition: transform .45s ease;
-}
-
-.lock-icon.is-unlocked .lock-shackle {
-  transform: rotate(45deg);
 }
 
 .lock-clock {
@@ -441,6 +436,10 @@ button {
 
 .pin-key:active {
   background: #ffffff45;
+}
+
+.pin-key:last-child {
+  grid-column: 2;
 }
 
 .pin-key small {
@@ -3830,7 +3829,6 @@ overscroll-behavior: contain;
   <!-- PASSCODE -->
   <section class="passcode-screen" id="passcodeScreen">
     <div class="passcode-title">Enter Passcode</div>
-    <div class="passcode-subtitle">Enter your passcode to unlock iPhone</div>
 
     <div class="pin-dots" id="pinDots">
       <span class="pin-dot"></span>
@@ -3851,9 +3849,7 @@ overscroll-behavior: contain;
       <button class="pin-key" onclick="enterPin('7')">7<small>PQRS</small></button>
       <button class="pin-key" onclick="enterPin('8')">8<small>TUV</small></button>
       <button class="pin-key" onclick="enterPin('9')">9<small>WXYZ</small></button>
-      <button class="pin-key" onclick="deletePin()" style="font-size:24px">×</button>
       <button class="pin-key" onclick="enterPin('0')">0<small>&nbsp;</small></button>
-      <button class="pin-key" onclick="confirmPin()" style="font-size:14px">OK</button>
     </div>
 
     <div class="pin-bottom">
@@ -4514,28 +4510,22 @@ function updatePinDots() {
 
 function unlockPhone() {
   const lock = document.getElementById("lockScreen");
-  const lockIcon = document.getElementById("lockIcon");
   const passcode = document.getElementById("passcodeScreen");
   const home = document.getElementById("homeScreen");
 
-  // Tutup layar PIN
   passcode.classList.remove("active");
 
-  // Jalankan animasi gembok terbuka
-  lockIcon.classList.add("is-unlocked");
+  lock.style.opacity = "0";
+  lock.style.visibility = "hidden";
 
-  // Tunggu animasi selesai sebelum masuk home screen
-  setTimeout(() => {
-    lock.style.opacity = "0";
-    lock.style.visibility = "hidden";
+  home.classList.add("active");
 
-    home.classList.add("active");
+  document.getElementById("whatsappBadge").classList.add("show");
 
-    document.getElementById("whatsappBadge").classList.add("show");
-
-    setTimeout(showNelsaNotification, 2000);
-  }, 500);
-}
+  setTimeout(showNelsaNotification, 2000);
+  }
+  }
+  
   function showNelsaNotification(messageText = "hah kok baca notes? emang lo kenapa???") {
   const phone = document.querySelector(".phone");
 
