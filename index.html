@@ -4981,29 +4981,35 @@ async function openCamera() {
 
 .wa-top-right {
   margin-left: auto !important;
-  gap: 12px !important;
+  gap: 8px !important;
 }
 
-.wa-icon-btn {
-  width: 34px !important;
-  height: 34px !important;
-  min-width: 34px !important;
-  flex: 0 0 34px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-.wa-camera-btn {
+/* Lingkaran kamera */
+.wa-top-right .wa-camera-btn {
+  width: 38px !important;
+  height: 38px !important;
+  min-width: 38px !important;
+  flex: 0 0 38px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
   background: #f4f4f4 !important;
 }
 
-.wa-add-btn {
-  width: 36px !important;
-  height: 36px !important;
-  min-width: 36px !important;
-  flex-basis: 36px !important;
-  font-size: 27px !important;
+/* Ikon kamera di dalam lingkaran */
+.wa-camera-btn svg {
+  width: 21px !important;
+  height: 21px !important;
+}
+
+/* Tombol plus */
+.wa-top-right .wa-add-btn {
+  width: 40px !important;
+  height: 40px !important;
+  min-width: 40px !important;
+  flex: 0 0 40px !important;
+  padding: 0 !important;
+  border-radius: 50% !important;
+  font-size: 25px !important;
 }
 
 .wa-heading {
