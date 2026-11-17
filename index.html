@@ -5722,12 +5722,20 @@ function setAppStatusTheme(name) {
   if (!theme) {
     phone.style.removeProperty("--app-status-bg");
     phone.style.removeProperty("--app-status-color");
+    phone.style.removeProperty("--home-indicator-color");
     return;
   }
 
   phone.style.setProperty("--app-status-bg", theme.bg);
   phone.style.setProperty("--app-status-color", theme.color);
-}
+
+  const isDarkTheme = theme.color === "#ffffff";
+
+  phone.style.setProperty(
+    "--home-indicator-color",
+    isDarkTheme ? "#ffffff" : "#000000"
+  );
+  }
   function openApp(name) {
   if (name === "WhatsApp") {
     const activeContact = window.waActiveChatContact;
