@@ -2516,6 +2516,13 @@ button {
   border-radius: 10px;
   }
 
+  .wa-notification-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+  }
+
 .wa-notification-content {
   flex: 1;
   min-width: 0;
@@ -4440,10 +4447,50 @@ function unlockPhone() {
   notification.className = "wa-notification";
 
   notification.innerHTML = `
-    <div class="wa-notification-icon">
-  <div class="wa-notification-icon">
-  <img src="${WA_NOTIFICATION_ICON}" alt="WhatsApp">
+    
+<div class="wa-notification-icon">
+  <svg
+    viewBox="0 0 100 100"
+    xmlns="http://www.w3.org/2000/svg"
+    width="38"
+    height="38"
+  >
+    <rect
+      width="100"
+      height="100"
+      rx="22"
+      fill="#20D64A"
+    />
+
+    <path
+      d="M50 17
+      C31.8 17 17 31.8 17 50
+      C17 56.5 19 62.5 22.5 67.5
+      L17 83 L34 78.5
+      C38.8 81.5 44.2 83 50 83
+      C68.2 83 83 68.2 83 50
+      C83 31.8 68.2 17 50 17Z"
+      fill="none"
+      stroke="white"
+      stroke-width="5"
+      stroke-linejoin="round"
+    />
+
+    <path
+      d="M37 32
+      C35 32 32 36 32 40
+      C32 49 45 65 57 68
+      C62 69 68 64 68 60
+      C68 58 58 53 56 53
+      C54 53 52 57 50 57
+      C46 55 42 51 40 47
+      C40 45 44 43 44 41
+      C44 39 39 32 37 32Z"
+      fill="white"
+    />
+  </svg>
 </div>
+
     <div class="wa-notification-content">
       <div class="wa-notification-top">
         <span class="wa-notification-name">yang mulia nelsa</span>
@@ -4501,9 +4548,6 @@ setTimeout(() => {
   }
 
 
-const WA_NOTIFICATION_ICON = "data:image/webp;base64,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";
-
-
 function showKathlynNotification() {
   const phone = document.querySelector(".phone");
 
@@ -4519,10 +4563,50 @@ function showKathlynNotification() {
   notification.className = "wa-notification";
 
   notification.innerHTML = `
-    <div class="wa-notification-icon">
-      <div class="wa-notification-icon">
-  <img src="${WA_NOTIFICATION_ICON}" alt="WhatsApp">
+    
+<div class="wa-notification-icon">
+  <svg
+    viewBox="0 0 100 100"
+    xmlns="http://www.w3.org/2000/svg"
+    width="38"
+    height="38"
+  >
+    <rect
+      width="100"
+      height="100"
+      rx="22"
+      fill="#20D64A"
+    />
+
+    <path
+      d="M50 17
+      C31.8 17 17 31.8 17 50
+      C17 56.5 19 62.5 22.5 67.5
+      L17 83 L34 78.5
+      C38.8 81.5 44.2 83 50 83
+      C68.2 83 83 68.2 83 50
+      C83 31.8 68.2 17 50 17Z"
+      fill="none"
+      stroke="white"
+      stroke-width="5"
+      stroke-linejoin="round"
+    />
+
+    <path
+      d="M37 32
+      C35 32 32 36 32 40
+      C32 49 45 65 57 68
+      C62 69 68 64 68 60
+      C68 58 58 53 56 53
+      C54 53 52 57 50 57
+      C46 55 42 51 40 47
+      C40 45 44 43 44 41
+      C44 39 39 32 37 32Z"
+      fill="white"
+    />
+  </svg>
 </div>
+
     <div class="wa-notification-content">
       <div class="wa-notification-top">
         <span class="wa-notification-name">kathlyn faye</span>
@@ -4570,10 +4654,50 @@ function showKathlynNotification() {
   notification.className = "wa-notification";
 
   notification.innerHTML = `
-    <div class="wa-notification-icon">
-      <div class="wa-notification-icon">
-  <img src="${WA_NOTIFICATION_ICON}" alt="WhatsApp">
+    
+<div class="wa-notification-icon">
+  <svg
+    viewBox="0 0 100 100"
+    xmlns="http://www.w3.org/2000/svg"
+    width="38"
+    height="38"
+  >
+    <rect
+      width="100"
+      height="100"
+      rx="22"
+      fill="#20D64A"
+    />
+
+    <path
+      d="M50 17
+      C31.8 17 17 31.8 17 50
+      C17 56.5 19 62.5 22.5 67.5
+      L17 83 L34 78.5
+      C38.8 81.5 44.2 83 50 83
+      C68.2 83 83 68.2 83 50
+      C83 31.8 68.2 17 50 17Z"
+      fill="none"
+      stroke="white"
+      stroke-width="5"
+      stroke-linejoin="round"
+    />
+
+    <path
+      d="M37 32
+      C35 32 32 36 32 40
+      C32 49 45 65 57 68
+      C62 69 68 64 68 60
+      C68 58 58 53 56 53
+      C54 53 52 57 50 57
+      C46 55 42 51 40 47
+      C40 45 44 43 44 41
+      C44 39 39 32 37 32Z"
+      fill="white"
+    />
+  </svg>
 </div>
+
     <div class="wa-notification-content">
       <div class="wa-notification-top">
         <span class="wa-notification-name">yang mulia nelsa</span>
@@ -4625,10 +4749,50 @@ function showKathlynNotification() {
   notification.className = "wa-notification";
 
   notification.innerHTML = `
-    <div class="wa-notification-icon">
-      <div class="wa-notification-icon">
-  <img src="${WA_NOTIFICATION_ICON}" alt="WhatsApp">
+    
+<div class="wa-notification-icon">
+  <svg
+    viewBox="0 0 100 100"
+    xmlns="http://www.w3.org/2000/svg"
+    width="38"
+    height="38"
+  >
+    <rect
+      width="100"
+      height="100"
+      rx="22"
+      fill="#20D64A"
+    />
+
+    <path
+      d="M50 17
+      C31.8 17 17 31.8 17 50
+      C17 56.5 19 62.5 22.5 67.5
+      L17 83 L34 78.5
+      C38.8 81.5 44.2 83 50 83
+      C68.2 83 83 68.2 83 50
+      C83 31.8 68.2 17 50 17Z"
+      fill="none"
+      stroke="white"
+      stroke-width="5"
+      stroke-linejoin="round"
+    />
+
+    <path
+      d="M37 32
+      C35 32 32 36 32 40
+      C32 49 45 65 57 68
+      C62 69 68 64 68 60
+      C68 58 58 53 56 53
+      C54 53 52 57 50 57
+      C46 55 42 51 40 47
+      C40 45 44 43 44 41
+      C44 39 39 32 37 32Z"
+      fill="white"
+    />
+  </svg>
 </div>
+
     <div class="wa-notification-content">
       <div class="wa-notification-top">
         <span class="wa-notification-name">prof hans</span>
