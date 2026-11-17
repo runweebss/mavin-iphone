@@ -4973,6 +4973,39 @@ async function openCamera() {
   font-size: 29px;
 }
 
+/* TOP ACTION BUTTONS */
+.wa-top-actions {
+  justify-content: flex-end !important;
+  padding-right: 20px !important;
+}
+
+.wa-top-right {
+  margin-left: auto !important;
+  gap: 12px !important;
+}
+
+.wa-icon-btn {
+  width: 34px !important;
+  height: 34px !important;
+  min-width: 34px !important;
+  flex: 0 0 34px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.wa-camera-btn {
+  background: #f4f4f4 !important;
+}
+
+.wa-add-btn {
+  width: 36px !important;
+  height: 36px !important;
+  min-width: 36px !important;
+  flex-basis: 36px !important;
+  font-size: 27px !important;
+}
+
 .wa-heading {
   font-size: 34px;
   margin: 8px 20px 15px;
@@ -5330,13 +5363,15 @@ title.textContent = name;
     </div>
     <div class="wa-top-right">
       <button class="wa-icon-btn" aria-label="Camera">
-  <svg viewBox="0 0 24 24" width="22" height="22"
-       fill="none" stroke="currentColor"
-       stroke-width="1.8" stroke-linecap="round"
-       stroke-linejoin="round">
-    <path d="M3 8.5h4l1.5-2h7l1.5 2h4v11H3z"/>
-    <circle cx="12" cy="13.5" r="3.5"/>
-  </svg>
+  <svg viewBox="0 0 64 64" width="23" height="23">
+  <path
+    d="M10 21 Q10 17 15 17 H23 L27 13 H39 L43 17 H49 Q54 17 54 21 V44 Q54 48 49 48 H15 Q10 48 10 44 Z"
+    fill="#000"
+  />
+  <circle cx="32" cy="32" r="10" fill="white"/>
+  <circle cx="32" cy="32" r="7" fill="#000"/>
+  <circle cx="45" cy="23" r="2.3" fill="white"/>
+</svg>
 </button>
 <button class="wa-icon-btn wa-add-btn">+</button>
     </div>
