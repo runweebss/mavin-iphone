@@ -379,12 +379,24 @@ button {
   display: none;
   flex-direction: column;
   align-items: center;
-  padding: 12vh 30px 35px;
+  padding: 8vh 30px 35px;
   background: rgba(28,27,32,.97);
 }
 
 .passcode-screen.active {
   display: flex;
+}
+
+.passcode-lock-icon {
+  width: 28px;
+  height: 35px;
+  flex-shrink: 0;
+  margin-bottom: 45px;
+}
+
+.passcode-lock-icon svg {
+  width: 100%;
+  height: 100%;
 }
 
 .passcode-title {
@@ -3829,6 +3841,23 @@ overscroll-behavior: contain;
   <!-- PASSCODE -->
   <section class="passcode-screen" id="passcodeScreen">
     <div class="passcode-title">Enter Passcode</div>
+    <div class="passcode-lock-icon">
+  <svg viewBox="0 0 64 80" aria-hidden="true">
+    <path
+      d="M16 32V21a16 16 0 0 1 32 0v11"
+      fill="none"
+      stroke="white"
+      stroke-width="7"
+      stroke-linecap="round"
+    />
+    <rect
+      x="5" y="30"
+      width="54" height="46"
+      rx="9"
+      fill="white"
+    />
+  </svg>
+    </div>
 
     <div class="pin-dots" id="pinDots">
       <span class="pin-dot"></span>
@@ -4458,11 +4487,13 @@ lockScreen.addEventListener("mouseup", function(event) {
   }
 });
 
+
 /* PASSCODE */
 
 function showPasscode() {
   enteredPin = "";
   updatePinDots();
+
   document.getElementById("pinError").textContent = "";
   document.getElementById("passcodeScreen").classList.add("active");
 }
@@ -4476,7 +4507,12 @@ function enterPin(number) {
 
   enteredPin += number;
   updatePinDots();
+
   document.getElementById("pinError").textContent = "";
+
+  if (enteredPin.length === 4) {
+    confirmPin();
+  }
 }
 
 function confirmPin() {
@@ -4494,12 +4530,6 @@ function confirmPin() {
       document.getElementById("pinError").textContent = "";
     }, 650);
   }
-  }
-
-function deletePin() {
-  enteredPin = enteredPin.slice(0, -1);
-  updatePinDots();
-  document.getElementById("pinError").textContent = "";
 }
 
 function updatePinDots() {
@@ -4523,10 +4553,11 @@ function unlockPhone() {
   document.getElementById("whatsappBadge").classList.add("show");
 
   setTimeout(showNelsaNotification, 2000);
-  }
-  
-  function showNelsaNotification(messageText = "hah kok baca notes? emang lo kenapa???") {
+}
+
+function showNelsaNotification(messageText = "hah kok baca notes? emang lo kenapa???") {
   const phone = document.querySelector(".phone");
+
 
   // UPDATE JUMLAH NOTIFIKASI WHATSAPP
   const badge = document.getElementById("whatsappBadge");
