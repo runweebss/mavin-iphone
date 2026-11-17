@@ -660,6 +660,13 @@ button {
   filter: drop-shadow(0 1px 2px #0002);
 }
 
+.app svg {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  filter: drop-shadow(0 1px 2px #0002);
+}
+
 .app-name {
   width: 145%;
   text-align: center;
@@ -3857,7 +3864,20 @@ overscroll-behavior: contain;
     <section class="home-grid">
 
       <button class="app whatsapp" onclick="openApp('WhatsApp')">
-  <img src="whatsapp%20logo.png" alt="WhatsApp">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100" height="100" rx="22" fill="#25D366"/>
+  <path
+    d="M50 17C31.8 17 17 31.4 17 49.2c0 6.4 1.9 12.4 5.2 17.4L17 83l17.1-4.5c4.8 2.6 10.2 4 15.9 4C68.2 82.5 83 68.1 83 50.3S68.2 17 50 17Z"
+    fill="none"
+    stroke="white"
+    stroke-width="5"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M39 34c-2 0-4 3-4 6 0 8 12 23 23 26 4 1 8-2 8-5 0-2-7-6-9-6s-3 3-5 3c-3-1-8-6-9-9 0-2 3-3 3-5s-5-10-7-10Z"
+    fill="white"
+  />
+  </svg>
   <span class="app-badge" id="whatsappBadge">8</span>
   <span class="app-name">WhatsApp</span>
       </button>
