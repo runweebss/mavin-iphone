@@ -1149,8 +1149,7 @@ button {
   color: #222;
 }
   
-  /* HOME INDICATOR */
-
+/* HOME INDICATOR */
 .home-indicator {
   position: absolute;
   z-index: 16;
@@ -1160,9 +1159,9 @@ button {
   width: 120px;
   height: 5px;
   border-radius: 10px;
-  background: white;
+  background: var(--home-indicator-color, white) !important;
   pointer-events: none;
-}
+  }
 .app-screen.active {
   display: flex;
 }
