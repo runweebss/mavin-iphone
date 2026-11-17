@@ -4975,8 +4975,15 @@ async function openCamera() {
 
 /* TOP ACTION BUTTONS */
 .wa-top-actions {
-  justify-content: space-between !important;
-  padding: 0 20px !important;
+  justify-content: flex-end !important;
+  padding-right: 16px !important;
+}
+
+.wa-top-left .wa-icon-btn {
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  font-size: 17px !important;
 }
 
 .wa-top-right {
@@ -4984,33 +4991,38 @@ async function openCamera() {
   gap: 6px !important;
 }
 
-/* Lingkaran kamera */
-.wa-top-right button[aria-label="Camera"] {
-  width: 34px !important;
-  height: 34px !important;
-  min-width: 34px !important;
-  flex: 0 0 34px !important;
+/* CAMERA BUTTON */
+.wa-top-right .wa-camera-btn {
+  width: 30px !important;
+  height: 30px !important;
+  min-width: 30px !important;
+  flex: 0 0 30px !important;
   padding: 0 !important;
   border-radius: 50% !important;
   background: #f4f4f4 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 
-.wa-top-right button[aria-label="Camera"] svg {
-  width: 18px !important;
-  height: 18px !important;
+.wa-camera-btn svg {
+  width: 17px !important;
+  height: 17px !important;
 }
 
-/* Tombol plus */
+/* PLUS BUTTON */
 .wa-top-right .wa-add-btn {
-  width: 34px !important;
-  height: 34px !important;
-  min-width: 34px !important;
-  flex: 0 0 34px !important;
+  width: 32px !important;
+  height: 32px !important;
+  min-width: 32px !important;
+  flex: 0 0 32px !important;
   padding: 0 !important;
   border-radius: 50% !important;
   font-size: 22px !important;
-}
-
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  }
 .wa-heading {
   font-size: 34px;
   margin: 8px 20px 15px;
