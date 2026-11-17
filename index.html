@@ -379,37 +379,19 @@ button {
   display: none;
   flex-direction: column;
   align-items: center;
-  padding: 8vh 30px 35px;
+  padding: 0 30px 35px;
   background: rgba(28,27,32,.97);
-}
+  }
 
 .passcode-screen.active {
   display: flex;
 }
 
-.passcode-lock-icon {
-  width: 28px;
-  height: 35px;
-  flex-shrink: 0;
-  margin-bottom: 45px;
-}
-
-.passcode-lock-icon svg {
-  width: 100%;
-  height: 100%;
-}
-
 .passcode-title {
   font-size: 22px;
   font-weight: 600;
+  margin-top: calc(8vh + 55px);
   margin-bottom: 9px;
-}
-
-.passcode-subtitle {
-  font-size: 14px;
-  color: #ccc;
-  margin-bottom: 24px;
-  text-align: center;
 }
 
 .pin-dots {
@@ -3839,32 +3821,15 @@ overscroll-behavior: contain;
   </section>
 
   <!-- PASSCODE -->
-  <section class="passcode-screen" id="passcodeScreen">
-    <div class="passcode-title">Enter Passcode</div>
-    <div class="passcode-lock-icon">
-  <svg viewBox="0 0 64 80" aria-hidden="true">
-    <path
-      d="M16 32V21a16 16 0 0 1 32 0v11"
-      fill="none"
-      stroke="white"
-      stroke-width="7"
-      stroke-linecap="round"
-    />
-    <rect
-      x="5" y="30"
-      width="54" height="46"
-      rx="9"
-      fill="white"
-    />
-  </svg>
-    </div>
+<section class="passcode-screen" id="passcodeScreen">
+  <div class="passcode-title">Enter Passcode</div>
 
-    <div class="pin-dots" id="pinDots">
-      <span class="pin-dot"></span>
-      <span class="pin-dot"></span>
-      <span class="pin-dot"></span>
-      <span class="pin-dot"></span>
-    </div>
+  <div class="pin-dots" id="pinDots">
+    <span class="pin-dot"></span>
+    <span class="pin-dot"></span>
+    <span class="pin-dot"></span>
+    <span class="pin-dot"></span>
+  </div>
 
     <div class="pin-error" id="pinError"></div>
 
@@ -4488,18 +4453,45 @@ lockScreen.addEventListener("mouseup", function(event) {
 });
 
 
+
 /* PASSCODE */
+
+let lockIconOriginalParent = null;
+let lockIconOriginalNextSibling = null;
 
 function showPasscode() {
   enteredPin = "";
   updatePinDots();
 
   document.getElementById("pinError").textContent = "";
-  document.getElementById("passcodeScreen").classList.add("active");
+
+  const lockIcon = document.getElementById("lockIcon");
+  const passcode = document.getElementById("passcodeScreen");
+
+  if (!lockIconOriginalParent) {
+    lockIconOriginalParent = lockIcon.parentNode;
+    lockIconOriginalNextSibling = lockIcon.nextSibling;
+  }
+
+  passcode.insertBefore(lockIcon, passcode.firstChild);
+  passcode.classList.add("active");
 }
 
 function hidePasscode() {
-  document.getElementById("passcodeScreen").classList.remove("active");
+  const lockIcon = document.getElementById("lockIcon");
+  const passcode = document.getElementById("passcodeScreen");
+
+  passcode.classList.remove("active");
+
+  if (lockIconOriginalParent) {
+    lockIconOriginalParent.insertBefore(
+      lockIcon,
+      lockIconOriginalNextSibling
+    );
+
+    lockIconOriginalParent = null;
+    lockIconOriginalNextSibling = null;
+  }
 }
 
 function enterPin(number) {
@@ -4554,10 +4546,6 @@ function unlockPhone() {
 
   setTimeout(showNelsaNotification, 2000);
 }
-
-function showNelsaNotification(messageText = "hah kok baca notes? emang lo kenapa???") {
-  const phone = document.querySelector(".phone");
-
 
   // UPDATE JUMLAH NOTIFIKASI WHATSAPP
   const badge = document.getElementById("whatsappBadge");
