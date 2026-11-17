@@ -5362,51 +5362,14 @@ title.textContent = name;
 "WhatsApp": `
 <div class="wa-home">
 
-  <div class="wa-top-actions" style="
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding: 0 20px;
-  ">
-
-    <div class="wa-top-left" style="
-      position: absolute;
-      left: 20px;
-    ">
+  <div class="wa-top-actions">
+    <div class="wa-top-left">
       <button class="wa-icon-btn">•••</button>
     </div>
 
-    <div class="wa-top-right" style="
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-left: auto;
-    ">
-
-      <!-- CAMERA BUTTON -->
-      <button
-        class="wa-icon-btn"
-        aria-label="Camera"
-        style="
-          width: 34px;
-          height: 34px;
-          min-width: 34px;
-          padding: 0;
-          flex: 0 0 34px;
-          border-radius: 50%;
-          background: #f4f4f4;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        "
-      >
-        <svg
-          viewBox="0 0 64 64"
-          width="19"
-          height="19"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+    <div class="wa-top-right">
+      <button class="wa-icon-btn wa-camera-btn" aria-label="Camera">
+        <svg viewBox="0 0 64 64" width="19" height="19">
           <path
             d="M10 21 Q10 17 15 17 H23 L27 13 H39 L43 17 H49 Q54 17 54 21 V44 Q54 48 49 48 H15 Q10 48 10 44 Z"
             fill="#000"
@@ -5417,33 +5380,9 @@ title.textContent = name;
         </svg>
       </button>
 
-      <!-- PLUS BUTTON -->
-      <button
-        class="wa-icon-btn"
-        aria-label="New chat"
-        style="
-          width: 36px;
-          height: 36px;
-          min-width: 36px;
-          flex: 0 0 36px;
-          padding: 0;
-          margin-left: -2px;
-          border-radius: 50%;
-          background: #00a968;
-          color: white;
-          font-size: 24px;
-          font-weight: 300;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-        "
-      >+</button>
-
+            <button class="wa-icon-btn wa-add-btn">+</button>
     </div>
   </div>
-</div>
-`
-
 
   <h1 class="wa-heading">Chats</h1>
 
